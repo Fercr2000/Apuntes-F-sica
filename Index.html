@@ -1,0 +1,481 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Apuntes de Física</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+/* Layout: la serie como un circuito. Arriba, un campo eléctrico vivo sobre papel milimetrado; abajo, un cable que recorre los temas y cada tema es un componente. */
+:root{
+  --bg:#f1f7f2; --surface:#ffffff; --surface-2:#e6f1e9; --ink:#0f241b; --ink-2:#34503f; --muted:#5d7869; --line:#cde0d2;
+  --accent:#0a8f5a; --accent-ink:#06603d; --accent-soft:#d2f0de; --on-accent:#ffffff;
+  --wire:#9dbfa9;
+  /* el bloque de portada es oscuro en los dos temas */
+  --hero-bg:#0b3a28; --hero-bg-2:#0f5c3d; --hero-ink:#ecfbf2; --hero-muted:#a8d8bd; --hero-line:rgba(236,251,242,.14);
+  --hero-pos:#9ef0c1; --hero-neg:#5fd3e6; --hero-panel:rgba(3,22,14,.35);
+  --shadow:0 1px 2px rgba(15,36,27,.05),0 10px 28px rgba(15,36,27,.07);
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --r:16px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#08130e; --surface:#0e1d16; --surface-2:#13281d; --ink:#e2f1e7; --ink-2:#b4ccbd; --muted:#83a091; --line:#213a2d;
+  --accent:#3ad693; --accent-ink:#7ee9b8; --accent-soft:#103727; --on-accent:#05271a;
+  --wire:#2c4a3a;
+  --hero-bg:#06261a; --hero-bg-2:#0b4630; --hero-ink:#e6faef; --hero-muted:#93cdb0; --hero-line:rgba(230,250,239,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.28);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#08130e; --surface:#0e1d16; --surface-2:#13281d; --ink:#e2f1e7; --ink-2:#b4ccbd; --muted:#83a091; --line:#213a2d;
+  --accent:#3ad693; --accent-ink:#7ee9b8; --accent-soft:#103727; --on-accent:#05271a;
+  --wire:#2c4a3a;
+  --hero-bg:#06261a; --hero-bg-2:#0b4630; --hero-ink:#e6faef; --hero-muted:#93cdb0; --hero-line:rgba(230,250,239,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.28);
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6}
+h1,h2,h3{font-family:var(--f-display);line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.015em}
+p{margin:0}
+a{color:var(--accent-ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1160px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* ---------- portada ---------- */
+.hero{color:var(--hero-ink);background:
+  linear-gradient(var(--hero-line) 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(90deg,var(--hero-line) 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(140deg,var(--hero-bg) 30%,var(--hero-bg-2))}
+.hero .wrap{padding-block:44px 48px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:40px;align-items:center}
+.eyebrow{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hero-muted)}
+.hero h1{font-size:clamp(46px,7vw,84px);font-weight:800;margin-top:14px;letter-spacing:-.035em;line-height:.95}
+.hero h1 .thin{display:block;font-weight:600;font-size:.42em;letter-spacing:-.01em;color:var(--hero-muted);margin-top:14px;line-height:1.15}
+.hero .lead{font-size:18px;max-width:46ch;margin-top:20px;opacity:.93}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;padding:0;list-style:none}
+.facts li{font-size:13.5px;font-weight:700;padding:6px 12px;border-radius:99px;border:1px solid var(--hero-line);color:var(--hero-ink);background:rgba(255,255,255,.04)}
+.facts b{font-family:var(--f-mono);color:var(--hero-pos);margin-right:4px}
+
+.lab{border:1px solid var(--hero-line);border-radius:var(--r);background:var(--hero-panel);overflow:hidden;min-width:0}
+.lab-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 10px;padding:10px 14px;border-bottom:1px solid var(--hero-line);font-family:var(--f-mono);font-size:12px;color:var(--hero-muted);letter-spacing:.06em;text-transform:uppercase}
+.lab-top .live{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+#lab-q{white-space:nowrap;text-transform:none}
+.lab-top .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--hero-pos);box-shadow:0 0 0 3px rgba(158,240,193,.18)}
+#field{display:block;width:100%;height:340px;cursor:default;touch-action:pan-y}
+.lab-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-top:1px solid var(--hero-line)}
+.presets{display:flex;flex-wrap:wrap;gap:6px}
+.presets button{font:700 13px var(--f-body);color:var(--hero-ink);background:transparent;border:1px solid var(--hero-line);border-radius:99px;padding:5px 12px;cursor:pointer}
+.presets button:hover{border-color:var(--hero-muted)}
+.presets button[aria-pressed="true"]{background:var(--hero-ink);color:var(--hero-bg);border-color:transparent}
+.lab-foot p{font-size:13px;color:var(--hero-muted);max-width:34ch}
+
+/* ---------- circuito de temas ---------- */
+main{padding-block:52px 24px}
+.head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px 32px;align-items:end;margin-bottom:30px}
+.head h2{font-size:clamp(30px,4vw,42px);font-weight:800}
+.head p{color:var(--ink-2);margin-top:10px;max-width:60ch}
+.start{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:16px;font-size:15px;color:var(--ink-2)}
+.start span{display:inline-flex;align-items:center;gap:8px}
+.start b{font-family:var(--f-mono);font-size:12.5px;padding:2px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent-ink)}
+
+.charge{display:grid;gap:8px;justify-items:end}
+.battery{display:flex;align-items:center}
+.cells{display:flex;gap:4px;padding:5px;border:2px solid var(--ink-2);border-radius:9px}
+.cell{width:22px;height:30px;border-radius:4px;background:var(--surface-2);transition:background .3s}
+.cell.on{background:var(--accent)}
+.nub{width:6px;height:14px;background:var(--ink-2);border-radius:0 3px 3px 0}
+.charge-txt{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.charge-txt b{color:var(--ink);font-size:15px}
+
+.circuit{list-style:none;margin:0;padding:0;display:grid;gap:18px}
+.row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;position:relative;z-index:1}
+/* cada tema tira su tramo de cable hasta el componente siguiente (centro del símbolo = 50px) */
+.row::before{content:"";position:absolute;left:31px;top:50px;bottom:-68px;width:2px;background:var(--wire)}
+.row::after{content:"";position:absolute;left:30px;top:50px;bottom:-68px;width:4px;
+  background:repeating-linear-gradient(to bottom,var(--accent) 0 5px,transparent 5px 26px);opacity:.6;animation:flow 1.6s linear infinite}
+.row.next::before,.row.next::after{display:none}
+@keyframes flow{to{background-position:0 26px}}
+.sym{position:relative;z-index:1;width:64px;height:72px;margin-top:14px;color:var(--ink-2);transition:color .2s}
+.sym .bgr{fill:var(--bg)}
+.sym *{vector-effect:non-scaling-stroke}
+.row:hover .sym,.row:focus-within .sym,.row.done .sym{color:var(--accent)}
+
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:20px 22px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 20px;align-items:start;transition:border-color .2s,transform .2s}
+.row:hover .card{border-color:var(--accent);transform:translateX(3px)}
+.row.done .card{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.num{grid-row:1 / span 3;font-family:var(--f-display);font-weight:800;font-size:64px;line-height:.85;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1.5px var(--muted);min-width:46px;text-align:center}
+.row:hover .num,.row.done .num{-webkit-text-stroke-color:var(--accent)}
+.kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.card h3{font-size:clamp(22px,2.6vw,28px);font-weight:700;margin-top:2px}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a::after{content:"";position:absolute;inset:0;border-radius:var(--r)}
+.card h3 a:focus-visible{outline:none}
+.card:has(h3 a:focus-visible){outline:3px solid var(--accent);outline-offset:3px}
+.desc{color:var(--ink-2);margin-top:6px;max-width:68ch}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0;padding:0;list-style:none}
+.chips li{font-size:13px;padding:3px 10px;border-radius:99px;background:var(--surface-2);color:var(--ink-2)}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:14px;font-size:14px}
+.tag{font-family:var(--f-mono);font-size:12.5px;padding:3px 9px;border-radius:7px;border:1px dashed var(--line);color:var(--accent-ink)}
+.go{font-weight:700;color:var(--accent-ink)}
+.side{grid-column:3;grid-row:1 / span 3;display:grid;justify-items:end}
+.done-btn{position:relative;z-index:2;display:inline-flex;align-items:center;gap:7px;font:700 13px var(--f-body);color:var(--ink-2);background:var(--surface);border:1.5px solid var(--line);border-radius:99px;padding:6px 12px 6px 9px;cursor:pointer;white-space:nowrap}
+.done-btn:hover{border-color:var(--accent)}
+.done-btn .box{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--muted);display:grid;place-items:center}
+.done-btn .box svg{width:11px;height:11px;opacity:0}
+.done-btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.done-btn[aria-pressed="true"] .box{border-color:var(--on-accent)}
+.done-btn[aria-pressed="true"] .box svg{opacity:1}
+
+.row.next .card{background:transparent;box-shadow:none;border-style:dashed;grid-template-columns:minmax(0,1fr)}
+.row.next h3{font-size:20px;color:var(--ink-2)}
+.row.next p{color:var(--muted);margin-top:4px}
+.row.next:hover .card{transform:none;border-color:var(--line)}
+.row.next:hover .sym{color:var(--ink-2)}
+
+footer{padding-block:28px 48px;color:var(--muted);font-size:14px}
+footer .wrap{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:22px}
+
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:minmax(0,1fr);gap:28px;padding-block:34px 36px}
+  #field{height:280px}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .head{grid-template-columns:minmax(0,1fr)}
+  .charge{justify-items:start}
+  .charge-txt{text-align:left}
+  .row{grid-template-columns:40px minmax(0,1fr);gap:10px}
+  .sym{width:40px;height:45px;margin-top:16px}
+  .row::before{left:19px;top:38px;bottom:-56px}
+  .row::after{left:18px;top:38px;bottom:-56px}
+  .card{grid-template-columns:minmax(0,1fr);padding:18px 16px}
+  .num{display:none}
+  .side{grid-column:1;grid-row:auto;justify-items:start;margin-top:12px}
+  #field{height:250px}
+}
+@media (prefers-reduced-motion:reduce){
+  .row::after{animation:none}
+  .card,.cell,.sym{transition:none}
+  .row:hover .card{transform:none}
+}
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Física · Grado en Ingeniería Informática</p>
+      <h1>Apuntes de Física<span class="thin">Electricidad explicada paso a paso</span></h1>
+      <p class="lead">Seis temas con la teoría justa, cada proceso de mates desmenuzado, los ejercicios de tus relaciones resueltos y un test al final de cada uno. Elige un tema y se abre en una pestaña nueva.</p>
+      <ul class="facts">
+        <li><b>6</b>temas</li>
+        <li><b>4</b>relaciones resueltas</li>
+        <li><b>60</b>preguntas de test</li>
+        <li><b>fx-570SP</b>trucos de calculadora</li>
+      </ul>
+    </div>
+    <figure class="lab" style="margin:0">
+      <div class="lab-top"><span class="live">Campo eléctrico en vivo</span><span id="lab-q">q₁ = +1 · q₂ = −1</span></div>
+      <canvas id="field" aria-label="Simulación de líneas de campo eléctrico. Se pueden arrastrar las cargas." role="img"></canvas>
+      <div class="lab-foot">
+        <div class="presets" role="group" aria-label="Configuración de cargas">
+          <button type="button" id="p-dip" data-p="dip" aria-pressed="true">Dipolo</button>
+          <button type="button" id="p-two" data-p="two" aria-pressed="false">Dos positivas</button>
+          <button type="button" id="p-tri" data-p="tri" aria-pressed="false">Tres cargas</button>
+        </div>
+        <p>Arrastra las cargas. Las líneas salen de las + y acaban en las −; el fondo es el potencial V.</p>
+      </div>
+    </figure>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="head">
+    <div>
+      <h2>El circuito del curso</h2>
+      <p>Cada tema es un componente del circuito y la corriente pasa por todos. Puedes seguirlos en orden o ir directo al que te haga falta.</p>
+      <div class="start">
+        <span><b>¿Mates oxidadas?</b> Empieza por el Tema 0.</span>
+        <span><b>¿Con base?</b> Ve directo al Tema 1.</span>
+      </div>
+    </div>
+    <div class="charge" aria-live="polite">
+      <div class="battery" aria-hidden="true"><div class="cells" id="cells"></div><div class="nub"></div></div>
+      <p class="charge-txt" id="charge-txt"><b>0 / 6</b> temas que ya llevas</p>
+    </div>
+  </div>
+
+  <ol class="circuit">
+    <!-- Tema 0: pila -->
+    <li class="row" data-t="0">
+      <svg class="sym" viewBox="0 0 64 72" aria-hidden="true"><rect class="bgr" x="0" y="0" width="64" height="72"/>
+        <g stroke="currentColor" fill="none" stroke-linecap="round"><line x1="32" y1="0" x2="32" y2="30" stroke-width="2"/><line x1="14" y1="30" x2="50" y2="30" stroke-width="2.4"/><line x1="22" y1="40" x2="42" y2="40" stroke-width="5"/><line x1="32" y1="40" x2="32" y2="72" stroke-width="2"/></g>
+        <text x="52" y="24" font-size="13" font-weight="700" fill="currentColor" font-family="JetBrains Mono,monospace">+</text></svg>
+      <article class="card">
+        <div class="num" aria-hidden="true">0</div>
+        <div>
+          <p class="kicker">Tema 0 · La fuente</p>
+          <h3><a href="https://claude.ai/artifact/HSC9RVR4F1vLX3NZBy3KcX" target="_blank" rel="noopener">Mates para Física</a></h3>
+          <p class="desc">Solo las matemáticas que salen en los temas y en tus relaciones, explicadas desde cero y con ejemplos de física.</p>
+          <ul class="chips"><li>Despejar</li><li>Notación científica y prefijos</li><li>Cambios de unidades</li><li>Trigonometría</li><li>Sistemas</li><li>Exponenciales y logaritmos</li><li>Derivadas</li><li>Integrales</li></ul>
+          <div class="meta"><span class="tag">Base para todo lo demás</span><span class="go">Abrir tema ↗</span></div>
+        </div>
+        <div class="side"><button type="button" class="done-btn" id="d0" aria-pressed="false"><span class="box"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.5 2.5L10 3" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Lo llevo</button></div>
+      </article>
+    </li>
+
+    <!-- Tema 1: vector -->
+    <li class="row" data-t="1">
+      <svg class="sym" viewBox="0 0 64 72" aria-hidden="true"><rect class="bgr" x="0" y="0" width="64" height="72"/>
+        <g stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><line x1="32" y1="0" x2="32" y2="18"/><circle cx="32" cy="36" r="18"/><line x1="32" y1="54" x2="32" y2="72"/><line x1="23" y1="45" x2="41" y2="27"/><polyline points="33,27 41,27 41,35"/></g></svg>
+      <article class="card">
+        <div class="num" aria-hidden="true">1</div>
+        <div>
+          <p class="kicker">Tema 1</p>
+          <h3><a href="https://claude.ai/artifact/5UzQ4YaArXtxVZQKoz7Yef" target="_blank" rel="noopener">Magnitudes y vectores</a></h3>
+          <p class="desc">Unidades, análisis dimensional y todo el álgebra de vectores que vas a necesitar en el campo eléctrico.</p>
+          <ul class="chips"><li>Cambios de unidades</li><li>Análisis dimensional</li><li>Suma de vectores</li><li>Producto escalar</li><li>Producto vectorial</li><li>Momento</li></ul>
+          <div class="meta"><span class="tag">Relación de Magnitudes resuelta</span><span class="go">Abrir tema ↗</span></div>
+        </div>
+        <div class="side"><button type="button" class="done-btn" id="d1" aria-pressed="false"><span class="box"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.5 2.5L10 3" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Lo llevo</button></div>
+      </article>
+    </li>
+
+    <!-- Tema 2: carga puntual -->
+    <li class="row" data-t="2">
+      <svg class="sym" viewBox="0 0 64 72" aria-hidden="true"><rect class="bgr" x="0" y="0" width="64" height="72"/>
+        <g stroke="currentColor" fill="none" stroke-linecap="round" stroke-width="2"><line x1="32" y1="0" x2="32" y2="22"/><circle cx="32" cy="36" r="13"/><line x1="32" y1="50" x2="32" y2="72"/><line x1="26" y1="36" x2="38" y2="36"/><line x1="32" y1="30" x2="32" y2="42"/>
+        <line x1="49" y1="36" x2="59" y2="36"/><line x1="15" y1="36" x2="5" y2="36"/><line x1="45" y1="26" x2="53" y2="20"/><line x1="45" y1="46" x2="53" y2="52"/><line x1="19" y1="26" x2="11" y2="20"/><line x1="19" y1="46" x2="11" y2="52"/></g></svg>
+      <article class="card">
+        <div class="num" aria-hidden="true">2</div>
+        <div>
+          <p class="kicker">Tema 2</p>
+          <h3><a href="https://claude.ai/artifact/EmosFbEofZfZhApDfot99i" target="_blank" rel="noopener">Campo eléctrico</a></h3>
+          <p class="desc">De la fuerza entre dos cargas al potencial, pasando por el teorema de Gauss.</p>
+          <ul class="chips"><li>Ley de Coulomb</li><li>Campo y superposición</li><li>Dipolo</li><li>Hilos y anillos</li><li>Flujo y Gauss</li><li>Potencial</li><li>Cargas en movimiento</li></ul>
+          <div class="meta"><span class="tag">20 ejercicios de Campo y Potencial</span><span class="go">Abrir tema ↗</span></div>
+        </div>
+        <div class="side"><button type="button" class="done-btn" id="d2" aria-pressed="false"><span class="box"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.5 2.5L10 3" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Lo llevo</button></div>
+      </article>
+    </li>
+
+    <!-- Tema 3: condensador -->
+    <li class="row" data-t="3">
+      <svg class="sym" viewBox="0 0 64 72" aria-hidden="true"><rect class="bgr" x="0" y="0" width="64" height="72"/>
+        <g stroke="currentColor" fill="none" stroke-linecap="round"><line x1="32" y1="0" x2="32" y2="30" stroke-width="2"/><line x1="14" y1="30" x2="50" y2="30" stroke-width="3.2"/><line x1="14" y1="42" x2="50" y2="42" stroke-width="3.2"/><line x1="32" y1="42" x2="32" y2="72" stroke-width="2"/></g></svg>
+      <article class="card">
+        <div class="num" aria-hidden="true">3</div>
+        <div>
+          <p class="kicker">Tema 3</p>
+          <h3><a href="https://claude.ai/artifact/6rCvw1sDeePkWPNUY6Wumw" target="_blank" rel="noopener">Conductores y condensadores</a></h3>
+          <p class="desc">Cómo se reparte la carga en un conductor y cómo se almacena energía en un condensador.</p>
+          <ul class="chips"><li>Conductores en equilibrio</li><li>Capacidad</li><li>Serie y paralelo</li><li>Energía</li><li>Dieléctricos</li></ul>
+          <div class="meta"><span class="tag">14 ejercicios de Condensadores</span><span class="go">Abrir tema ↗</span></div>
+        </div>
+        <div class="side"><button type="button" class="done-btn" id="d3" aria-pressed="false"><span class="box"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.5 2.5L10 3" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Lo llevo</button></div>
+      </article>
+    </li>
+
+    <!-- Tema 4: resistencia -->
+    <li class="row" data-t="4">
+      <svg class="sym" viewBox="0 0 64 72" aria-hidden="true"><rect class="bgr" x="0" y="0" width="64" height="72"/>
+        <g stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><polyline points="32,0 32,14 41,18 23,25 41,32 23,39 41,46 23,53 32,57 32,72"/></g></svg>
+      <article class="card">
+        <div class="num" aria-hidden="true">4</div>
+        <div>
+          <p class="kicker">Tema 4</p>
+          <h3><a href="https://claude.ai/artifact/CaaQ7auFrzq2YzLsexy798" target="_blank" rel="noopener">Corriente eléctrica</a></h3>
+          <p class="desc">Leer un circuito, resolverlo con Kirchhoff y entender la carga y descarga de un condensador.</p>
+          <ul class="chips"><li>Simbología</li><li>Ley de Ohm</li><li>Efecto Joule</li><li>Fuerza electromotriz</li><li>Kirchhoff</li><li>Amperímetro y voltímetro</li><li>Circuito RC</li></ul>
+          <div class="meta"><span class="tag">32 ejercicios de Circuitos</span><span class="go">Abrir tema ↗</span></div>
+        </div>
+        <div class="side"><button type="button" class="done-btn" id="d4" aria-pressed="false"><span class="box"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.5 2.5L10 3" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Lo llevo</button></div>
+      </article>
+    </li>
+
+    <!-- Tema 5: diodo -->
+    <li class="row" data-t="5">
+      <svg class="sym" viewBox="0 0 64 72" aria-hidden="true"><rect class="bgr" x="0" y="0" width="64" height="72"/>
+        <g stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><line x1="32" y1="0" x2="32" y2="24"/><polygon points="17,24 47,24 32,46"/><line x1="17" y1="46" x2="47" y2="46" stroke-width="2.6"/><line x1="32" y1="46" x2="32" y2="72"/></g></svg>
+      <article class="card">
+        <div class="num" aria-hidden="true">5</div>
+        <div>
+          <p class="kicker">Tema 5</p>
+          <h3><a href="https://claude.ai/artifact/Ljjm57gVSz8f4iPBnsdq1W" target="_blank" rel="noopener">Teoría de bandas</a></h3>
+          <p class="desc">Por qué unos materiales conducen y otros no, y cómo se fabrican los semiconductores de los chips.</p>
+          <ul class="chips"><li>Niveles y bandas</li><li>Conductor, aislante, semiconductor</li><li>Gap y temperatura</li><li>Dopado n y p</li></ul>
+          <div class="meta"><span class="tag">9 preguntas tipo examen</span><span class="go">Abrir tema ↗</span></div>
+        </div>
+        <div class="side"><button type="button" class="done-btn" id="d5" aria-pressed="false"><span class="box"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.5 2.5L10 3" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Lo llevo</button></div>
+      </article>
+    </li>
+
+    <!-- interruptor abierto -->
+    <li class="row next">
+      <svg class="sym" viewBox="0 0 64 72" aria-hidden="true"><rect class="bgr" x="0" y="0" width="64" height="72"/>
+        <g stroke="currentColor" fill="none" stroke-linecap="round" stroke-width="2"><line x1="32" y1="0" x2="32" y2="24"/><circle cx="32" cy="27" r="3" fill="currentColor"/><line x1="32" y1="27" x2="50" y2="48"/><circle cx="32" cy="54" r="3"/></g></svg>
+      <div class="card">
+        <h3>Próximos temas</h3>
+        <p>Interruptor abierto: los temas nuevos se conectarán aquí cuando lleguen.</p>
+      </div>
+    </li>
+  </ol>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Cada tema guarda su propio progreso de «Marcar como entendido». Las marcas «Lo llevo» de este índice se guardan solo en este navegador.</p>
+    <p>Apuntes basados en las diapositivas y relaciones de ejercicios de la asignatura.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* ---------- Progreso «Lo llevo» ---------- */
+  const KEY="fisica-indice-llevo", N=6;
+  let done=[];
+  try{ done=JSON.parse(localStorage.getItem(KEY)||"[]"); if(!Array.isArray(done)) done=[]; }catch(e){ done=[]; }
+  const cells=document.getElementById("cells");
+  for(let i=0;i<N;i++){ const c=document.createElement("div"); c.className="cell"; cells.appendChild(c); }
+  function paint(){
+    document.querySelectorAll(".row[data-t]").forEach(r=>{
+      const t=+r.dataset.t, on=done.includes(t);
+      r.classList.toggle("done",on);
+      r.querySelector(".done-btn").setAttribute("aria-pressed",String(on));
+    });
+    [...cells.children].forEach((c,i)=>c.classList.toggle("on",i<done.length));
+    const n=done.length;
+    document.getElementById("charge-txt").innerHTML = n===N
+      ? "<b>6 / 6</b> batería cargada: a por el examen"
+      : `<b>${n} / ${N}</b> temas que ya llevas`;
+  }
+  document.querySelectorAll(".done-btn").forEach(b=>b.addEventListener("click",e=>{
+    e.preventDefault(); e.stopPropagation();
+    const t=+b.closest(".row").dataset.t;
+    done = done.includes(t) ? done.filter(x=>x!==t) : done.concat(t);
+    try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(err){}
+    paint();
+  }));
+  paint();
+
+  /* ---------- Campo eléctrico interactivo ---------- */
+  const cv=document.getElementById("field"), ctx=cv.getContext("2d");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const PRESETS={
+    dip:[{x:.32,y:.5,q:1},{x:.68,y:.5,q:-1}],
+    two:[{x:.34,y:.5,q:1},{x:.66,y:.5,q:1}],
+    tri:[{x:.5,y:.36,q:2},{x:.28,y:.7,q:-1},{x:.72,y:.7,q:-1}]
+  };
+  let charges=PRESETS.dip.map(c=>({...c})), W=0, H=0, dpr=1, lines=[], layer=null, colors={};
+  const SUP={"1":"+1","-1":"−1","2":"+2","-2":"−2"};
+
+  function readColors(){
+    const cs=getComputedStyle(document.documentElement);
+    const g=n=>cs.getPropertyValue(n).trim();
+    colors={pos:g("--hero-pos"),neg:g("--hero-neg"),ink:g("--hero-ink"),muted:g("--hero-muted"),bg:g("--hero-bg")};
+  }
+  function hexRGB(h){ h=h.replace("#",""); if(h.length===3) h=h.split("").map(c=>c+c).join(""); const n=parseInt(h,16); return [(n>>16)&255,(n>>8)&255,n&255]; }
+
+  function E(x,y){ let ex=0,ey=0; for(const c of charges){ const dx=x-c.x*W, dy=y-c.y*H, r2=dx*dx+dy*dy+1, r=Math.sqrt(r2), k=c.q/(r2*r); ex+=k*dx; ey+=k*dy; } return [ex,ey]; }
+  function trace(x,y,dir){
+    const pts=[[x,y]], ds=3.2; let L=0;
+    for(let s=0;s<700;s++){
+      let [ex,ey]=E(x,y); let m=Math.hypot(ex,ey); if(m<1e-12) break;
+      const mx=x+dir*ex/m*ds/2, my=y+dir*ey/m*ds/2;
+      [ex,ey]=E(mx,my); m=Math.hypot(ex,ey); if(m<1e-12) break;
+      x+=dir*ex/m*ds; y+=dir*ey/m*ds; L+=ds; pts.push([x,y]);
+      if(x<-30||y<-30||x>W+30||y>H+30) break;
+      let hit=null; for(const c of charges){ if(Math.sign(c.q)===-dir && Math.hypot(x-c.x*W,y-c.y*H)<11){ hit=c; break; } }
+      if(hit){ pts.push([hit.x*W,hit.y*H]); break; }
+    }
+    const cum=[0]; for(let i=1;i<pts.length;i++) cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+    return {pts,cum,len:cum[cum.length-1],dir};
+  }
+  function computeLines(){
+    lines=[];
+    const pos=charges.filter(c=>c.q>0), neg=charges.filter(c=>c.q<0);
+    const sp=pos.reduce((a,c)=>a+c.q,0), sn=neg.reduce((a,c)=>a-c.q,0);
+    const per=W<420?10:13;
+    const seed=(list,dir)=>list.forEach((c,ci)=>{ const n=Math.round(per*Math.abs(c.q)); for(let i=0;i<n;i++){ const a=2*Math.PI*(i+.5)/n+ci*.37; lines.push(trace(c.x*W+12*Math.cos(a),c.y*H+12*Math.sin(a),dir)); } });
+    seed(pos,1); if(sn>sp) seed(neg,-1);
+  }
+  function renderLayer(){
+    layer=document.createElement("canvas"); layer.width=Math.round(W*dpr); layer.height=Math.round(H*dpr);
+    const g=layer.getContext("2d"); g.scale(dpr,dpr);
+    // potencial V en una rejilla gruesa, suavizada al escalar
+    const s=5, gw=Math.ceil(W/s), gh=Math.ceil(H/s), img=g.createImageData(gw,gh);
+    const P=hexRGB(colors.pos), Q=hexRGB(colors.neg);
+    for(let j=0;j<gh;j++) for(let i=0;i<gw;i++){
+      const x=i*s, y=j*s; let V=0; for(const c of charges){ V+=c.q/Math.max(10,Math.hypot(x-c.x*W,y-c.y*H)); }
+      const t=Math.tanh(V*18), a=Math.abs(t), band=(Math.abs((V*60)%1)<.06)?.10:0, col=t>0?P:Q, k=(j*gw+i)*4;
+      img.data[k]=col[0]; img.data[k+1]=col[1]; img.data[k+2]=col[2]; img.data[k+3]=Math.round(255*Math.min(.6,a*.32+band*a));
+    }
+    const tmp=document.createElement("canvas"); tmp.width=gw; tmp.height=gh; tmp.getContext("2d").putImageData(img,0,0);
+    g.imageSmoothingEnabled=true; g.drawImage(tmp,0,0,gw*s,gh*s);
+    // líneas de campo
+    g.lineWidth=1.25; g.strokeStyle=colors.muted; g.globalAlpha=.62; g.lineJoin="round";
+    for(const l of lines){ g.beginPath(); l.pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])); g.stroke(); }
+    // flechas a mitad de cada línea
+    g.globalAlpha=.85; g.fillStyle=colors.muted;
+    for(const l of lines){ if(l.len<40) continue; const p=at(l,l.len*.5), q=at(l,l.len*.5+4); let ang=Math.atan2(q[1]-p[1],q[0]-p[0]); if(l.dir<0) ang+=Math.PI;
+      g.save(); g.translate(p[0],p[1]); g.rotate(ang); g.beginPath(); g.moveTo(5,0); g.lineTo(-4,-3.5); g.lineTo(-4,3.5); g.closePath(); g.fill(); g.restore(); }
+    g.globalAlpha=1;
+    // cargas
+    for(const c of charges){ const x=c.x*W, y=c.y*H, r=Math.abs(c.q)>1?17:14, col=c.q>0?colors.pos:colors.neg;
+      g.beginPath(); g.arc(x,y,r+7,0,7); g.fillStyle=col; g.globalAlpha=.16; g.fill(); g.globalAlpha=1;
+      g.beginPath(); g.arc(x,y,r,0,7); g.fillStyle=col; g.fill();
+      g.fillStyle=colors.bg; g.font="700 "+(Math.abs(c.q)>1?14:16)+"px "+getComputedStyle(document.body).getPropertyValue("--f-mono");
+      g.textAlign="center"; g.textBaseline="middle"; g.fillText(Math.abs(c.q)>1?(c.q>0?"2+":"2−"):(c.q>0?"+":"−"),x,y+1); }
+  }
+  function at(l,d){ let i=1; while(i<l.cum.length-1 && l.cum[i]<d) i++; const a=l.pts[i-1], b=l.pts[i], seg=(l.cum[i]-l.cum[i-1])||1, t=Math.max(0,Math.min(1,(d-l.cum[i-1])/seg)); return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]; }
+
+  let off=0, raf=0, visible=true;
+  function frame(){
+    ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
+    if(layer) ctx.drawImage(layer,0,0,W,H);
+    if(!reduce){
+      ctx.fillStyle=colors.ink; ctx.globalAlpha=.85; const gap=34;
+      for(const l of lines){ for(let d=(off%gap);d<l.len-6;d+=gap){ const dd=l.dir>0?d:l.len-d; const p=at(l,dd); ctx.beginPath(); ctx.arc(p[0],p[1],1.6,0,7); ctx.fill(); } }
+      ctx.globalAlpha=1;
+    }
+  }
+  function loop(){ off+=.55; frame(); raf = visible && !reduce ? requestAnimationFrame(loop) : 0; }
+  function start(){ if(!raf && !reduce && visible) raf=requestAnimationFrame(loop); }
+  function rebuild(){ computeLines(); renderLayer(); frame(); }
+  function resize(){
+    const r=cv.getBoundingClientRect(); W=Math.max(200,r.width); H=Math.max(160,r.height); dpr=Math.min(2,window.devicePixelRatio||1);
+    cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); readColors(); rebuild();
+  }
+  function label(){ document.getElementById("lab-q").textContent = charges.map((c,i)=>"q"+"₁₂₃"[i]+" = "+SUP[String(c.q)]).join(" · "); }
+
+  // arrastrar (ratón y dedo). Con el dedo solo se bloquea el scroll si tocas una carga.
+  let drag=null;
+  function pick(x,y){ let best=null,bd=30; for(const c of charges){ const d=Math.hypot(x-c.x*W,y-c.y*H); if(d<bd){bd=d;best=c;} } return best; }
+  function local(e){ const r=cv.getBoundingClientRect(); return [e.clientX-r.left,e.clientY-r.top]; }
+  function moveTo(x,y){ drag.x=Math.min(.96,Math.max(.04,x/W)); drag.y=Math.min(.94,Math.max(.06,y/H)); rebuild(); }
+  cv.addEventListener("mousedown",e=>{ const [x,y]=local(e); drag=pick(x,y); if(drag){ cv.style.cursor="grabbing"; e.preventDefault(); } });
+  window.addEventListener("mousemove",e=>{ const [x,y]=local(e); if(drag){ moveTo(x,y); } else if(e.target===cv){ cv.style.cursor=pick(x,y)?"grab":"default"; } });
+  window.addEventListener("mouseup",()=>{ if(drag){ drag=null; cv.style.cursor="grab"; } });
+  cv.addEventListener("touchstart",e=>{ const t=e.touches[0], [x,y]=local(t); drag=pick(x,y); if(drag) e.preventDefault(); },{passive:false});
+  cv.addEventListener("touchmove",e=>{ if(!drag) return; e.preventDefault(); const [x,y]=local(e.touches[0]); moveTo(x,y); },{passive:false});
+  cv.addEventListener("touchend",()=>{ drag=null; });
+
+  document.querySelectorAll(".presets button").forEach(b=>b.addEventListener("click",()=>{
+    charges=PRESETS[b.dataset.p].map(c=>({...c}));
+    document.querySelectorAll(".presets button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+    label(); rebuild();
+  }));
+
+  new ResizeObserver(()=>resize()).observe(cv);
+  if("IntersectionObserver" in window){ new IntersectionObserver(es=>{ visible=es[0].isIntersecting; if(visible) start(); }).observe(cv); }
+  document.addEventListener("visibilitychange",()=>{ visible=!document.hidden; if(visible) start(); });
+  const reread=()=>{ readColors(); rebuild(); };
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change",reread);
+  new MutationObserver(reread).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+  if(document.fonts) document.fonts.ready.then(()=>{ renderLayer(); frame(); });
+  label(); resize(); start();
+})();
+</script>
+
+</body></html>
