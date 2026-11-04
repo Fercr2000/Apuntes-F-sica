@@ -1,0 +1,1256 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Tema 3 · Condensadores</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+/* Layout: cuaderno de ingeniería — índice fijo a la izquierda, columna de lectura de ~70ch, figuras sobre papel milimetrado verde */
+:root{
+  --bg:#f1f7f2; --surface:#ffffff; --surface-2:#e6f1e9; --ink:#0f241b; --ink-2:#34503f; --muted:#5d7869; --line:#cde0d2;
+  --accent:#0a8f5a; --accent-ink:#06603d; --accent-soft:#d2f0de; --lime:#5f9a12; --on-accent:#ffffff;
+  --grid:rgba(10,143,90,.08); --grid-strong:rgba(10,143,90,.17);
+  --warn:#a3560a; --warn-soft:#fbefd7; --teal:#0b7285; --teal-soft:#d6eef3; --rose:#bf2f50; --rose-soft:#fbe3e9;
+  --hero-bg:#0b3a28; --hero-bg-2:#0f5c3d; --hero-ink:#ecfbf2; --hero-muted:#a8d8bd; --hero-line:rgba(236,251,242,.14);
+  --shadow:0 1px 2px rgba(15,36,27,.05),0 8px 24px rgba(15,36,27,.06);
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --r:14px; --r-sm:9px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#08130e; --surface:#0e1d16; --surface-2:#13281d; --ink:#e2f1e7; --ink-2:#b4ccbd; --muted:#83a091; --line:#213a2d;
+  --accent:#3ad693; --accent-ink:#7ee9b8; --accent-soft:#103727; --lime:#a6e33f; --on-accent:#05271a;
+  --grid:rgba(58,214,147,.07); --grid-strong:rgba(58,214,147,.15);
+  --warn:#f2b04a; --warn-soft:#2f230b; --teal:#4cc9de; --teal-soft:#0c2a31; --rose:#ff7d98; --rose-soft:#3a1420;
+  --hero-bg:#06261a; --hero-bg-2:#0b4630; --hero-ink:#e6faef; --hero-muted:#93cdb0; --hero-line:rgba(230,250,239,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#08130e; --surface:#0e1d16; --surface-2:#13281d; --ink:#e2f1e7; --ink-2:#b4ccbd; --muted:#83a091; --line:#213a2d;
+  --accent:#3ad693; --accent-ink:#7ee9b8; --accent-soft:#103727; --lime:#a6e33f; --on-accent:#05271a;
+  --grid:rgba(58,214,147,.07); --grid-strong:rgba(58,214,147,.15);
+  --warn:#f2b04a; --warn-soft:#2f230b; --teal:#4cc9de; --teal-soft:#0c2a31; --rose:#ff7d98; --rose-soft:#3a1420;
+  --hero-bg:#06261a; --hero-bg-2:#0b4630; --hero-ink:#e6faef; --hero-muted:#93cdb0; --hero-line:rgba(230,250,239,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.62;}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0}
+a{color:var(--accent-ink)}
+strong{font-weight:700;color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+sup,sub{line-height:0}
+
+.wrap{max-width:1180px;margin-inline:auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+
+/* ---------- HERO ---------- */
+.hero{background:
+  linear-gradient(var(--hero-line) 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(90deg,var(--hero-line) 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(135deg,var(--hero-bg),var(--hero-bg-2));
+  color:var(--hero-ink);}
+.hero .wrap{padding-block:34px 38px;display:grid;gap:22px}
+.series{display:flex;flex-wrap:wrap;gap:6px;font-size:13px}
+.series span{padding:4px 10px;border-radius:99px;border:1px solid var(--hero-line);color:var(--hero-muted);font-weight:700;letter-spacing:.02em}
+.series span.on{background:var(--hero-ink);color:var(--hero-bg);border-color:transparent}
+.hero-main{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:end}
+.bignum{font-family:var(--f-display);font-weight:800;font-size:clamp(88px,16vw,168px);line-height:.8;color:transparent;-webkit-text-stroke:2px var(--hero-muted);letter-spacing:-.04em}
+.eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--hero-muted)}
+.hero h1{font-size:clamp(34px,5.4vw,58px);font-weight:800;margin-top:6px}
+.hero .lead{font-size:18.5px;max-width:62ch;color:var(--hero-ink);opacity:.92;margin-top:12px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--hero-muted)}
+.hero-meta b{color:var(--hero-ink)}
+@media (max-width:640px){.hero-main{grid-template-columns:1fr}.bignum{font-size:84px}}
+
+/* ---------- LAYOUT ---------- */
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:44px;padding-block:34px 80px}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 18px);align-self:start;max-height:calc(100vh - 36px);overflow:auto;padding-right:4px}
+.toc-title{font-family:var(--f-display);font-weight:700;font-size:15px;margin-bottom:8px;color:var(--ink-2)}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.toc a{display:grid;grid-template-columns:26px 1fr 18px;gap:6px;align-items:baseline;padding:6px 8px;border-radius:8px;text-decoration:none;color:var(--ink-2);font-size:14.5px;line-height:1.3}
+.toc a:hover{background:var(--surface-2);color:var(--ink)}
+.toc a.active{background:var(--accent-soft);color:var(--accent-ink);font-weight:700}
+.toc .n{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.toc .ck{color:var(--accent);font-weight:800;opacity:0}
+.toc a.done .ck{opacity:1}
+.progress{margin-top:16px;padding:12px;border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--line);font-size:13.5px;color:var(--ink-2)}
+.bar{height:8px;border-radius:99px;background:var(--surface-2);margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--lime));border-radius:99px;transition:width .4s}
+.toc-mobile{display:none}
+@media (max-width:980px){
+  .layout{grid-template-columns:minmax(0,1fr);gap:0;padding-top:18px}
+  .toc{display:none}
+  .toc-mobile{display:block;margin-bottom:22px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+  .toc-mobile summary{cursor:pointer;padding:12px 16px;font-family:var(--f-display);font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
+  .toc-mobile summary::-webkit-details-marker{display:none}
+  .toc-mobile summary::after{content:"＋";color:var(--accent)}
+  .toc-mobile[open] summary::after{content:"－"}
+  .toc-mobile ol{padding:0 8px 10px}
+}
+main{min-width:0}
+.content{max-width:780px;display:grid;gap:64px}
+
+/* ---------- SECTIONS ---------- */
+.sec{display:grid;gap:22px;scroll-margin-top:20px}
+.sec-head{display:grid;gap:6px;padding-bottom:14px;border-bottom:2px solid var(--line)}
+.sec-num{font-family:var(--f-mono);font-size:13px;font-weight:700;color:var(--accent-ink);letter-spacing:.06em}
+.sec h2{font-size:clamp(27px,3.6vw,36px);font-weight:800}
+.sec-sub{color:var(--ink-2);font-size:17px}
+.sec h3{font-size:21px;font-weight:700;margin-top:6px}
+.sec h4{font-size:17px;font-weight:700}
+.sec p,.sec li{max-width:70ch}
+.sec ul,.sec ol{margin:0;padding-left:1.25em;display:grid;gap:6px}
+.uses{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13.5px}
+.uses .lbl{font-weight:700;color:var(--muted);margin-right:2px}
+.chip{display:inline-block;padding:3px 9px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);font-weight:700;font-size:12.5px;white-space:nowrap}
+.chip.rel{background:var(--accent-soft);border-color:transparent;color:var(--accent-ink)}
+.hl{background:linear-gradient(transparent 58%,var(--accent-soft) 58%);padding:0 2px}
+.key{display:inline-block;font-family:var(--f-mono);font-size:.8em;font-weight:700;padding:1px 7px 2px;border-radius:6px;background:var(--surface);border:1px solid var(--line);border-bottom-width:3px;color:var(--ink);white-space:nowrap;line-height:1.5}
+
+/* ---------- BOXES ---------- */
+.box{border-radius:var(--r);padding:16px 18px;display:grid;gap:10px;border:1px solid var(--line);background:var(--surface)}
+.box>.tag{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.box>.tag::before{content:"";width:9px;height:9px;border-radius:3px;background:currentColor}
+.box.idea{background:var(--accent-soft);border-color:transparent}
+.box.idea>.tag{color:var(--accent-ink)}
+.box.cuidado{background:var(--warn-soft);border-color:transparent}
+.box.cuidado>.tag{color:var(--warn)}
+.box.truco{background:var(--teal-soft);border-color:transparent}
+.box.truco>.tag{color:var(--teal)}
+.box.calc{background:var(--surface);border:1px dashed var(--line)}
+.box.calc>.tag{color:var(--ink-2)}
+.box ul,.box ol{padding-left:1.2em}
+
+/* formula card */
+.formula{border-radius:var(--r);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+.formula .f-head{padding:10px 18px;font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);border-bottom:1px solid var(--line);background:var(--surface-2)}
+.formula .f-body{padding:6px 18px 14px;display:grid;gap:8px}
+.formula .f-body>p{font-size:15.5px;color:var(--ink-2)}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:15px;margin:0}
+.legend dt{font-weight:700;text-align:right}
+.legend dd{margin:0;color:var(--ink-2)}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15.5px;font-variant-numeric:tabular-nums}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:var(--surface-2);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+tr:last-child td{border-bottom:0}
+td.c,th.c{text-align:center}
+
+/* ---------- WORKED EXAMPLE (stepper) ---------- */
+.ej{border-radius:var(--r);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+.ej-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:center;padding:12px 18px;background:var(--hero-bg);color:var(--hero-ink)}
+.ej-head .t{font-family:var(--f-display);font-weight:700;font-size:16.5px}
+.ej-head .src{font-size:12.5px;color:var(--hero-muted);font-weight:700}
+.ej-q{padding:16px 18px;border-bottom:1px solid var(--line);display:grid;gap:8px}
+.ej-q .data{display:flex;flex-wrap:wrap;gap:6px}
+.ej-q .data span{font-family:var(--f-mono);font-size:13.5px;padding:2px 8px;border-radius:6px;background:var(--surface-2)}
+.steps{list-style:none;margin:0;padding:0;counter-reset:st}
+.step{counter-increment:st;display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.step::before{content:counter(st);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;font-size:14px;background:var(--accent);color:var(--on-accent)}
+.step .st-t{font-weight:700;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.step .st-b{display:grid;gap:8px;margin-top:6px;min-width:0}
+.step .st-b p{max-width:none}
+.step.locked::before{background:var(--surface-2);color:var(--muted)}
+.step.locked .st-t{color:var(--muted)}
+.step.locked .st-b{max-height:0;overflow:hidden;visibility:hidden;margin:0}
+.step.locked .st-t::after{content:"· intenta este paso antes de abrirlo";font-weight:400;font-size:13px;color:var(--muted)}
+.step.just{animation:pop .45s ease}
+@keyframes pop{from{background:var(--accent-soft)}to{background:transparent}}
+.ej-ctrl{display:flex;flex-wrap:wrap;gap:8px;padding:12px 18px;background:var(--surface-2)}
+.btn{font:inherit;font-size:14.5px;font-weight:700;border-radius:99px;padding:8px 16px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:transform .12s,background .12s}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--accent);border-color:transparent;color:var(--on-accent)}
+.btn[disabled]{opacity:.45;cursor:default;transform:none}
+.result{border-radius:var(--r-sm);padding:10px 14px;background:var(--accent-soft);color:var(--accent-ink);font-weight:700;border:1px solid transparent}
+.check{font-size:14.5px;color:var(--ink-2);border-left:3px solid var(--accent);padding-left:10px}
+
+/* practice */
+.practica{border-radius:var(--r);border:2px dashed var(--line);padding:16px 18px;display:grid;gap:10px}
+.practica>.tag{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lime)}
+.practica ol{display:grid;gap:12px}
+details.sol summary{cursor:pointer;font-weight:700;color:var(--accent-ink);font-size:14.5px;width:max-content;max-width:100%}
+details.sol>div{margin-top:8px;padding:10px 14px;border-radius:var(--r-sm);background:var(--surface-2);display:grid;gap:6px}
+
+/* figures & widgets */
+.fig{border-radius:var(--r);border:1px solid var(--line);overflow:hidden;background:var(--surface)}
+.paper{background-color:var(--surface);background-image:
+  linear-gradient(var(--grid-strong) 1px,transparent 1px),linear-gradient(90deg,var(--grid-strong) 1px,transparent 1px),
+  linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:80px 80px,80px 80px,16px 16px,16px 16px}
+.fig .art{padding:14px;overflow-x:auto}
+.fig .art svg{display:block;width:100%;height:auto;max-width:100%}
+.fig figcaption,.fig .cap{padding:10px 16px;font-size:14.5px;color:var(--ink-2);border-top:1px solid var(--line);background:var(--surface)}
+.widget .w-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--surface)}
+.widget .w-head b{font-family:var(--f-display);font-size:16px}
+.widget .w-head .pill{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:var(--accent);color:var(--on-accent)}
+.controls{display:grid;gap:12px;padding:14px 16px;border-top:1px solid var(--line);background:var(--surface)}
+.ctrl{display:grid;grid-template-columns:minmax(110px,auto) 1fr auto;gap:12px;align-items:center;font-size:15px}
+.ctrl label{font-weight:700}
+.ctrl output{font-family:var(--f-mono);font-size:14px;min-width:64px;text-align:right}
+input[type=range]{width:100%;accent-color:var(--accent);min-width:0}
+select,input[type=number],input[type=text]{font:inherit;font-size:15px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-width:0}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;padding:12px 16px;background:var(--surface-2);font-variant-numeric:tabular-nums}
+.readout div{display:grid;gap:2px;font-size:13px;color:var(--muted);font-weight:700}
+.readout div span{font-family:var(--f-mono);font-size:16px;color:var(--ink);font-weight:700}
+.explain{padding:12px 16px;font-size:15.5px;border-top:1px solid var(--line);background:var(--surface);display:grid;gap:6px}
+@media (max-width:520px){.ctrl{grid-template-columns:1fr auto}.ctrl input[type=range]{grid-column:1/-1;order:3}}
+
+/* svg tokens */
+.s-ink{stroke:var(--ink);fill:none}
+.s-ink2{stroke:var(--ink-2);fill:none}
+.s-muted{stroke:var(--muted);fill:none}
+.s-acc{stroke:var(--accent);fill:none}
+.s-teal{stroke:var(--teal);fill:none}
+.s-warn{stroke:var(--warn);fill:none}
+.s-rose{stroke:var(--rose);fill:none}
+.f-acc{fill:var(--accent)}
+.f-accsoft{fill:var(--accent-soft)}
+.f-teal{fill:var(--teal)}
+.f-warn{fill:var(--warn)}
+.f-rose{fill:var(--rose)}
+.f-ink{fill:var(--ink)}
+.f-ink2{fill:var(--ink-2)}
+.f-muted{fill:var(--muted)}
+.f-surface{fill:var(--surface)}
+.f-surface2{fill:var(--surface-2)}
+svg text{font-family:var(--f-body);font-size:14px;fill:var(--ink-2)}
+svg text.m{font-family:var(--f-mono);font-size:12.5px}
+svg text.b{font-weight:700}
+svg text.lg{font-size:17px}
+
+/* grid of cards (formulario) */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:12px}
+.fcard{border-radius:var(--r);border:1px solid var(--line);background:var(--surface);padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.fcard h4{font-size:15px;color:var(--accent-ink);letter-spacing:.02em}
+.fcard .row{overflow-x:auto;overflow-y:hidden}
+
+/* method steps */
+.method{list-style:none;padding:0!important;margin:0;display:grid;gap:10px;counter-reset:m}
+.method li{counter-increment:m;display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;max-width:none!important}
+.method li::before{content:counter(m);font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1;color:var(--accent)}
+.method b{display:block}
+
+/* legend of boxes */
+.kinds{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.kinds>div{border-radius:var(--r-sm);padding:10px 12px;font-size:14.5px;display:grid;gap:2px}
+.kinds b{font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.kinds .k-idea{background:var(--accent-soft)} .kinds .k-idea b{color:var(--accent-ink)}
+.kinds .k-form{background:var(--surface);border:1px solid var(--line)} .kinds .k-form b{color:var(--accent-ink)}
+.kinds .k-ej{background:var(--hero-bg);color:var(--hero-ink)} .kinds .k-ej b{color:var(--hero-muted)}
+.kinds .k-cui{background:var(--warn-soft)} .kinds .k-cui b{color:var(--warn)}
+.kinds .k-tru{background:var(--teal-soft)} .kinds .k-tru b{color:var(--teal)}
+.kinds .k-pra{border:2px dashed var(--line)} .kinds .k-pra b{color:var(--lime)}
+
+/* quiz */
+.quiz{display:grid;gap:14px}
+.q{border-radius:var(--r);border:1px solid var(--line);background:var(--surface);padding:16px 18px;display:grid;gap:10px}
+.q .qt{font-weight:700}
+.q .opts{display:grid;gap:8px}
+.q .opts button{font:inherit;text-align:left;padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.q .opts button:hover{border-color:var(--accent)}
+.q .opts button.ok{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.q .opts button.ko{background:var(--rose-soft);border-color:var(--rose);color:var(--rose)}
+.q .why{font-size:15px;color:var(--ink-2);padding:10px 12px;border-radius:var(--r-sm);background:var(--surface-2)}
+.score{position:relative;font-family:var(--f-display);font-weight:700;font-size:18px;padding:14px 18px;border-radius:var(--r);background:var(--hero-bg);color:var(--hero-ink);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+.done-btn{justify-self:start;font:inherit;font-weight:700;font-size:14.5px;padding:9px 16px;border-radius:99px;border:2px solid var(--accent);background:transparent;color:var(--accent-ink);cursor:pointer}
+.done-btn[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+
+/* math */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;padding:4px 0;margin:4px 0!important}
+mjx-container{color:inherit}
+.big mjx-container[display="true"]{font-size:118%}
+
+footer.foot{border-top:1px solid var(--line);padding-block:24px 40px;color:var(--muted);font-size:14px}
+
+/* evita que fórmulas largas ensanchen la columna */
+.content,.sec,.box,.formula .f-body,.step .st-b,.ej-q,.practica,details.sol>div,.explain,.q,.fcard{grid-template-columns:minmax(0,1fr)}
+.sec ul,.sec ol{grid-template-columns:minmax(0,1fr)}
+.sec li{min-width:0}
+.step::before{grid-row:1 / span 2}
+.step .st-t,.step .st-b{grid-column:2}
+.widget .art svg{max-width:600px;margin-inline:auto}
+.readout{grid-template-columns:repeat(auto-fit,minmax(118px,1fr))}
+@media (max-width:560px){
+  .widget svg text{font-size:21px}
+  .widget svg text.m{font-size:19px}
+}
+
+/* notas de calculadora dentro de los pasos */
+.calc-note{font-size:14.5px;line-height:1.5;padding:9px 12px;border-radius:var(--r-sm);background:var(--teal-soft);color:var(--ink-2);border-left:3px solid var(--teal)}
+.calc-note b:first-child{color:var(--teal);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-right:4px}
+/* serie con enlaces */
+.series a{padding:4px 10px;border-radius:99px;border:1px solid var(--hero-muted);color:var(--hero-ink);font-weight:700;letter-spacing:.02em;text-decoration:none}
+.series a:hover{background:var(--hero-line)}
+/* arrastrable */
+.drag{cursor:grab;touch-action:none}
+.drag:active{cursor:grabbing}
+.theory{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.theory>div{border-radius:var(--r-sm);border:1px solid var(--line);background:var(--surface);padding:12px 14px;display:grid;gap:4px;align-content:start}
+.theory b{font-family:var(--f-display);font-size:16px}
+.theory p{font-size:15px;color:var(--ink-2)}
+
+/* cuadro de relaciones F-E-Ep-V */
+.magic{display:grid;grid-template-columns:minmax(0,1fr) minmax(70px,.8fr) minmax(0,1fr);grid-template-rows:auto auto auto;gap:6px;align-items:stretch}
+.magic .mb{border-radius:var(--r);padding:12px;text-align:center;display:grid;gap:2px;align-content:center;border:2px solid transparent}
+.magic .mb b{font-family:var(--f-display);font-size:19px}
+.magic .mb span{font-size:13px;color:var(--ink-2)}
+.magic .vec{background:var(--accent-soft);border-color:var(--accent)}
+.magic .esc{background:var(--teal-soft);border-color:var(--teal)}
+.magic .ar{display:grid;place-items:center;text-align:center;font-size:14px;color:var(--ink-2);padding:4px;min-width:0}
+.magic .ar b{color:var(--ink);font-family:var(--f-mono);font-size:13px}
+.magic .mid{font-size:13px;color:var(--muted);display:grid;place-items:center;text-align:center}
+@media (max-width:520px){.magic .mb b{font-size:16px}.magic .ar{font-size:12.5px}}
+
+/* tabla de símbolos en móvil: tarjetas */
+@media (max-width:600px){
+  .symtab thead{display:none}
+  .symtab tr{display:grid;grid-template-columns:110px minmax(0,1fr);align-items:center;border-bottom:1px solid var(--line)}
+  .symtab td{border-bottom:0;padding:8px 10px}
+  .symtab td:nth-child(3){grid-column:1/-1;padding-top:0;font-size:14.5px}
+  .symtab svg{width:100px;height:42px}
+}
+
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']],
+    macros: { ii: '\\hat{\\imath}', jj: '\\hat{\\jmath}', kk: '\\hat{k}', sen: '\\operatorname{sen}' }
+  },
+  svg: { fontCache: 'global' },
+  options: { enableMenu: false }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<div data-topic="3">
+<header class="hero">
+  <div class="wrap">
+    <nav class="series" aria-label="Serie de apuntes">
+      <a href="https://claude.ai/artifact/HSC9RVR4F1vLX3NZBy3KcX" target="_blank" rel="noopener">0 · Mates ↗</a><a href="https://claude.ai/artifact/5UzQ4YaArXtxVZQKoz7Yef" target="_blank" rel="noopener">1 · Magnitudes y vectores ↗</a><a href="https://claude.ai/artifact/EmosFbEofZfZhApDfot99i" target="_blank" rel="noopener">2 · Campo eléctrico ↗</a><span class="on">3 · Conductores y condensadores</span><a href="https://claude.ai/artifact/CaaQ7auFrzq2YzLsexy798" target="_blank" rel="noopener">4 · Corriente eléctrica ↗</a><a href="https://claude.ai/artifact/Ljjm57gVSz8f4iPBnsdq1W" target="_blank" rel="noopener">5 · Teoría de bandas ↗</a>
+    </nav>
+    <div class="hero-main">
+      <div class="bignum" aria-hidden="true">3</div>
+      <div>
+        <div class="eyebrow">Física · Tema 3 · Campo eléctrico en la materia</div>
+        <h1>Conductores y condensadores</h1>
+        <p class="lead">Conductores en equilibrio, capacidad, asociación de condensadores, energía y dieléctricos. Están los 14 ejercicios de tu relación de Condensadores, resueltos paso a paso.</p>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <span><b>7</b> apartados + formulario y test</span>
+      <span><b>≈ 4 h</b> de estudio</span>
+      <span>Relación: <b>Condensadores 1–14</b></span>
+    </div>
+  </div>
+</header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <marker id="ah-ink" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-ink" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-acc" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-acc" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-teal" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-teal" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-rose" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-rose" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-warn" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-warn" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-muted" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path class="f-muted" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+</svg>
+
+<div class="wrap layout">
+  <nav class="toc" aria-label="Índice del tema">
+    <div class="toc-title">En este tema</div>
+    <ol data-toc></ol>
+    <div class="progress"><span data-prog-txt></span><div class="bar"><i data-prog-bar></i></div></div>
+  </nav>
+
+  <main>
+    <details class="toc-mobile">
+      <summary>Índice del tema</summary>
+      <ol data-toc></ol>
+      <div class="progress" style="margin:0 12px 12px"><span data-prog-txt></span><div class="bar"><i data-prog-bar></i></div></div>
+    </details>
+
+    <div class="content">
+
+<!-- ======================= 00 ======================= -->
+<section class="sec" id="mapa" data-n="00" data-title="Qué entra en este tema">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 00</div>
+    <h2>Qué entra en este tema</h2>
+    <p class="sec-sub">Un poco de teoría de conductores y luego todo condensadores.</p>
+  </div>
+  <div class="theory">
+    <div><b>Conductores</b><p>Qué pasa con las cargas dentro de un metal: campo nulo, todo al mismo potencial, efecto puntas. Apartado 01. Sobre todo teoría.</p></div>
+    <div><b>Capacidad</b><p>Calcular C de un condensador plano, cilíndrico o esférico. Ejercicios 1, 2, 3 y 8. Apartado 02.</p></div>
+    <div><b>Asociaciones</b><p>Serie y paralelo: el tipo de ejercicio que más se repite. Ejercicios 4, 5, 6 y 7. Apartado 03.</p></div>
+    <div><b>Energía</b><p>Cuánta energía guarda un condensador y qué fuerza hay entre sus placas. Ejercicios 9, 13 y 14. Apartado 04.</p></div>
+    <div><b>Dieléctricos</b><p>Meter un aislante entre las placas multiplica la capacidad. Ejercicios 10, 11 y 12. Apartado 05.</p></div>
+  </div>
+  <div class="box truco">
+    <div class="tag">Lo que ya sabes del Tema 2 y vas a reutilizar</div>
+    <ul>
+      <li>Gauss: campo de esferas, cilindros y láminas (Tema 2, apartado 06).</li>
+      <li>\(\Delta V = -\int E\,dr\), y en campo uniforme \(V = E\,d\) (Tema 2, apartado 07).</li>
+      <li>Esferas en contacto: mismo potencial (Tema 2, apartado 09).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======================= 01 ======================= -->
+<section class="sec" id="conductores" data-n="01" data-title="Conductores en equilibrio">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 01</div>
+    <h2>Conductores en equilibrio</h2>
+    <p class="sec-sub">Teoría de las diapositivas 2–8: lo que hay que saber explicar.</p>
+  </div>
+
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>Por su comportamiento eléctrico, los materiales son <b>conductores</b>, <b>dieléctricos</b> (aislantes) o <b>semiconductores</b>. En un <b>conductor ideal</b> los electrones se mueven libremente. Si dentro hubiera campo, los electrones se moverían, así que al llegar al equilibrio (cuando ya no se mueven) el campo dentro tiene que ser cero.</p>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-cond" viewBox="0 0 560 250" style="max-width:560px;margin-inline:auto" role="img" aria-label="Conductor cargado: cargas en la superficie, campo nulo dentro y campo perpendicular a la superficie fuera"></svg></div>
+    <figcaption>Conductor cargado en equilibrio. Las cargas se van a la superficie, dentro E = 0 y fuera el campo sale perpendicular a la superficie.</figcaption>
+  </figure>
+
+  <div class="theory">
+    <div><b>1 · Campo nulo dentro</b><p>\(\vec E_{int} = 0\). Con Gauss: una superficie de Gauss dentro del metal tiene flujo 0, así que dentro no queda carga neta.</p></div>
+    <div><b>2 · Carga en la superficie</b><p>Toda la carga sobrante se va a la superficie exterior.</p></div>
+    <div><b>3 · Todo al mismo potencial</b><p>Como \(E = 0\) dentro, \(\Delta V = -\int E\,dl = 0\): todos los puntos del conductor tienen el mismo potencial (es <b>equipotencial</b>).</p></div>
+    <div><b>4 · Jaula de Faraday</b><p>Si el conductor tiene un hueco, el campo dentro del hueco también es cero. Los campos de fuera no afectan a lo que hay dentro (por eso un coche protege de un rayo).</p></div>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Teorema de Coulomb · Campo justo fuera de un conductor</div>
+    <div class="f-body big">
+      \[E = \frac{\sigma}{\varepsilon_0}\qquad\text{(perpendicular a la superficie)}\]
+      <p>Se demuestra con un cilindrito de Gauss que atraviesa la superficie: dentro E = 0, así que solo hay flujo por la tapa de fuera, \(E\,dS = \sigma\,dS/\varepsilon_0\). Fíjate en que da el doble que una lámina aislada (\(\sigma/2\varepsilon_0\), Tema 2): aquí el campo solo sale hacia fuera.</p>
+    </div>
+  </div>
+
+  <h3>Ejemplo de las diapositivas: esfera conductora con carga Q</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Zona</th><th>Campo</th><th>Potencial</th></tr></thead>
+      <tbody>
+        <tr><td>Dentro, \(r &lt; R\)</td><td>\(E = 0\)</td><td>\(V = kQ/R\) (constante)</td></tr>
+        <tr><td>En la superficie, \(r = R\)</td><td>\(E = \sigma/\varepsilon_0 = kQ/R^2\)</td><td>\(V = kQ/R\)</td></tr>
+        <tr><td>Fuera, \(r &gt; R\)</td><td>\(E = kQ/r^2\)</td><td>\(V = kQ/r\)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Es lo mismo que la corteza esférica del ejercicio 14 del Tema 2: en un conductor macizo la carga también se queda en la superficie.</p>
+
+  <div class="box idea">
+    <div class="tag">Efecto puntas</div>
+    <p>Une con un cable una esfera grande (R₁) y una pequeña (R₂). Quedan al mismo potencial: \(\dfrac{kQ_1}{R_1} = \dfrac{kQ_2}{R_2}\). Escribiendo \(Q = \sigma\cdot4\pi R^2\) sale:</p>
+    <div class="big">\[\sigma_1 R_1 = \sigma_2 R_2\ \Rightarrow\ \sigma \propto \frac{1}{R}\]</div>
+    <p>La esfera pequeña tiene <b>más densidad de carga</b> y por tanto más campo en su superficie (\(E = \sigma/\varepsilon_0\)). En un conductor con forma irregular, la carga se acumula en las <b>puntas</b>, que son como esferas de radio muy pequeño. Así funcionan los pararrayos.</p>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 02 ======================= -->
+<section class="sec" id="capacidad" data-n="02" data-title="Capacidad: plano, cilíndrico y esférico">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 02</div>
+    <h2>Capacidad: condensador plano, cilíndrico y esférico</h2>
+    <p class="sec-sub">Qué es la capacidad y cómo se calcula para cada forma. Ejercicios 1, 2, 3 y 8.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Condensadores 1</span><span class="chip rel">2</span><span class="chip rel">3</span><span class="chip rel">8</span></div>
+
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>Un <b>condensador</b> es cualquier dispositivo que almacena carga y energía. Normalmente son dos conductores (armaduras) muy cerca, uno con \(+Q\) y otro con \(-Q\). La <b>capacidad</b> dice cuánta carga guarda por cada voltio de diferencia de potencial entre ellos. Depende <b>solo de la geometría</b> (y del material que haya entre las armaduras), no de la carga que tenga en cada momento.</p>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Fórmula · Capacidad</div>
+    <div class="f-body big">
+      \[C = \frac{Q}{V}\qquad 1\ \text{F (faradio)} = \frac{1\ \text{C}}{1\ \text{V}}\]
+      <p>El faradio es enorme: una esfera aislada tiene \(C = 4\pi\varepsilon_0R\), y para la Tierra entera sale menos de un milifaradio (≈ 7·10⁻⁴ F). Por eso los condensadores reales se miden en μF, nF y pF.</p>
+    </div>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-tipos" viewBox="0 0 660 240" style="min-width:560px" role="img" aria-label="Condensador plano, cilíndrico y esférico"></svg></div>
+    <figcaption>Los tres condensadores del tema. En rosa la armadura +Q, en azul la −Q.</figcaption>
+  </figure>
+
+  <div class="formula">
+    <div class="f-head">Método · Calcular la capacidad de cualquier condensador</div>
+    <div class="f-body">
+      <ol>
+        <li>Pon \(+Q\) en una armadura y \(-Q\) en la otra.</li>
+        <li>Calcula el campo <b>entre</b> las armaduras con Gauss.</li>
+        <li>Integra para sacar la diferencia de potencial: \(V = \int E\,dr\) de una armadura a la otra.</li>
+        <li>Divide: \(C = Q/V\). La \(Q\) siempre se va, y queda una fórmula que solo tiene la geometría.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejemplo resuelto · Condensador plano</span><span class="src">Diapositiva 10</span></div>
+    <div class="ej-q"><p>Dos placas de área \(A\) separadas \(d\), con \(\pm Q\). Halla su capacidad.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Campo entre las placas</div><div class="st-b"><p>Es el ejercicio 15 del Tema 2 (o el teorema de Coulomb): \(\sigma = Q/A\), y entre las placas:</p>\[E = \frac{\sigma}{\varepsilon_0} = \frac{Q}{\varepsilon_0A}\qquad (\text{fuera, } E = 0)\]</div></li>
+      <li class="step"><div class="st-t">Diferencia de potencial (campo uniforme)</div><div class="st-b">\[V = E\cdot d = \frac{Q\,d}{\varepsilon_0A}\]</div></li>
+      <li class="step"><div class="st-t">Capacidad</div><div class="st-b">\[C = \frac{Q}{V} = \frac{Q}{Q\,d/\varepsilon_0A} = \frac{\varepsilon_0\,A}{d}\]<div class="result">\(C = \varepsilon_0A/d\). Más área, más capacidad. Más separación, menos capacidad.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Las tres fórmulas (con un dieléctrico, cambia ε₀ por ε = ε₀εᵣ)</div>
+    <div class="f-body big">
+      \[C_{plano} = \frac{\varepsilon A}{d}\qquad C_{cil} = \frac{2\pi\varepsilon L}{\ln(r_2/r_1)}\qquad C_{esf} = \frac{4\pi\varepsilon\,R_1R_2}{R_2 - R_1}\]
+      <dl class="legend">
+        <dt>\(\varepsilon\)</dt><dd>\(\varepsilon_0\varepsilon_r\): permitividad del material entre armaduras. En el vacío o el aire, \(\varepsilon_r = 1\).</dd>
+        <dt>\(r_1, r_2\)</dt><dd>radios interior y exterior del cilindro, de longitud \(L\)</dd>
+        <dt>\(R_1, R_2\)</dt><dd>radios interior y exterior de las esferas</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 1 · Plano con dieléctrico</span><span class="src">Condensadores 1</span></div>
+    <div class="ej-q"><p>Placas de 0.02 m², separadas 1 cm, con un dieléctrico de \(\varepsilon_r = 30\). Halla C.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Datos al SI</div><div class="st-b"><p>\(A = 0.02\) m², \(d = 0.01\) m, \(\varepsilon = \varepsilon_0\varepsilon_r = 8.85\cdot10^{-12}\cdot30\).</p></div></li>
+      <li class="step"><div class="st-t">Sustituye</div><div class="st-b">\[C = \frac{\varepsilon_0\varepsilon_rA}{d} = \frac{8.85\cdot10^{-12}\cdot30\cdot0.02}{0.01} = 5.31\cdot10^{-10}\ \text{F}\]<div class="result">C = 531 pF</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 2 · Cilíndrico</span><span class="src">Condensadores 2</span></div>
+    <div class="ej-q"><p>Longitud 10 cm, radio interno 0.5 cm, radio externo 1 cm, con \(\varepsilon_r = 15\). Halla C.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">De dónde sale la fórmula (diapositiva 11)</div><div class="st-b"><p>Con un cilindro de Gauss de radio \(r\) entre las dos armaduras: \(E\cdot2\pi rL = Q/\varepsilon\), así que \(E = \dfrac{Q}{2\pi\varepsilon Lr}\). Integrando de \(r_1\) a \(r_2\):</p>\[V = \frac{Q}{2\pi\varepsilon L}\ln\frac{r_2}{r_1}\ \Rightarrow\ C = \frac{2\pi\varepsilon L}{\ln(r_2/r_1)}\]</div></li>
+      <li class="step"><div class="st-t">El logaritmo (los cm se cancelan)</div><div class="st-b">\[\ln\frac{r_2}{r_1} = \ln\frac{1}{0.5} = \ln2 = 0.693\]</div></li>
+      <li class="step"><div class="st-t">Sustituye</div><div class="st-b">\[C = \frac{2\pi\cdot8.85\cdot10^{-12}\cdot15\cdot0.1}{0.693} = \frac{8.34\cdot10^{-11}}{0.693} = 1.203\cdot10^{-10}\ \text{F}\]<div class="result">C = 120.3 pF</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 3 · Esférico</span><span class="src">Condensadores 3</span></div>
+    <div class="ej-q"><p>Radio interno 1 m, radio externo 2 m, con \(\varepsilon_r = 20\). Halla C.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">De dónde sale la fórmula</div><div class="st-b"><p>Entre las esferas, \(E = \dfrac{Q}{4\pi\varepsilon r^2}\). Integrando de \(R_1\) a \(R_2\):</p>\[V = \frac{Q}{4\pi\varepsilon}\left(\frac{1}{R_1} - \frac{1}{R_2}\right) = \frac{Q}{4\pi\varepsilon}\cdot\frac{R_2-R_1}{R_1R_2}\ \Rightarrow\ C = \frac{4\pi\varepsilon R_1R_2}{R_2-R_1}\]</div></li>
+      <li class="step"><div class="st-t">Sustituye</div><div class="st-b">\[C = \frac{4\pi\cdot8.85\cdot10^{-12}\cdot20\cdot1\cdot2}{2-1} = 4.45\cdot10^{-9}\ \text{F}\]<div class="result">C = 4.45 nF</div></div></li>
+    </ol>
+  </div>
+
+  <div class="practica">
+    <div class="tag">Inténtalo tú · Ejercicio 8 (demostración)</div>
+    <p>Demuestra que si los radios del condensador esférico son casi iguales, su capacidad se parece a la de un condensador plano, \(C \approx \varepsilon_0A/d\), con \(A\) el área de la esfera y \(d = R_2 - R_1\).</p>
+    <details class="sol"><summary>Ver solución</summary><div>
+      <p>Parte de \(C = \dfrac{4\pi\varepsilon_0R_1R_2}{R_2-R_1}\). Si \(R_1 \approx R_2 \approx R\), el producto \(R_1R_2 \approx R^2\) y el denominador es \(d\):</p>
+      \[C \approx \frac{4\pi\varepsilon_0R^2}{d} = \frac{\varepsilon_0\,(4\pi R^2)}{d} = \frac{\varepsilon_0A}{d}\]
+      <p>Tiene sentido: dos esferas casi pegadas son como dos placas planas enormes y curvadas.</p>
+    </div></details>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 03 ======================= -->
+<section class="sec" id="asociacion" data-n="03" data-title="Asociación de condensadores">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 03</div>
+    <h2>Asociación de condensadores</h2>
+    <p class="sec-sub">Serie y paralelo. Es el tipo de ejercicio que más se repite. Ejercicios 4, 5, 6 y 7.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Condensadores 4</span><span class="chip rel">5</span><span class="chip rel">6</span><span class="chip rel">7</span></div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th></th><th>En serie (uno detrás de otro)</th><th>En paralelo (lado a lado)</th></tr></thead>
+      <tbody>
+        <tr><td><b>Qué comparten</b></td><td>la misma <b>carga</b> Q</td><td>la misma <b>tensión</b> V</td></tr>
+        <tr><td><b>Qué se reparte</b></td><td>la tensión: \(V = V_1 + V_2 + \dots\)</td><td>la carga: \(Q = Q_1 + Q_2 + \dots\)</td></tr>
+        <tr><td><b>Capacidad equivalente</b></td><td>\(\dfrac{1}{C} = \dfrac{1}{C_1} + \dfrac{1}{C_2} + \dots\)</td><td>\(C = C_1 + C_2 + \dots\)</td></tr>
+        <tr><td><b>Resultado</b></td><td>menor que la más pequeña</td><td>mayor que la más grande</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box cuidado">
+    <div class="tag">Al revés que las resistencias</div>
+    <p>Los condensadores en <b>paralelo se suman</b> directamente y en <b>serie</b> se suman sus inversas. Con las resistencias (Tema 4) es justo al revés. Para recordarlo: en paralelo es como juntar las placas en una más grande (más área, más C); en serie es como separarlas más (más distancia, menos C).</p>
+  </div>
+
+  <div class="fig widget paper" id="w-asoc">
+    <div class="w-head"><b>Serie contra paralelo con una pila de 12 V</b><span class="pill">Interactivo</span></div>
+    <div class="art"><svg id="asoc-svg" viewBox="0 0 440 220" style="max-width:460px" role="img" aria-label="Dos condensadores conectados en serie o en paralelo a una pila"></svg></div>
+    <div class="controls">
+      <div class="ctrl"><label for="as-mode">Conexión</label><select id="as-mode"><option value="s">En serie</option><option value="p">En paralelo</option></select><span></span></div>
+      <div class="ctrl"><label for="as-c1">C₁</label><input type="range" id="as-c1" min="1" max="10" step="0.5" value="2"><output id="as-c1-o">2 μF</output></div>
+      <div class="ctrl"><label for="as-c2">C₂</label><input type="range" id="as-c2" min="1" max="10" step="0.5" value="6"><output id="as-c2-o">6 μF</output></div>
+    </div>
+    <div class="readout" id="as-read"></div>
+    <div class="explain" id="as-exp"></div>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Método · Circuitos mixtos</div>
+    <div class="f-body">
+      <ol>
+        <li><b>Reduce de dentro hacia fuera:</b> busca grupos que estén claramente en serie (sin nada que salga entre ellos) o en paralelo (unidos por los dos extremos) y cámbialos por su equivalente. Repite hasta quedarte con uno solo.</li>
+        <li><b>Carga total:</b> \(Q = C_{eq}\cdot V\).</li>
+        <li><b>Vuelve hacia atrás:</b> en cada paso de la reducción, si era serie, la carga es la misma para todos y la tensión se reparte con \(V_i = Q/C_i\). Si era paralelo, la tensión es la misma y \(Q_i = C_iV\).</li>
+        <li><b>Energía total:</b> \(U = \tfrac12 C_{eq}V^2\).</li>
+      </ol>
+    </div>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig4" viewBox="0 0 1000 250" style="min-width:700px" role="img" aria-label="Los tres circuitos de la figura 4"></svg></div>
+    <figcaption>Figura 4 de tu relación, redibujada. Capacidades en μF.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 4 a) · C₁ en serie con (C₂ ∥ C₃)</span><span class="src">Condensadores 4.1</span></div>
+    <div class="ej-q"><p>C₁ = 0.3 μF, C₂ = 1 μF y C₃ = 0.25 μF, con 10 V. Halla la capacidad equivalente, la carga de cada uno y la energía total.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Reconoce la forma</div><div class="st-b"><p>C₂ y C₃ están unidos por arriba y por abajo: están en <b>paralelo</b>. Ese bloque está en <b>serie</b> con C₁.</p></div></li>
+      <li class="step"><div class="st-t">Paralelo C₂ ∥ C₃</div><div class="st-b">\[C_{23} = 1 + 0.25 = 1.25\ \mu\text{F}\]</div></li>
+      <li class="step"><div class="st-t">Serie con C₁</div><div class="st-b">\[C_{eq} = \frac{C_1C_{23}}{C_1 + C_{23}} = \frac{0.3\cdot1.25}{0.3+1.25} = 0.242\ \mu\text{F}\]<div class="calc-note"><b>Casio (opcional)</b> Para series de más de dos: 1 ÷ (1 ÷ 0.3 + 1 ÷ 1.25) = 0.2419. Guarda el resultado con la tecla de variables para no reescribirlo.</div></div></li>
+      <li class="step"><div class="st-t">Carga total = carga de C₁ (está en serie)</div><div class="st-b">\[Q = C_{eq}V = 0.242\cdot10 = 2.42\ \mu\text{C} = Q_1\]</div></li>
+      <li class="step"><div class="st-t">Tensión del bloque y cargas de C₂ y C₃</div><div class="st-b"><p>El bloque C₂₃ también tiene esos 2.42 μC (está en serie con C₁):</p>\[V_{23} = \frac{Q}{C_{23}} = \frac{2.42}{1.25} = 1.935\ \text{V}\]\[Q_2 = 1\cdot1.935 = 1.93\ \mu\text{C}\qquad Q_3 = 0.25\cdot1.935 = 0.484\ \mu\text{C}\]<p class="check">Comprobación: Q₂ + Q₃ = 2.42 μC = Q ✓</p></div></li>
+      <li class="step"><div class="st-t">Energía</div><div class="st-b">\[U = \tfrac12C_{eq}V^2 = \tfrac12\cdot0.242\cdot10^{-6}\cdot10^2 = 12.1\ \mu\text{J}\]<div class="result">C = 0.242 μF · Q₁ = 2.42 μC, Q₂ = 1.93 μC, Q₃ = 0.483 μC · U = 12.1 μJ</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 4 b) · (C₁ en serie con C₂) ∥ C₃</span><span class="src">Condensadores 4.2</span></div>
+    <div class="ej-q"><p>C₁ = 4 μF, C₂ = 15 μF y C₃ = 12 μF, con 200 V.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Rama izquierda: C₁ y C₂ en serie</div><div class="st-b">\[C_{12} = \frac{4\cdot15}{4+15} = 3.158\ \mu\text{F}\]</div></li>
+      <li class="step"><div class="st-t">En paralelo con C₃</div><div class="st-b">\[C_{eq} = 3.158 + 12 = 15.16\ \mu\text{F}\]</div></li>
+      <li class="step"><div class="st-t">Cargas: las dos ramas tienen 200 V</div><div class="st-b">\[Q_1 = Q_2 = C_{12}\cdot200 = 631.6\ \mu\text{C} = 0.632\ \text{mC}\qquad Q_3 = 12\cdot200 = 2400\ \mu\text{C} = 2.4\ \text{mC}\]</div></li>
+      <li class="step"><div class="st-t">Energía</div><div class="st-b">\[U = \tfrac12\cdot15.16\cdot10^{-6}\cdot200^2 = 0.303\ \text{J}\]<div class="result">C = 15.16 μF · Q₁ = Q₂ = 0.632 mC, Q₃ = 2.4 mC · U = 303.2 mJ</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 4 c) · El de la diagonal</span><span class="src">Condensadores 4.3</span></div>
+    <div class="ej-q"><p>C₁ = 5 μF, C₂ = 4 μF, C₃ = 3 μF y C₄ = C₅ = C₆ = 1 μF, con 10 V.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">El truco: ¿dónde está conectado cada extremo?</div><div class="st-b"><p>Sigue los cables. El cable de arriba (después de C₂) toca la parte de arriba de C₄, de C₆ y el extremo superior derecho de C₅. El cable de abajo (después de C₃) toca la parte de abajo de C₄, de C₆ y el extremo inferior izquierdo de C₅. Los tres están entre los <b>mismos dos cables</b>: están en <b>paralelo</b>, aunque C₅ esté dibujado en diagonal.</p></div></li>
+      <li class="step"><div class="st-t">Paralelo de los tres</div><div class="st-b">\[C_{456} = 1 + 1 + 1 = 3\ \mu\text{F}\]</div></li>
+      <li class="step"><div class="st-t">Todo lo demás en serie</div><div class="st-b"><p>C₁, C₂, el bloque C₄₅₆ y C₃ forman un único camino:</p>\[\frac{1}{C_{eq}} = \frac15 + \frac14 + \frac13 + \frac13 = 1.117\ \Rightarrow\ C_{eq} = 0.896\ \mu\text{F}\]</div></li>
+      <li class="step"><div class="st-t">Cargas</div><div class="st-b">\[Q = 0.896\cdot10 = 8.96\ \mu\text{C} = Q_1 = Q_2 = Q_3\]<p>El bloque tiene \(V_{456} = 8.96/3 = 2.99\) V, así que:</p>\[Q_4 = Q_5 = Q_6 = 1\cdot2.99 = 2.99\ \mu\text{C}\]<p class="check">La hoja da 2.95 μC. Es un redondeo: con C = 0.9 μF exacto saldría 3 μC.</p></div></li>
+      <li class="step"><div class="st-t">Energía</div><div class="st-b">\[U = \tfrac12\cdot0.896\cdot10^{-6}\cdot100 = 44.8\ \mu\text{J}\approx45\ \mu\text{J}\]<div class="result">C ≈ 0.9 μF · Q₁ = Q₂ = Q₃ ≈ 9 μC · Q₄ = Q₅ = Q₆ ≈ 3 μC · U ≈ 45 μJ</div></div></li>
+    </ol>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig5" viewBox="0 0 400 230" style="max-width:400px;margin-inline:auto" role="img" aria-label="Figura 5: C1 y C2 en serie, en paralelo con C3"></svg></div>
+    <figcaption>Figura 5: C₁ = 2 μF y C₂ = 6 μF en serie, en paralelo con C₃ = 3.5 μF.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 5 · Tensión de ruptura</span><span class="src">Condensadores 5</span></div>
+    <div class="ej-q"><p>a) Capacidad equivalente. b) Si cada condensador aguanta como máximo V₁ = 100 V, V₂ = 50 V y V₃ = 400 V, ¿qué tensión máxima se puede aplicar entre a y b?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">a) Capacidad</div><div class="st-b">\[C_{12} = \frac{2\cdot6}{2+6} = 1.5\ \mu\text{F}\qquad C_{eq} = 1.5 + 3.5 = 5\ \mu\text{F}\]</div></li>
+      <li class="step"><div class="st-t">b) En la rama en serie, ¿quién se lleva más tensión?</div><div class="st-b"><p>C₁ y C₂ tienen la misma carga Q. Como \(V = Q/C\), el condensador <b>pequeño</b> se lleva <b>más</b> tensión:</p>\[V_1 = \frac{Q}{2}\qquad V_2 = \frac{Q}{6}\ \Rightarrow\ V_1 = 3V_2\]</div></li>
+      <li class="step"><div class="st-t">¿Qué límite se alcanza antes?</div><div class="st-b"><p>Si \(V_1 = 100\) V (su máximo), entonces \(V_2 = 33.3\) V &lt; 50 V ✓. Si intentáramos \(V_2 = 50\) V, entonces \(V_1 = 150\) V &gt; 100 ✗. Manda C₁: \(V_1 = 100\) V y \(V_2 = 33.3\) V.</p></div></li>
+      <li class="step"><div class="st-t">Tensión total y comprobación de C₃</div><div class="st-b">\[V_{ab} = 100 + 33.3 = 133.3\ \text{V}\]<p>C₃ está en paralelo: tiene 133.3 V, menos que sus 400 V ✓.</p><div class="result">a) 5 μF. b) Como máximo 133.3 V.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 6 · Diseñar con piezas de 1, 3, 50 y 70 pF</span><span class="src">Condensadores 6</span></div>
+    <div class="ej-q"><p>Con muchos condensadores de 1, 3, 50 y 70 pF, diseña: a) uno de 40 pF, b) uno de 85 pF, c) uno que con 100 V guarde 2.65 nC.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Las dos herramientas</div><div class="st-b"><p>Dos iguales en <b>serie</b> dan la mitad: 70 + 70 en serie = 35 pF, 50 + 50 en serie = 25 pF, 1 + 1 en serie = 0.5 pF. En <b>paralelo</b> se suman.</p></div></li>
+      <li class="step"><div class="st-t">a) 40 pF</div><div class="st-b"><p>Dos de 70 en serie (35 pF), en paralelo con 3 + 1 + 1 pF: 35 + 5 = <b>40 pF</b>. (También valdría, por ejemplo, 13 de 3 pF y 1 de 1 pF en paralelo.)</p></div></li>
+      <li class="step"><div class="st-t">b) 85 pF</div><div class="st-b"><p>Uno de 50 en paralelo con dos de 70 en serie: 50 + 35 = <b>85 pF</b>. (O 70 + 5 de 3 pF en paralelo.)</p></div></li>
+      <li class="step"><div class="st-t">c) Primero, qué capacidad hace falta</div><div class="st-b">\[C = \frac{Q}{V} = \frac{2.65\cdot10^{-9}}{100} = 2.65\cdot10^{-11}\ \text{F} = 26.5\ \text{pF}\]<p>Dos de 50 en serie (25) + uno de 1 + dos de 1 en serie (0.5), todo en paralelo: 25 + 1 + 0.5 = <b>26.5 pF</b>.</p><div class="result">a) (70 s 70) ∥ 3 ∥ 1 ∥ 1. b) 50 ∥ (70 s 70). c) (50 s 50) ∥ 1 ∥ (1 s 1). Hay más soluciones válidas. «s» significa en serie y «∥» en paralelo.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="practica">
+    <div class="tag">Inténtalo tú · Ejercicio 7</div>
+    <p>Con tres condensadores de 2000 pF, 5000 pF y 0.010 pF, ¿cuáles son las capacidades máxima y mínima que se pueden conseguir? ¿Cómo se conectan?</p>
+    <details class="sol"><summary>Ver solución</summary><div>
+      <p><b>Máxima: todos en paralelo.</b></p>\[C = 2000 + 5000 + 0.01 = 7000.01\ \text{pF} \approx 7\ \text{nF}\]
+      <p><b>Mínima: todos en serie.</b></p>\[\frac1C = \frac1{2000} + \frac1{5000} + \frac1{0.01} \approx 100\ \Rightarrow\ C \approx 0.01\ \text{pF}\]<p>En serie manda el más pequeño.</p>
+      <p class="check">La hoja da «7 μF y 10⁻⁵ μF». Con los datos del enunciado (en pF) sale 7 nF y 10⁻⁵ nF (= 0.01 pF). Parece que la hoja pone μ donde debería poner n.</p>
+    </div></details>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 04 ======================= -->
+<section class="sec" id="energia" data-n="04" data-title="Energía de un condensador">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 04</div>
+    <h2>Energía de un condensador</h2>
+    <p class="sec-sub">Cuánta energía guarda, a dónde va al conectarlo con otro y qué fuerza hay entre las placas. Ejercicios 9, 13 y 14.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Condensadores 9</span><span class="chip rel">13</span><span class="chip rel">14</span><span class="chip rel">4 c)</span></div>
+
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>Cargar un condensador es ir llevando trocitos de carga \(dq\) de una placa a la otra. Cuanta más carga hay, más cuesta llevar el siguiente trocito, porque hay que vencer la repulsión. Ese trabajo lo hace la pila y queda <b>almacenado</b> como energía en el campo eléctrico entre las placas.</p>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Fórmula · Energía almacenada</div>
+    <div class="f-body big">
+      \[U = \int_0^Q\frac{q}{C}\,dq = \frac{Q^2}{2C} = \frac12QV = \frac12CV^2\]
+      <p>La integral está hecha paso a paso en el Tema 0 (apartado 09, ejemplo 2). Las tres formas son la misma, cambiando \(Q = CV\). Usa la que tenga los datos que te dan.</p>
+      <p><b>En un condensador plano</b>, con \(C = \varepsilon A/d\) y \(V = Ed\), sale \(U = \tfrac12\varepsilon E^2\cdot(A\,d)\). Como \(A\,d\) es el volumen entre las placas, la energía por unidad de volumen es \(u = \tfrac12\varepsilon E^2\): la energía está guardada en el propio campo.</p>
+    </div>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 9 · Conectar un condensador cargado con otro descargado</span><span class="src">Condensadores 9</span></div>
+    <div class="ej-q"><p>Un condensador de 20 pF se carga a 3000 V y luego se conecta en paralelo con otro de 50 pF descargado. Halla a) la carga final de cada uno, b) la energía inicial y la final.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Carga inicial (solo la tiene el primero)</div><div class="st-b">\[Q_0 = C_1V_0 = 20\cdot10^{-12}\cdot3000 = 60\cdot10^{-9}\ \text{C} = 60\ \text{nC}\]</div></li>
+      <li class="step"><div class="st-t">Al conectarlos: la carga se conserva y la tensión se iguala</div><div class="st-b"><p>No hay pila: la carga total sigue siendo 60 nC, ahora repartida entre los dos, que quedan en paralelo (misma V):</p>\[V = \frac{Q_0}{C_1 + C_2} = \frac{60\cdot10^{-9}}{70\cdot10^{-12}} = 857.1\ \text{V}\]</div></li>
+      <li class="step"><div class="st-t">a) Carga de cada uno</div><div class="st-b">\[Q_1 = 20\cdot10^{-12}\cdot857.1 = 17.1\ \text{nC}\qquad Q_2 = 50\cdot10^{-12}\cdot857.1 = 42.9\ \text{nC}\]<p class="check">17.1 + 42.9 = 60 nC ✓</p></div></li>
+      <li class="step"><div class="st-t">b) Energías</div><div class="st-b">\[U_i = \tfrac12\cdot20\cdot10^{-12}\cdot3000^2 = 90\ \mu\text{J}\qquad U_f = \tfrac12\cdot70\cdot10^{-12}\cdot857.1^2 = 25.7\ \mu\text{J}\]</div></li>
+      <li class="step"><div class="st-t">¿Dónde está la energía que falta?</div><div class="st-b"><p>Se han perdido 64.3 μJ: la carga conserva, pero la energía no. Se disipa como calor en los cables y como radiación durante la corriente que pasa al conectarlos. Siempre que se conectan dos condensadores a distinta tensión se pierde energía.</p><div class="result">a) Q₁ = 17.1 nC, Q₂ = 42.9 nC. b) Uᵢ = 90 μJ, U_f = 25.7 μJ.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 13 · Fuerza entre las placas (con energías)</span><span class="src">Condensadores 13</span></div>
+    <div class="ej-q"><p>Condensador plano de área \(A\), separación \(x\) y carga \(\pm q\) (aislado). a) Energía almacenada. b) Energía si se separan las placas una distancia extra \(dx\). c) Si la diferencia entre las dos energías es el trabajo \(dW = F\,dx\), demuestra que \(F = q^2/2\varepsilon A\).</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">a) Con la carga fija, usa \(U = q^2/2C\)</div><div class="st-b">\[C = \frac{\varepsilon A}{x}\ \Rightarrow\ U = \frac{q^2}{2C} = \frac{q^2\,x}{2\varepsilon A}\]</div></li>
+      <li class="step"><div class="st-t">b) Con separación \(x + dx\)</div><div class="st-b">\[U' = \frac{q^2\,(x+dx)}{2\varepsilon A}\]</div></li>
+      <li class="step"><div class="st-t">c) La diferencia es el trabajo de separarlas</div><div class="st-b">\[dU = U' - U = \frac{q^2\,dx}{2\varepsilon A} = F\,dx\ \Rightarrow\ F = \frac{q^2}{2\varepsilon A}\]<p>La energía aumenta al separar las placas porque hay que tirar de ellas: se atraen (tienen cargas opuestas).</p><div class="result">a) \(q^2x/2\varepsilon A\). b) \(q^2(x+dx)/2\varepsilon A\). c) \(F = q^2/2\varepsilon A\).</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 14 · La balanza electrostática</span><span class="src">Condensadores 14</span></div>
+    <div class="ej-q"><p>Un platillo de 100 cm² está 2 mm por encima de una lámina metálica a tierra, con 200 V entre ambos. Halla a) la capacidad, b) la masa que equilibra la balanza, c) la carga del platillo.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Datos al SI</div><div class="st-b"><p>\(A = 100\ \text{cm}^2 = 10^{-2}\ \text{m}^2\), \(d = 2\cdot10^{-3}\) m, \(V = 200\) V. Platillo y lámina forman un condensador plano con aire.</p></div></li>
+      <li class="step"><div class="st-t">a) Capacidad</div><div class="st-b">\[C = \frac{\varepsilon_0A}{d} = \frac{8.85\cdot10^{-12}\cdot10^{-2}}{2\cdot10^{-3}} = 4.42\cdot10^{-11}\ \text{F}\]</div></li>
+      <li class="step"><div class="st-t">c) Carga del platillo</div><div class="st-b">\[q = CV = 4.42\cdot10^{-11}\cdot200 = 8.85\cdot10^{-9}\ \text{C}\]</div></li>
+      <li class="step"><div class="st-t">b) Fuerza de atracción (ejercicio 13)</div><div class="st-b">\[F = \frac{q^2}{2\varepsilon_0A} = \frac{(8.85\cdot10^{-9})^2}{2\cdot8.85\cdot10^{-12}\cdot10^{-2}} = 4.42\cdot10^{-4}\ \text{N}\]</div></li>
+      <li class="step"><div class="st-t">Masa que compensa esa fuerza: \(mg = F\)</div><div class="st-b">\[m = \frac{F}{g} = \frac{4.42\cdot10^{-4}}{9.8} = 4.5\cdot10^{-5}\ \text{kg} = 0.045\ \text{g}\]<p class="check">La hoja da 9 g, pero con estos datos sale unas 200 veces menos (0.045 g = 45 mg). Las partes a) y c) sí coinciden, así que el fallo está solo en b). Si en clase os dan 9 g, pregúntaselo al profesor.</p><div class="result">a) 4.42·10⁻¹¹ F. b) 4.5·10⁻⁵ kg ≈ 45 mg. c) 8.85·10⁻⁹ C.</div></div></li>
+    </ol>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 05 ======================= -->
+<section class="sec" id="dielectricos" data-n="05" data-title="Dieléctricos">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 05</div>
+    <h2>Dieléctricos</h2>
+    <p class="sec-sub">Meter un aislante entre las placas aumenta la capacidad. Teoría de las diapositivas 17–24 y ejercicios 10, 11 y 12.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Condensadores 10</span><span class="chip rel">11</span><span class="chip rel">12</span><span class="chip rel">1–3</span></div>
+
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>Un <b>dieléctrico</b> es un aislante: sus electrones están muy unidos a sus átomos y no pueden irse. Pero un campo eléctrico sí puede <b>desplazarlos un poco</b>: el átomo se deforma y se convierte en un pequeño <b>dipolo</b> (Tema 2, apartado 04). Dentro de un condensador, todos esos dipolos se alinean, y en las caras del dieléctrico aparecen cargas <b>inducidas</b> de signo contrario a las de las placas. Esas cargas tapan en parte a las de las placas, así que el campo dentro baja.</p>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-diel" viewBox="0 0 560 250" style="max-width:560px;margin-inline:auto" role="img" aria-label="Dieléctrico polarizado entre las placas de un condensador, con cargas inducidas en sus caras"></svg></div>
+    <figcaption>Dieléctrico entre las placas. Cada molécula es un pequeño dipolo alineado con el campo. En la cara izquierda del dieléctrico queda carga −σᵢ y en la derecha +σᵢ. Su campo Eᵢ va al revés que E₀, así que el campo total es E = E₀ − Eᵢ, menor.</figcaption>
+  </figure>
+
+  <div class="theory">
+    <div><b>Distorsión</b><p>El campo desplaza la nube de electrones respecto del núcleo. Ocurre en todos los dieléctricos.</p></div>
+    <div><b>Momento dipolar</b><p>\(\vec p = q\,\vec d\): carga por separación, dirigido de − a +.</p></div>
+    <div><b>No polares y polares</b><p>No polares: sin campo, \(\vec p = 0\). Polares (como el agua): cada molécula ya es un dipolo, pero desordenado, así que el total es 0.</p></div>
+    <div><b>Orientación</b><p>Con campo, los dipolos giran y se alinean con él. Así se <b>polariza</b> el material.</p></div>
+    <div><b>Rigidez dieléctrica</b><p>El campo máximo que aguanta un dieléctrico sin romperse (hacer saltar una chispa). Por eso los condensadores tienen una tensión máxima (ejercicio 5).</p></div>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Fórmula · Constante dieléctrica</div>
+    <div class="f-body big">
+      \[E = \frac{E_0}{\varepsilon_r}\qquad C = \varepsilon_r\,C_0\qquad \varepsilon = \varepsilon_0\varepsilon_r\qquad C_{plano} = \frac{\varepsilon A}{d}\]
+      <dl class="legend">
+        <dt>\(\varepsilon_r\)</dt><dd>constante dieléctrica relativa: cuántas veces aumenta la capacidad. Sin unidades y siempre ≥ 1.</dd>
+        <dt>\(C_0\)</dt><dd>capacidad del mismo condensador vacío</dd>
+        <dt>\(\varepsilon\)</dt><dd>permitividad del material (la «constante dieléctrica del material» de las diapositivas)</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Material</th><th class="c">εᵣ</th><th>Material</th><th class="c">εᵣ</th></tr></thead>
+      <tbody>
+        <tr><td>Vacío</td><td class="c">1</td><td>Papel</td><td class="c">3.7</td></tr>
+        <tr><td>Aire</td><td class="c">1.0006</td><td>Vidrio pyrex</td><td class="c">5.6</td></tr>
+        <tr><td>Teflón</td><td class="c">2.1</td><td>Agua</td><td class="c">80</td></tr>
+        <tr><td>Poliestireno</td><td class="c">2.56</td><td>Titanato de estroncio</td><td class="c">233</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Al meter el dieléctrico…</th><th>Aislado (Q fija)</th><th>Conectado a la pila (V fija)</th></tr></thead>
+      <tbody>
+        <tr><td>Capacidad C</td><td>× εᵣ</td><td>× εᵣ</td></tr>
+        <tr><td>Carga Q</td><td>igual</td><td>× εᵣ (la pila mete más)</td></tr>
+        <tr><td>Tensión V = Q/C</td><td>÷ εᵣ</td><td>igual</td></tr>
+        <tr><td>Campo E = V/d</td><td>÷ εᵣ</td><td>igual</td></tr>
+        <tr><td>Energía U</td><td>÷ εᵣ (U = Q²/2C)</td><td>× εᵣ (U = ½CV²)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="fig widget paper" id="w-cap">
+    <div class="w-head"><b>Laboratorio del condensador plano</b><span class="pill">Interactivo</span></div>
+    <div class="art"><svg id="cap-svg" viewBox="0 0 460 250" style="max-width:500px" role="img" aria-label="Condensador plano con placas, carga, campo y dieléctrico ajustables"></svg></div>
+    <div class="controls">
+      <div class="ctrl"><label for="cap-mode">Situación</label><select id="cap-mode"><option value="v">Conectado a una pila de 100 V</option><option value="q">Cargado y desconectado (Q fija)</option></select><span></span></div>
+      <div class="ctrl"><label for="cap-A">Área A</label><input type="range" id="cap-A" min="50" max="400" step="10" value="200"><output id="cap-A-o"></output></div>
+      <div class="ctrl"><label for="cap-d">Separación d</label><input type="range" id="cap-d" min="0.5" max="5" step="0.1" value="2"><output id="cap-d-o"></output></div>
+      <div class="ctrl"><label for="cap-er">Dieléctrico εᵣ</label><input type="range" id="cap-er" min="1" max="10" step="0.5" value="1"><output id="cap-er-o"></output></div>
+    </div>
+    <div class="readout" id="cap-read"></div>
+    <div class="explain" id="cap-exp"></div>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig1011" viewBox="0 0 560 210" style="max-width:560px;margin-inline:auto" role="img" aria-label="Dos dieléctricos apilados (figura 10) y dos dieléctricos lado a lado (figura 11)"></svg></div>
+    <figcaption>Fig. 10: dos dieléctricos uno encima del otro, cada uno de grosor d/2: están <b>en serie</b>. Fig. 11: uno al lado del otro, cada uno con la mitad del área: están <b>en paralelo</b>.</figcaption>
+  </figure>
+
+  <div class="box truco">
+    <div class="tag">El truco para los ejercicios 10, 11 y 12</div>
+    <p>Cuando hay varios materiales, divide el condensador en trozos que tengan <b>un solo material</b>. Cada trozo es un condensador plano. Si los trozos están <b>apilados</b> en la dirección del campo (la carga pasa por uno y luego por el otro), van <b>en serie</b>. Si están <b>uno al lado del otro</b> (cada uno toca las dos placas), van <b>en paralelo</b>.</p>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 10 · Dos dieléctricos apilados</span><span class="src">Condensadores 10 · figura 10</span></div>
+    <div class="ej-q"><p>Placas de área \(A\) separadas \(d\), con dos láminas de dieléctrico \(\varepsilon_1\) y \(\varepsilon_2\), cada una de grosor \(d/2\) y área \(A\). Halla C.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Dos condensadores de grosor d/2</div><div class="st-b">\[C_1 = \frac{\varepsilon_1A}{d/2} = \frac{2\varepsilon_1A}{d}\qquad C_2 = \frac{2\varepsilon_2A}{d}\]</div></li>
+      <li class="step"><div class="st-t">Están apilados: en serie</div><div class="st-b">\[C = \frac{C_1C_2}{C_1+C_2} = \frac{\dfrac{4\varepsilon_1\varepsilon_2A^2}{d^2}}{\dfrac{2A(\varepsilon_1+\varepsilon_2)}{d}}\]</div></li>
+      <li class="step"><div class="st-t">Simplifica</div><div class="st-b">\[C = \frac{2\varepsilon_1\varepsilon_2A}{(\varepsilon_1+\varepsilon_2)\,d}\]<div class="result">\(C = \dfrac{2\varepsilon_1\varepsilon_2A}{(\varepsilon_1+\varepsilon_2)d}\). Coincide con la solución.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 11 · Dos dieléctricos lado a lado</span><span class="src">Condensadores 11 · figura 11</span></div>
+    <div class="ej-q"><p>Mismo condensador, pero ahora cada dieléctrico ocupa la mitad del área y todo el grosor \(d\).</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Dos condensadores de área A/2</div><div class="st-b">\[C_1 = \frac{\varepsilon_1\,(A/2)}{d}\qquad C_2 = \frac{\varepsilon_2\,(A/2)}{d}\]</div></li>
+      <li class="step"><div class="st-t">Lado a lado: en paralelo, se suman</div><div class="st-b">\[C = C_1 + C_2 = \frac{(\varepsilon_1+\varepsilon_2)\,A}{2d}\]<div class="result">\(C = \dfrac{(\varepsilon_1+\varepsilon_2)A}{2d}\)</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 12 · Dieléctrico que llena la mitad</span><span class="src">Condensadores 12</span></div>
+    <div class="ej-q"><p>Un condensador plano tiene capacidad \(C_0\) vacío. Se mete un dieléctrico \(\varepsilon_r\) de grosor \(d/2\) (y toda el área). ¿Cuál es la nueva capacidad?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Es el ejercicio 10 con uno de los dos materiales = aire</div><div class="st-b"><p>Trozo con dieléctrico (grosor d/2) en serie con trozo de aire (grosor d/2). Recuerda \(C_0 = \varepsilon_0A/d\):</p>\[C_{diel} = \frac{\varepsilon_0\varepsilon_rA}{d/2} = 2\varepsilon_rC_0\qquad C_{aire} = \frac{\varepsilon_0A}{d/2} = 2C_0\]</div></li>
+      <li class="step"><div class="st-t">En serie</div><div class="st-b">\[C = \frac{2\varepsilon_rC_0\cdot2C_0}{2\varepsilon_rC_0 + 2C_0} = \frac{4\varepsilon_rC_0^2}{2C_0(\varepsilon_r+1)} = \frac{2\varepsilon_r}{\varepsilon_r+1}\,C_0\]<p class="check">Comprobación: si \(\varepsilon_r = 1\) (no hay dieléctrico), sale \(C = C_0\) ✓.</p><div class="result">\(C = \dfrac{2\varepsilon_r}{\varepsilon_r+1}\,C_0\)</div></div></li>
+    </ol>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 06 ======================= -->
+<section class="sec" id="formulario" data-n="06" data-title="Formulario del Tema 3">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 06</div>
+    <h2>Formulario del Tema 3</h2>
+    <p class="sec-sub">Todo el tema en una vista.</p>
+  </div>
+  <div class="fgrid">
+    <div class="fcard"><h4>Conductor en equilibrio</h4><p>E = 0 dentro · carga en la superficie · todo al mismo potencial · jaula de Faraday · efecto puntas: σ ∝ 1/R</p><div class="row">\[E_{superficie} = \frac{\sigma}{\varepsilon_0}\]</div></div>
+    <div class="fcard"><h4>Esfera conductora</h4><div class="row">\[r&lt;R:\ E=0,\ V=\frac{kQ}{R}\qquad r&gt;R:\ E=\frac{kQ}{r^2},\ V=\frac{kQ}{r}\]</div><p>Aislada: C = 4πε₀R</p></div>
+    <div class="fcard"><h4>Capacidad</h4><div class="row">\[C = \frac QV\qquad 1\ \text{F} = 1\ \text{C/V}\]</div><p>Método: ±Q → Gauss → V = ∫E dr → C = Q/V</p></div>
+    <div class="fcard"><h4>Tres condensadores</h4><div class="row">\[\frac{\varepsilon A}{d}\qquad \frac{2\pi\varepsilon L}{\ln(r_2/r_1)}\qquad \frac{4\pi\varepsilon R_1R_2}{R_2-R_1}\]</div><p>Plano · cilíndrico · esférico</p></div>
+    <div class="fcard"><h4>Serie</h4><div class="row">\[\frac1C = \sum\frac1{C_i}\qquad Q\ \text{igual}\qquad V = \sum V_i\]</div><p>Dos: C₁C₂/(C₁+C₂). El pequeño se lleva más tensión.</p></div>
+    <div class="fcard"><h4>Paralelo</h4><div class="row">\[C = \sum C_i\qquad V\ \text{igual}\qquad Q = \sum Q_i\]</div></div>
+    <div class="fcard"><h4>Energía</h4><div class="row">\[U = \frac{Q^2}{2C} = \frac12QV = \frac12CV^2\qquad u = \frac12\varepsilon E^2\]</div><p>Fuerza entre placas: F = q²/(2εA)</p></div>
+    <div class="fcard"><h4>Dieléctricos</h4><div class="row">\[\varepsilon = \varepsilon_0\varepsilon_r\quad C = \varepsilon_rC_0\quad E = \frac{E_0}{\varepsilon_r}\]</div><p>Apilados: serie · lado a lado: paralelo · Q fija: V y U bajan · V fija: Q y U suben</p></div>
+  </div>
+</section>
+
+<!-- ======================= 07 ======================= -->
+<section class="sec" id="test" data-n="07" data-title="Test rápido">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 07</div>
+    <h2>Test rápido</h2>
+    <p class="sec-sub">10 preguntas de teoría y de cálculo.</p>
+  </div>
+  <div class="quiz" data-quiz>
+    <div class="q" data-ans="1"><p class="qt">1. Dentro de un conductor en equilibrio, el campo eléctrico es…</p><div class="opts"><button>máximo</button><button>cero</button><button>σ/ε₀</button><button>igual que fuera</button></div><p class="why" hidden>Si no fuera cero, los electrones libres se moverían y no estaría en equilibrio.</p></div>
+    <div class="q" data-ans="3"><p class="qt">2. ¿Por qué un pararrayos acaba en punta?</p><div class="opts"><button>Para que pese menos</button><button>Porque en la punta el potencial es mayor</button><button>Porque en la punta el campo es nulo</button><button>Porque la carga se concentra en las puntas (σ ∝ 1/R) y ahí el campo es muy intenso</button></div><p class="why" hidden>Es el efecto puntas: σ₁R₁ = σ₂R₂. Radio pequeño, mucha densidad de carga y mucho campo.</p></div>
+    <div class="q" data-ans="2"><p class="qt">3. Si se duplica la separación entre las placas de un condensador plano, su capacidad…</p><div class="opts"><button>se duplica</button><button>no cambia</button><button>se reduce a la mitad</button><button>se reduce a la cuarta parte</button></div><p class="why" hidden>C = εA/d: va con 1/d.</p></div>
+    <div class="q" data-ans="0"><p class="qt">4. Dos condensadores de 6 μF en serie equivalen a…</p><div class="opts"><button>3 μF</button><button>12 μF</button><button>6 μF</button><button>36 μF</button></div><p class="why" hidden>Producto partido por suma: 36/12 = 3 μF. En serie, menos capacidad.</p></div>
+    <div class="q" data-ans="1"><p class="qt">5. En una asociación en paralelo, todos los condensadores tienen la misma…</p><div class="opts"><button>carga</button><button>tensión</button><button>capacidad</button><button>energía</button></div><p class="why" hidden>Están conectados a los mismos dos puntos, así que tienen la misma V. En serie lo que comparten es la carga.</p></div>
+    <div class="q" data-ans="3"><p class="qt">6. Un condensador de 10 μF a 20 V guarda una energía de…</p><div class="opts"><button>200 μJ</button><button>100 μJ</button><button>4 mJ</button><button>2 mJ</button></div><p class="why" hidden>½CV² = ½·10⁻⁵·400 = 2·10⁻³ J = 2 mJ.</p></div>
+    <div class="q" data-ans="0"><p class="qt">7. Un condensador cargado y desconectado: al meter un dieléctrico con εᵣ = 4, su tensión…</p><div class="opts"><button>se divide entre 4</button><button>se multiplica por 4</button><button>no cambia</button><button>se hace cero</button></div><p class="why" hidden>Q fija y C × 4, así que V = Q/C ÷ 4.</p></div>
+    <div class="q" data-ans="2"><p class="qt">8. Dos dieléctricos apilados entre las placas (uno encima de otro, cada uno de grosor d/2) se tratan como…</p><div class="opts"><button>dos condensadores en paralelo</button><button>un solo condensador con la media de las ε</button><button>dos condensadores en serie</button><button>un condensador vacío</button></div><p class="why" hidden>El campo atraviesa uno y luego el otro: en serie (ejercicio 10).</p></div>
+    <div class="q" data-ans="1"><p class="qt">9. Al conectar un condensador cargado con otro descargado, ¿qué se conserva?</p><div class="opts"><button>la energía</button><button>la carga</button><button>la tensión</button><button>las dos, carga y energía</button></div><p class="why" hidden>La carga se conserva; parte de la energía se pierde como calor (ejercicio 9).</p></div>
+    <div class="q" data-ans="3"><p class="qt">10. La rigidez dieléctrica es…</p><div class="opts"><button>la constante εᵣ</button><button>la capacidad máxima</button><button>la carga máxima de una placa</button><button>el campo máximo que soporta un dieléctrico sin romperse</button></div><p class="why" hidden>Por encima de ese campo, el aislante deja pasar una chispa (se «rompe»).</p></div>
+    <div class="score" data-score></div>
+  </div>
+</section>
+
+    </div><!-- /content -->
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap">
+    <p><b>Siguiente: <a href="https://claude.ai/artifact/CaaQ7auFrzq2YzLsexy798" target="_blank" rel="noopener">Tema 4 · Corriente eléctrica</a></b> (ley de Ohm, efecto Joule, fem, asociación de resistencias, Kirchhoff y circuito RC, con la relación de Circuitos).</p>
+  </div>
+</footer>
+
+</div>
+<script>
+/* ===== utilidades comunes a todos los temas ===== */
+(function(){
+  const holder = document.querySelector("[data-topic]");
+  const TOPIC = (holder && holder.dataset.topic) || "x";
+  const KEY = "fisica-apuntes-" + TOPIC + "-hecho";
+  const store = {
+    get(){ try{ return JSON.parse(localStorage.getItem(KEY) || "[]"); }catch(e){ return []; } },
+    set(v){ try{ localStorage.setItem(KEY, JSON.stringify(v)); }catch(e){} }
+  };
+
+  /* ---- índice ---- */
+  const secs = [...document.querySelectorAll("section.sec[id]")];
+  const tocLists = [...document.querySelectorAll("[data-toc]")];
+  tocLists.forEach(ol=>{
+    secs.forEach(s=>{
+      const li=document.createElement("li");
+      const a=document.createElement("a");
+      a.href="#"+s.id; a.dataset.id=s.id;
+      a.innerHTML='<span class="n">'+(s.dataset.n||"")+'</span><span>'+(s.dataset.title||s.id)+'</span><span class="ck">✓</span>';
+      li.appendChild(a); ol.appendChild(li);
+    });
+  });
+  const links = id => document.querySelectorAll('[data-toc] a[data-id="'+id+'"]');
+  if("IntersectionObserver" in window){
+    const io=new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting){
+        document.querySelectorAll("[data-toc] a.active").forEach(a=>a.classList.remove("active"));
+        links(e.target.id).forEach(a=>a.classList.add("active"));
+      }});
+    },{rootMargin:"-30% 0px -60% 0px"});
+    secs.forEach(s=>io.observe(s));
+  }
+
+  /* ---- "lo tengo" por sección ---- */
+  const countable = secs.filter(s=>s.querySelector(".done-btn"));
+  function paint(){
+    const done=store.get();
+    countable.forEach(s=>{
+      const on=done.includes(s.id);
+      const b=s.querySelector(".done-btn");
+      b.setAttribute("aria-pressed", on?"true":"false");
+      b.textContent = on ? "✓ Entendido" : "Marcar como entendido";
+      links(s.id).forEach(a=>a.classList.toggle("done",on));
+    });
+    const n=countable.filter(s=>done.includes(s.id)).length;
+    document.querySelectorAll("[data-prog-txt]").forEach(el=>el.textContent=n+" de "+countable.length+" apartados entendidos");
+    document.querySelectorAll("[data-prog-bar]").forEach(el=>el.style.width=(countable.length? (100*n/countable.length):0)+"%");
+  }
+  countable.forEach(s=>{
+    s.querySelector(".done-btn").addEventListener("click",()=>{
+      let d=store.get();
+      d = d.includes(s.id) ? d.filter(x=>x!==s.id) : d.concat(s.id);
+      store.set(d); paint();
+    });
+  });
+  paint();
+
+  /* ---- ejemplos paso a paso ---- */
+  document.querySelectorAll("[data-ej]").forEach(ej=>{
+    const steps=[...ej.querySelectorAll(".step")];
+    let shown=0;
+    let ctrl=ej.querySelector(".ej-ctrl");
+    if(!ctrl){ ctrl=document.createElement("div"); ctrl.className="ej-ctrl"; ej.appendChild(ctrl); }
+    const next=document.createElement("button"); next.className="btn primary"; next.type="button";
+    const all=document.createElement("button"); all.className="btn"; all.type="button"; all.textContent="Ver todos los pasos";
+    const reset=document.createElement("button"); reset.className="btn"; reset.type="button"; reset.textContent="Ocultar y empezar de nuevo";
+    ctrl.append(next,all,reset);
+    function render(flash){
+      steps.forEach((s,i)=>{
+        s.classList.toggle("locked", i>=shown);
+        if(flash && i===shown-1){ s.classList.remove("just"); void s.offsetWidth; s.classList.add("just"); }
+      });
+      next.disabled = shown>=steps.length;
+      next.textContent = shown>=steps.length ? "Resuelto ✓" : "Ver paso "+(shown+1)+" de "+steps.length;
+      reset.hidden = shown===0;
+    }
+    next.addEventListener("click",()=>{ if(shown<steps.length){ shown++; render(true);} });
+    all.addEventListener("click",()=>{ shown=steps.length; render(false); });
+    reset.addEventListener("click",()=>{ shown=0; render(false); });
+    render(false);
+  });
+
+  /* ---- test ---- */
+  document.querySelectorAll("[data-quiz]").forEach(qz=>{
+    const qs=[...qz.querySelectorAll(".q")];
+    const out=qz.querySelector("[data-score]");
+    let ok=0, answered=0;
+    function upd(){ if(out) out.innerHTML="<span>Aciertos: "+ok+" / "+qs.length+"</span><span>"+(answered<qs.length?"Te quedan "+(qs.length-answered):(ok>=qs.length-1?"¡Listo para seguir!":"Repasa los apartados que has fallado"))+"</span>"; }
+    qs.forEach(q=>{
+      const right=+q.dataset.ans;
+      const bs=[...q.querySelectorAll(".opts button")];
+      bs.forEach((b,i)=>{
+        b.type="button";
+        b.addEventListener("click",()=>{
+          if(q.dataset.done) return;
+          q.dataset.done="1"; answered++;
+          if(i===right) ok++;
+          bs.forEach((x,j)=>{ if(j===right) x.classList.add("ok"); else if(j===i) x.classList.add("ko"); x.disabled=true; });
+          const w=q.querySelector(".why"); if(w) w.hidden=false;
+          upd();
+        });
+      });
+    });
+    upd();
+  });
+})();
+
+/* ---- helpers para dibujos ---- */
+window.SV = function(tag, attrs, parent){
+  const e=document.createElementNS("http://www.w3.org/2000/svg",tag);
+  for(const k in (attrs||{})) e.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(e);
+  return e;
+};
+window.fmt = function(x, d){
+  if(!isFinite(x)) return "—";
+  const v = Math.abs(x)<1e-12 ? 0 : x;
+  let s = (+v.toPrecision(d||4)).toString();
+  if(/e/.test(s)) return sci(v, d);
+  return s.replace("-", "−");
+};
+window.sci = function(x, d){
+  if(x===0) return "0";
+  const k=Math.floor(Math.log10(Math.abs(x)));
+  let m=x/Math.pow(10,k);
+  let ms=(+m.toPrecision(d||3)).toString();
+  if(ms==="10"||ms==="-10"){ ms = ms[0]==="-"?"-1":"1"; return ms.replace("-","−")+" × 10<sup>"+String(k+1).replace("-","−")+"</sup>"; }
+  return ms.replace("-","−")+" × 10<sup>"+String(k).replace("-","−")+"</sup>";
+};
+
+</script>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const T = (parent, x, y, txt, cls, extra) => { const t=SV("text", Object.assign({x, y}, cls?{class:cls}:{}, extra||{}), parent); t.textContent=txt; return t; };
+  const L = (p, x1,y1,x2,y2, cls, w, extra) => SV("line", Object.assign({x1,y1,x2,y2,class:cls,"stroke-width":w||2}, extra||{}), p);
+  const f3 = x => fmt(x,3);
+  /* condensador entre dos puntos, con etiqueta */
+  function cap(p,x1,y1,x2,y2,label,side,cls){
+    const dx=x2-x1, dy=y2-y1, len=Math.hypot(dx,dy), u=[dx/len,dy/len], n=[-u[1],u[0]], mx=(x1+x2)/2, my=(y1+y2)/2, g=6, h=15;
+    L(p,x1,y1,mx-g*u[0],my-g*u[1],"s-ink",2); L(p,mx+g*u[0],my+g*u[1],x2,y2,"s-ink",2);
+    L(p,mx-g*u[0]+h*n[0],my-g*u[1]+h*n[1],mx-g*u[0]-h*n[0],my-g*u[1]-h*n[1],cls||"s-acc",4);
+    L(p,mx+g*u[0]+h*n[0],my+g*u[1]+h*n[1],mx+g*u[0]-h*n[0],my+g*u[1]-h*n[1],cls||"s-acc",4);
+    if(label){ const s=side||1; const ox=mx+s*n[0]*28, oy=my+s*n[1]*28+5; T(p,ox,oy,label,"m b",{"text-anchor":Math.abs(n[0])>0.5?(s*n[0]>0?"start":"end"):"middle"}); }
+  }
+  const wire=(p,pts)=>SV("polyline",{points:pts.map(q=>q.join(",")).join(" "),class:"s-ink","stroke-width":2,fill:"none"},p);
+  const term=(p,x,y,lab)=>{ SV("circle",{cx:x,cy:y,r:4.5,class:"f-surface s-ink","stroke-width":2},p); if(lab) T(p,x+10,y+5,lab,"b"); };
+  const dot=(p,x,y)=>SV("circle",{cx:x,cy:y,r:3.5,class:"f-ink"},p);
+
+  /* ---------- conductor ---------- */
+  (function(){
+    const s=$("fig-cond"); if(!s) return;
+    const c=[180,125], R=th=>{const r=1+0.16*Math.cos(2*th)+0.08*Math.sin(3*th); return [c[0]+118*r*Math.cos(th), c[1]+78*r*Math.sin(th)];};
+    let d=""; for(let i=0;i<=120;i++){const [x,y]=R(i/120*2*Math.PI); d+=(i?"L":"M")+x.toFixed(1)+","+y.toFixed(1);} d+="Z";
+    SV("path",{d,class:"f-surface2 s-ink2","stroke-width":2.5},s);
+    for(let i=0;i<12;i++){ const th=i/12*2*Math.PI, p=R(th), q=R(th+0.01), t=[q[0]-p[0],q[1]-p[1]], m=Math.hypot(...t), n=[t[1]/m,-t[0]/m];
+      L(s,p[0]+n[0]*8,p[1]+n[1]*8,p[0]+n[0]*40,p[1]+n[1]*40,"s-ink2",1.6,{"marker-end":"url(#ah-muted)"});
+      T(s,p[0]-n[0]*1,p[1]-n[1]*1+5,"+","b",{"text-anchor":"middle",style:"fill:var(--rose)"}); }
+    T(s,c[0],c[1]-4,"E = 0","b lg",{"text-anchor":"middle"});
+    T(s,c[0],c[1]+18,"V = constante","m",{"text-anchor":"middle"});
+    // efecto puntas
+    L(s,445,150,525,112,"s-ink2",2);
+    SV("circle",{cx:445,cy:150,r:42,class:"f-surface2 s-ink2","stroke-width":2},s);
+    SV("circle",{cx:525,cy:112,r:14,class:"f-surface2 s-ink2","stroke-width":2},s);
+    for(let i=0;i<8;i++){const a=i/8*2*Math.PI; T(s,445+42*Math.cos(a),150+42*Math.sin(a)+5,"+","b",{"text-anchor":"middle",style:"fill:var(--rose)"});}
+    for(let i=0;i<8;i++){const a=i/8*2*Math.PI; T(s,525+14*Math.cos(a),112+14*Math.sin(a)+5,"+","b",{"text-anchor":"middle",style:"fill:var(--rose);font-size:12px"});}
+    T(s,445,214,"R grande: σ pequeña","m",{"text-anchor":"middle"}); T(s,556,82,"R pequeño: σ grande","m",{"text-anchor":"end"});
+    T(s,485,240,"efecto puntas","b",{"text-anchor":"middle"});
+  })();
+
+  /* ---------- tipos de condensador ---------- */
+  (function(){
+    const s=$("fig-tipos"); if(!s) return;
+    // plano
+    SV("rect",{x:52,y:40,width:12,height:140,class:"f-rose"},s); SV("rect",{x:150,y:40,width:12,height:140,class:"f-teal"},s);
+    [60,90,120,150].forEach(y=>L(s,68,y,144,y,"s-ink2",1.5,{"marker-end":"url(#ah-muted)"}));
+    L(s,64,196,150,196,"s-ink2",1.2,{"marker-start":"url(#ah-muted)","marker-end":"url(#ah-muted)"}); T(s,107,191,"d","m b",{"text-anchor":"middle"});
+    T(s,58,32,"+Q","b",{"text-anchor":"middle",style:"fill:var(--rose)"}); T(s,156,32,"−Q","b",{"text-anchor":"middle",style:"fill:var(--teal)"});
+    T(s,107,226,"Plano: εA/d","b",{"text-anchor":"middle"});
+    // cilíndrico
+    const cx=330;
+    SV("ellipse",{cx,cy:110,rx:80,ry:80,class:"f-teal",opacity:.18},s);
+    SV("circle",{cx,cy:110,r:80,class:"s-teal","stroke-width":5,fill:"none"},s);
+    SV("circle",{cx,cy:110,r:30,class:"f-rose"},s);
+    for(let i=0;i<8;i++){const a=i/8*2*Math.PI+0.2; L(s,cx+34*Math.cos(a),110+34*Math.sin(a),cx+72*Math.cos(a),110+72*Math.sin(a),"s-ink2",1.4,{"marker-end":"url(#ah-muted)"});}
+    T(s,cx,115,"r₁","b",{"text-anchor":"middle",style:"fill:var(--surface)"});
+    T(s,cx+60,196,"r₂","b"); T(s,cx,226,"Cilíndrico (corte): 2πεL/ln(r₂/r₁)","b",{"text-anchor":"middle"});
+    // esférico
+    const ex=560;
+    SV("circle",{cx:ex,cy:110,r:78,class:"f-teal",opacity:.12},s);
+    SV("circle",{cx:ex,cy:110,r:78,class:"s-teal","stroke-width":4,fill:"none","stroke-dasharray":"0"},s);
+    SV("circle",{cx:ex,cy:110,r:34,class:"f-rose",opacity:.85},s);
+    SV("ellipse",{cx:ex,cy:110,rx:78,ry:20,class:"s-teal","stroke-width":1.4,fill:"none","stroke-dasharray":"5 4"},s);
+     T(s,ex+14,104,"R₁","b",{style:"fill:var(--surface)"});
+    L(s,ex,110,ex-55,165,"s-ink2",1.5); T(s,ex-48,150,"R₂","b",{"text-anchor":"end"});
+    T(s,ex,226,"Esférico: 4πεR₁R₂/(R₂−R₁)","b",{"text-anchor":"middle"});
+  })();
+
+  /* ---------- figura 4 ---------- */
+  (function(){
+    const s=$("fig4"); if(!s) return;
+    // a
+    T(s,14,30,"a)","b lg");
+    term(s,40,60); term(s,40,200);
+    cap(s,40,60,170,60,"C₁ = 0.3",-1); wire(s,[[170,60],[300,60]]); dot(s,210,60);
+    cap(s,210,60,210,200,"C₂ = 1",1); cap(s,300,60,300,200,"C₃ = 0.25",-1);
+    wire(s,[[40,200],[300,200]]); dot(s,210,200);
+    T(s,52,136,"10 V","b");
+    // b
+    const b=410; T(s,b,30,"b)","b lg");
+    term(s,b+20,50); term(s,b+20,215);
+    wire(s,[[b+20,50],[b+210,50]]); dot(s,b+100,50);
+    cap(s,b+100,50,b+100,132,"C₁ = 4",-1); cap(s,b+100,132,b+100,215,"C₂ = 15",-1);
+    cap(s,b+210,50,b+210,215,"C₃ = 12",1);
+    wire(s,[[b+20,215],[b+210,215]]); dot(s,b+100,215);
+    T(s,b+20,140,"200 V","b");
+    // c
+    const c=665; T(s,c,30,"c)","b lg");
+    term(s,c+10,60); term(s,c+10,200);
+    cap(s,c+10,60,c+80,60,"C₁ = 5",-1); cap(s,c+80,60,c+150,60,"C₂ = 4",-1); wire(s,[[c+150,60],[c+290,60]]);
+    cap(s,c+10,200,c+130,200,"C₃ = 3",1); wire(s,[[c+130,200],[c+290,200]]);
+    cap(s,c+170,60,c+170,200,"C₄",1); cap(s,c+290,60,c+290,200,"C₆",-1); cap(s,c+170,200,c+290,60,"C₅",1,"s-warn");
+    dot(s,c+170,60); dot(s,c+170,200); dot(s,c+290,60); dot(s,c+290,200);
+    T(s,c+20,136,"10 V","b");
+    T(s,c+230,240,"C₄ = C₅ = C₆ = 1","m b",{"text-anchor":"middle"});
+  })();
+
+  /* ---------- figura 5 ---------- */
+  (function(){
+    const s=$("fig5"); if(!s) return;
+    term(s,190,18,"a"); wire(s,[[190,22],[190,45]]); wire(s,[[110,45],[270,45]]); dot(s,190,45);
+    cap(s,110,45,110,115,"C₁ = 2 μF",-1); cap(s,110,115,110,185,"C₂ = 6 μF",-1); cap(s,270,45,270,185,"C₃ = 3.5 μF",-1);
+    wire(s,[[110,185],[270,185]]); dot(s,190,185); wire(s,[[190,185],[190,208]]); term(s,190,212,"b");
+  })();
+
+  /* ---------- dieléctrico polarizado ---------- */
+  (function(){
+    const s=$("fig-diel"); if(!s) return;
+    SV("rect",{x:40,y:30,width:14,height:190,class:"f-rose"},s); SV("rect",{x:506,y:30,width:14,height:190,class:"f-teal"},s);
+    for(let i=0;i<7;i++){ T(s,30,48+i*27,"+","b",{"text-anchor":"middle",style:"fill:var(--rose)"}); T(s,530,48+i*27,"−","b",{"text-anchor":"middle",style:"fill:var(--teal)"}); }
+    SV("rect",{x:110,y:40,width:340,height:170,rx:6,class:"f-accsoft s-acc","stroke-width":1.5},s);
+    for(let r=0;r<4;r++) for(let c=0;c<6;c++){ const x=150+c*52, y=70+r*38;
+      SV("ellipse",{cx:x,cy:y,rx:20,ry:11,class:"f-surface s-ink2","stroke-width":1.2},s);
+      T(s,x-9,y+4,"−","b",{"text-anchor":"middle",style:"fill:var(--teal);font-size:13px"}); T(s,x+9,y+5,"+","b",{"text-anchor":"middle",style:"fill:var(--rose);font-size:13px"}); }
+    for(let i=0;i<6;i++){ T(s,120,62+i*27,"−","b",{"text-anchor":"middle",style:"fill:var(--teal)"}); T(s,440,62+i*27,"+","b",{"text-anchor":"middle",style:"fill:var(--rose)"}); }
+    L(s,70,20,490,20,"s-ink",2.5,{"marker-end":"url(#ah-ink)"}); T(s,280,14,"E₀ (de las placas)","m b",{"text-anchor":"middle"});
+    L(s,430,232,130,232,"s-warn",2.5,{"marker-end":"url(#ah-warn)"}); T(s,280,248,"Eᵢ (cargas inducidas)","m b",{"text-anchor":"middle",style:"fill:var(--warn)"});
+    T(s,120,225,"−σᵢ","m b",{"text-anchor":"middle",style:"fill:var(--teal)"}); T(s,440,225,"+σᵢ","m b",{"text-anchor":"middle",style:"fill:var(--rose)"});
+  })();
+
+  /* ---------- figuras 10 y 11 ---------- */
+  (function(){
+    const s=$("fig1011"); if(!s) return;
+    const block=(x0,type)=>{
+      SV("rect",{x:x0,y:30,width:200,height:10,class:"f-rose"},s); SV("rect",{x:x0,y:160,width:200,height:10,class:"f-teal"},s);
+      if(type==="s"){ SV("rect",{x:x0,y:40,width:200,height:60,class:"f-accsoft s-acc","stroke-width":1.2},s); SV("rect",{x:x0,y:100,width:200,height:60,class:"f-teal",opacity:.2},s); SV("rect",{x:x0,y:100,width:200,height:60,class:"s-teal","stroke-width":1.2,fill:"none"},s);
+        T(s,x0+100,76,"ε₁","b lg",{"text-anchor":"middle"}); T(s,x0+100,136,"ε₂","b lg",{"text-anchor":"middle"});
+        L(s,x0+214,40,x0+214,100,"s-ink2",1.2,{"marker-start":"url(#ah-muted)","marker-end":"url(#ah-muted)"}); T(s,x0+222,75,"d/2","m"); L(s,x0+214,100,x0+214,160,"s-ink2",1.2,{"marker-start":"url(#ah-muted)","marker-end":"url(#ah-muted)"}); T(s,x0+222,135,"d/2","m");
+        T(s,x0+100,196,"Fig. 10 · en serie","b",{"text-anchor":"middle"}); }
+      else { SV("rect",{x:x0,y:40,width:100,height:120,class:"f-accsoft s-acc","stroke-width":1.2},s); SV("rect",{x:x0+100,y:40,width:100,height:120,class:"f-teal",opacity:.2},s); SV("rect",{x:x0+100,y:40,width:100,height:120,class:"s-teal","stroke-width":1.2,fill:"none"},s);
+        T(s,x0+50,106,"ε₁","b lg",{"text-anchor":"middle"}); T(s,x0+150,106,"ε₂","b lg",{"text-anchor":"middle"});
+        L(s,x0,22,x0+100,22,"s-ink2",1.2,{"marker-start":"url(#ah-muted)","marker-end":"url(#ah-muted)"}); T(s,x0+50,16,"A/2","m",{"text-anchor":"middle"});
+        L(s,x0+100,22,x0+200,22,"s-ink2",1.2,{"marker-start":"url(#ah-muted)","marker-end":"url(#ah-muted)"}); T(s,x0+150,16,"A/2","m",{"text-anchor":"middle"});
+        T(s,x0+100,196,"Fig. 11 · en paralelo","b",{"text-anchor":"middle"}); }
+    };
+    block(20,"s"); block(320,"p");
+  })();
+
+  /* ---------- serie vs paralelo ---------- */
+  (function(){
+    const s=$("asoc-svg"); if(!s) return;
+    const M=$("as-mode"), C1=$("as-c1"), C2=$("as-c2"), V=12;
+    const g=SV("g",{},s);
+    function upd(){
+      const c1=+C1.value, c2=+C2.value, ser=M.value==="s";
+      g.innerHTML="";
+      // pila
+      L(g,40,95,40,125,"s-ink",2); L(g,26,95,54,95,"s-ink",3.5); L(g,32,125,48,125,"s-ink",6);
+      wire(g,[[40,95],[40,40]]); wire(g,[[40,125],[40,185]]); T(g,60,115,"12 V","b");
+      let Ceq,q1,q2,v1,v2;
+      if(ser){ Ceq=c1*c2/(c1+c2); const Q=Ceq*V; q1=q2=Q; v1=Q/c1; v2=Q/c2;
+        wire(g,[[40,40],[110,40]]); cap(g,110,40,220,40,"C₁",-1); cap(g,220,40,330,40,"C₂",-1); wire(g,[[330,40],[400,40],[400,185],[40,185]]);
+        T(g,165,78,`Q = ${f3(q1)} μC`,"m b",{"text-anchor":"middle",style:"fill:var(--accent-ink)"}); T(g,165,96,`V = ${f3(v1)} V`,"m",{"text-anchor":"middle"});
+        T(g,275,78,`Q = ${f3(q2)} μC`,"m b",{"text-anchor":"middle",style:"fill:var(--accent-ink)"}); T(g,275,96,`V = ${f3(v2)} V`,"m",{"text-anchor":"middle"});
+      } else { Ceq=c1+c2; v1=v2=V; q1=c1*V; q2=c2*V;
+        wire(g,[[40,40],[340,40]]); wire(g,[[40,185],[340,185]]); dot(g,200,40); dot(g,200,185);
+        cap(g,200,40,200,185,"C₁",-1); cap(g,340,40,340,185,"C₂",1);
+        T(g,150,140,`Q = ${f3(q1)} μC`,"m b",{"text-anchor":"end",style:"fill:var(--accent-ink)"}); T(g,150,158,`V = 12 V`,"m",{"text-anchor":"end"});
+        T(g,372,140,`Q = ${f3(q2)} μC`,"m b",{"text-anchor":"start",style:"fill:var(--accent-ink)"});
+      }
+      const U=0.5*Ceq*1e-6*V*V;
+      $("as-c1-o").textContent=f3(c1)+" μF"; $("as-c2-o").textContent=f3(c2)+" μF";
+      $("as-read").innerHTML=`<div>C equivalente<span>${f3(Ceq)} μF</span></div><div>Q₁ / Q₂<span>${f3(q1)} / ${f3(q2)} μC</span></div><div>V₁ / V₂<span>${f3(v1)} / ${f3(v2)} V</span></div><div>energía total<span>${f3(U*1e6)} μJ</span></div>`;
+      $("as-exp").innerHTML= ser
+        ? `<p><b>Serie:</b> C = C₁C₂/(C₁+C₂) = ${f3(c1)}·${f3(c2)}/${f3(c1+c2)} = ${f3(Ceq)} μF, menor que los dos. Los dos tienen la <b>misma carga</b>, Q = C·V = ${f3(q1)} μC, y la tensión se reparte: V₁ = Q/C₁ = ${f3(v1)} V y V₂ = Q/C₂ = ${f3(v2)} V. El condensador más pequeño se lleva más tensión.</p>`
+        : `<p><b>Paralelo:</b> C = C₁ + C₂ = ${f3(Ceq)} μF. Los dos tienen la <b>misma tensión</b> (12 V) y la carga se reparte: Q₁ = C₁·12 = ${f3(q1)} μC y Q₂ = C₂·12 = ${f3(q2)} μC. El más grande guarda más carga.</p>`;
+    }
+    [M,C1,C2].forEach(el=>el.addEventListener("input",upd)); upd();
+  })();
+
+  /* ---------- laboratorio del condensador ---------- */
+  (function(){
+    const s=$("cap-svg"); if(!s) return;
+    const MODE=$("cap-mode"), RA=$("cap-A"), RD=$("cap-d"), RE=$("cap-er");
+    const e0=8.85e-12; let Qfix=null;
+    const g=SV("g",{},s);
+    const cfmt = c => c<1e-9 ? fmt(c*1e12,3)+" pF" : fmt(c*1e9,3)+" nF";
+    function state(){ const A=+RA.value*1e-4, d=+RD.value*1e-3, er=+RE.value; const C=e0*er*A/d; let Q,V;
+      if(MODE.value==="v"){ V=100; Q=C*V; } else { if(Qfix===null) Qfix=C*100; Q=Qfix; V=Q/C; }
+      return {A,d,er,C,Q,V,E:V/d,U:0.5*Q*V}; }
+    function upd(){
+      const st=state(); g.innerHTML="";
+      const gap=Math.max(24,+RD.value*44), h=Math.min(220,10*Math.sqrt(+RA.value)+40), cx=230, cy=125, xl=cx-gap/2, xr=cx+gap/2, y0=cy-h/2;
+      if(st.er>1){ SV("rect",{x:xl,y:y0,width:gap,height:h,class:"f-acc",opacity:(0.08+0.06*(st.er-1)).toFixed(2)},g); T(g,cx,y0+h+20,"dieléctrico εᵣ = "+fmt(st.er,3),"m",{"text-anchor":"middle"}); }
+      SV("rect",{x:xl-12,y:y0,width:12,height:h,class:"f-rose"},g); SV("rect",{x:xr,y:y0,width:12,height:h,class:"f-teal"},g);
+      const nq=Math.max(2,Math.min(14,Math.round(4+3*Math.log10(st.Q/1e-9))));
+      for(let i=0;i<nq;i++){ const y=y0+(i+0.5)*h/nq; T(g,xl-24,y+5,"+","b",{"text-anchor":"middle",style:"fill:var(--rose)"}); T(g,xr+24,y+5,"−","b",{"text-anchor":"middle",style:"fill:var(--teal)"}); }
+      const nE=Math.max(1,Math.min(14,Math.round(st.E/1.5e4)));
+      for(let i=0;i<nE;i++){ const y=y0+(i+0.5)*h/nE; L(g,xl+4,y,xr-6,y,"s-ink2",1.4,{"marker-end":"url(#ah-muted)"}); }
+      T(g,cx,y0-10,"d = "+fmt(+RD.value,2)+" mm","m b",{"text-anchor":"middle"});
+      $("cap-A-o").textContent=RA.value+" cm²"; $("cap-d-o").textContent=fmt(+RD.value,2)+" mm"; $("cap-er-o").textContent=fmt(st.er,3);
+      $("cap-read").innerHTML=`<div>capacidad C<span>${cfmt(st.C)}</span></div><div>carga Q<span>${fmt(st.Q*1e9,3)} nC</span></div><div>tensión V<span>${fmt(st.V,4)} V</span></div><div>campo E<span>${fmt(st.E/1000,3)} kV/m</span></div><div>energía U<span>${fmt(st.U*1e6,3)} μJ</span></div>`;
+      $("cap-exp").innerHTML = MODE.value==="v"
+        ? `<p><b>Conectado a la pila:</b> la tensión está fijada en 100 V. Si aumentas εᵣ o el área, o acercas las placas, C sube y la pila mete <b>más carga</b> (Q = CV) y más energía (U = ½CV²). El campo solo depende de V y d: E = V/d.</p>`
+        : `<p><b>Desconectado:</b> la carga ya no puede cambiar (se ha quedado en ${fmt(st.Q*1e9,3)} nC). Si metes un dieléctrico, C se multiplica por εᵣ y entonces <b>V = Q/C baja</b>, el campo baja y la energía U = Q²/2C también baja. Si separas las placas, C baja, V sube y la energía sube (has hecho trabajo tirando de ellas).</p>`;
+    }
+    MODE.addEventListener("input",()=>{ Qfix=null; upd(); });
+    [RA,RD,RE].forEach(el=>el.addEventListener("input",upd)); upd();
+  })();
+})();
+
+</script>
+
+</body></html>

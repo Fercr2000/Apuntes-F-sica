@@ -1,0 +1,1559 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Tema 2 · Campo eléctrico</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+/* Layout: cuaderno de ingeniería — índice fijo a la izquierda, columna de lectura de ~70ch, figuras sobre papel milimetrado verde */
+:root{
+  --bg:#f1f7f2; --surface:#ffffff; --surface-2:#e6f1e9; --ink:#0f241b; --ink-2:#34503f; --muted:#5d7869; --line:#cde0d2;
+  --accent:#0a8f5a; --accent-ink:#06603d; --accent-soft:#d2f0de; --lime:#5f9a12; --on-accent:#ffffff;
+  --grid:rgba(10,143,90,.08); --grid-strong:rgba(10,143,90,.17);
+  --warn:#a3560a; --warn-soft:#fbefd7; --teal:#0b7285; --teal-soft:#d6eef3; --rose:#bf2f50; --rose-soft:#fbe3e9;
+  --hero-bg:#0b3a28; --hero-bg-2:#0f5c3d; --hero-ink:#ecfbf2; --hero-muted:#a8d8bd; --hero-line:rgba(236,251,242,.14);
+  --shadow:0 1px 2px rgba(15,36,27,.05),0 8px 24px rgba(15,36,27,.06);
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --r:14px; --r-sm:9px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#08130e; --surface:#0e1d16; --surface-2:#13281d; --ink:#e2f1e7; --ink-2:#b4ccbd; --muted:#83a091; --line:#213a2d;
+  --accent:#3ad693; --accent-ink:#7ee9b8; --accent-soft:#103727; --lime:#a6e33f; --on-accent:#05271a;
+  --grid:rgba(58,214,147,.07); --grid-strong:rgba(58,214,147,.15);
+  --warn:#f2b04a; --warn-soft:#2f230b; --teal:#4cc9de; --teal-soft:#0c2a31; --rose:#ff7d98; --rose-soft:#3a1420;
+  --hero-bg:#06261a; --hero-bg-2:#0b4630; --hero-ink:#e6faef; --hero-muted:#93cdb0; --hero-line:rgba(230,250,239,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#08130e; --surface:#0e1d16; --surface-2:#13281d; --ink:#e2f1e7; --ink-2:#b4ccbd; --muted:#83a091; --line:#213a2d;
+  --accent:#3ad693; --accent-ink:#7ee9b8; --accent-soft:#103727; --lime:#a6e33f; --on-accent:#05271a;
+  --grid:rgba(58,214,147,.07); --grid-strong:rgba(58,214,147,.15);
+  --warn:#f2b04a; --warn-soft:#2f230b; --teal:#4cc9de; --teal-soft:#0c2a31; --rose:#ff7d98; --rose-soft:#3a1420;
+  --hero-bg:#06261a; --hero-bg-2:#0b4630; --hero-ink:#e6faef; --hero-muted:#93cdb0; --hero-line:rgba(230,250,239,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.62;}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0}
+a{color:var(--accent-ink)}
+strong{font-weight:700;color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+sup,sub{line-height:0}
+
+.wrap{max-width:1180px;margin-inline:auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+
+/* ---------- HERO ---------- */
+.hero{background:
+  linear-gradient(var(--hero-line) 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(90deg,var(--hero-line) 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(135deg,var(--hero-bg),var(--hero-bg-2));
+  color:var(--hero-ink);}
+.hero .wrap{padding-block:34px 38px;display:grid;gap:22px}
+.series{display:flex;flex-wrap:wrap;gap:6px;font-size:13px}
+.series span{padding:4px 10px;border-radius:99px;border:1px solid var(--hero-line);color:var(--hero-muted);font-weight:700;letter-spacing:.02em}
+.series span.on{background:var(--hero-ink);color:var(--hero-bg);border-color:transparent}
+.hero-main{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:end}
+.bignum{font-family:var(--f-display);font-weight:800;font-size:clamp(88px,16vw,168px);line-height:.8;color:transparent;-webkit-text-stroke:2px var(--hero-muted);letter-spacing:-.04em}
+.eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--hero-muted)}
+.hero h1{font-size:clamp(34px,5.4vw,58px);font-weight:800;margin-top:6px}
+.hero .lead{font-size:18.5px;max-width:62ch;color:var(--hero-ink);opacity:.92;margin-top:12px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--hero-muted)}
+.hero-meta b{color:var(--hero-ink)}
+@media (max-width:640px){.hero-main{grid-template-columns:1fr}.bignum{font-size:84px}}
+
+/* ---------- LAYOUT ---------- */
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:44px;padding-block:34px 80px}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 18px);align-self:start;max-height:calc(100vh - 36px);overflow:auto;padding-right:4px}
+.toc-title{font-family:var(--f-display);font-weight:700;font-size:15px;margin-bottom:8px;color:var(--ink-2)}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.toc a{display:grid;grid-template-columns:26px 1fr 18px;gap:6px;align-items:baseline;padding:6px 8px;border-radius:8px;text-decoration:none;color:var(--ink-2);font-size:14.5px;line-height:1.3}
+.toc a:hover{background:var(--surface-2);color:var(--ink)}
+.toc a.active{background:var(--accent-soft);color:var(--accent-ink);font-weight:700}
+.toc .n{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.toc .ck{color:var(--accent);font-weight:800;opacity:0}
+.toc a.done .ck{opacity:1}
+.progress{margin-top:16px;padding:12px;border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--line);font-size:13.5px;color:var(--ink-2)}
+.bar{height:8px;border-radius:99px;background:var(--surface-2);margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--lime));border-radius:99px;transition:width .4s}
+.toc-mobile{display:none}
+@media (max-width:980px){
+  .layout{grid-template-columns:minmax(0,1fr);gap:0;padding-top:18px}
+  .toc{display:none}
+  .toc-mobile{display:block;margin-bottom:22px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+  .toc-mobile summary{cursor:pointer;padding:12px 16px;font-family:var(--f-display);font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
+  .toc-mobile summary::-webkit-details-marker{display:none}
+  .toc-mobile summary::after{content:"＋";color:var(--accent)}
+  .toc-mobile[open] summary::after{content:"－"}
+  .toc-mobile ol{padding:0 8px 10px}
+}
+main{min-width:0}
+.content{max-width:780px;display:grid;gap:64px}
+
+/* ---------- SECTIONS ---------- */
+.sec{display:grid;gap:22px;scroll-margin-top:20px}
+.sec-head{display:grid;gap:6px;padding-bottom:14px;border-bottom:2px solid var(--line)}
+.sec-num{font-family:var(--f-mono);font-size:13px;font-weight:700;color:var(--accent-ink);letter-spacing:.06em}
+.sec h2{font-size:clamp(27px,3.6vw,36px);font-weight:800}
+.sec-sub{color:var(--ink-2);font-size:17px}
+.sec h3{font-size:21px;font-weight:700;margin-top:6px}
+.sec h4{font-size:17px;font-weight:700}
+.sec p,.sec li{max-width:70ch}
+.sec ul,.sec ol{margin:0;padding-left:1.25em;display:grid;gap:6px}
+.uses{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13.5px}
+.uses .lbl{font-weight:700;color:var(--muted);margin-right:2px}
+.chip{display:inline-block;padding:3px 9px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);font-weight:700;font-size:12.5px;white-space:nowrap}
+.chip.rel{background:var(--accent-soft);border-color:transparent;color:var(--accent-ink)}
+.hl{background:linear-gradient(transparent 58%,var(--accent-soft) 58%);padding:0 2px}
+.key{display:inline-block;font-family:var(--f-mono);font-size:.8em;font-weight:700;padding:1px 7px 2px;border-radius:6px;background:var(--surface);border:1px solid var(--line);border-bottom-width:3px;color:var(--ink);white-space:nowrap;line-height:1.5}
+
+/* ---------- BOXES ---------- */
+.box{border-radius:var(--r);padding:16px 18px;display:grid;gap:10px;border:1px solid var(--line);background:var(--surface)}
+.box>.tag{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.box>.tag::before{content:"";width:9px;height:9px;border-radius:3px;background:currentColor}
+.box.idea{background:var(--accent-soft);border-color:transparent}
+.box.idea>.tag{color:var(--accent-ink)}
+.box.cuidado{background:var(--warn-soft);border-color:transparent}
+.box.cuidado>.tag{color:var(--warn)}
+.box.truco{background:var(--teal-soft);border-color:transparent}
+.box.truco>.tag{color:var(--teal)}
+.box.calc{background:var(--surface);border:1px dashed var(--line)}
+.box.calc>.tag{color:var(--ink-2)}
+.box ul,.box ol{padding-left:1.2em}
+
+/* formula card */
+.formula{border-radius:var(--r);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+.formula .f-head{padding:10px 18px;font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);border-bottom:1px solid var(--line);background:var(--surface-2)}
+.formula .f-body{padding:6px 18px 14px;display:grid;gap:8px}
+.formula .f-body>p{font-size:15.5px;color:var(--ink-2)}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:15px;margin:0}
+.legend dt{font-weight:700;text-align:right}
+.legend dd{margin:0;color:var(--ink-2)}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15.5px;font-variant-numeric:tabular-nums}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:var(--surface-2);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+tr:last-child td{border-bottom:0}
+td.c,th.c{text-align:center}
+
+/* ---------- WORKED EXAMPLE (stepper) ---------- */
+.ej{border-radius:var(--r);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+.ej-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:center;padding:12px 18px;background:var(--hero-bg);color:var(--hero-ink)}
+.ej-head .t{font-family:var(--f-display);font-weight:700;font-size:16.5px}
+.ej-head .src{font-size:12.5px;color:var(--hero-muted);font-weight:700}
+.ej-q{padding:16px 18px;border-bottom:1px solid var(--line);display:grid;gap:8px}
+.ej-q .data{display:flex;flex-wrap:wrap;gap:6px}
+.ej-q .data span{font-family:var(--f-mono);font-size:13.5px;padding:2px 8px;border-radius:6px;background:var(--surface-2)}
+.steps{list-style:none;margin:0;padding:0;counter-reset:st}
+.step{counter-increment:st;display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.step::before{content:counter(st);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;font-size:14px;background:var(--accent);color:var(--on-accent)}
+.step .st-t{font-weight:700;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.step .st-b{display:grid;gap:8px;margin-top:6px;min-width:0}
+.step .st-b p{max-width:none}
+.step.locked::before{background:var(--surface-2);color:var(--muted)}
+.step.locked .st-t{color:var(--muted)}
+.step.locked .st-b{max-height:0;overflow:hidden;visibility:hidden;margin:0}
+.step.locked .st-t::after{content:"· intenta este paso antes de abrirlo";font-weight:400;font-size:13px;color:var(--muted)}
+.step.just{animation:pop .45s ease}
+@keyframes pop{from{background:var(--accent-soft)}to{background:transparent}}
+.ej-ctrl{display:flex;flex-wrap:wrap;gap:8px;padding:12px 18px;background:var(--surface-2)}
+.btn{font:inherit;font-size:14.5px;font-weight:700;border-radius:99px;padding:8px 16px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:transform .12s,background .12s}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--accent);border-color:transparent;color:var(--on-accent)}
+.btn[disabled]{opacity:.45;cursor:default;transform:none}
+.result{border-radius:var(--r-sm);padding:10px 14px;background:var(--accent-soft);color:var(--accent-ink);font-weight:700;border:1px solid transparent}
+.check{font-size:14.5px;color:var(--ink-2);border-left:3px solid var(--accent);padding-left:10px}
+
+/* practice */
+.practica{border-radius:var(--r);border:2px dashed var(--line);padding:16px 18px;display:grid;gap:10px}
+.practica>.tag{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lime)}
+.practica ol{display:grid;gap:12px}
+details.sol summary{cursor:pointer;font-weight:700;color:var(--accent-ink);font-size:14.5px;width:max-content;max-width:100%}
+details.sol>div{margin-top:8px;padding:10px 14px;border-radius:var(--r-sm);background:var(--surface-2);display:grid;gap:6px}
+
+/* figures & widgets */
+.fig{border-radius:var(--r);border:1px solid var(--line);overflow:hidden;background:var(--surface)}
+.paper{background-color:var(--surface);background-image:
+  linear-gradient(var(--grid-strong) 1px,transparent 1px),linear-gradient(90deg,var(--grid-strong) 1px,transparent 1px),
+  linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:80px 80px,80px 80px,16px 16px,16px 16px}
+.fig .art{padding:14px;overflow-x:auto}
+.fig .art svg{display:block;width:100%;height:auto;max-width:100%}
+.fig figcaption,.fig .cap{padding:10px 16px;font-size:14.5px;color:var(--ink-2);border-top:1px solid var(--line);background:var(--surface)}
+.widget .w-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--surface)}
+.widget .w-head b{font-family:var(--f-display);font-size:16px}
+.widget .w-head .pill{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:var(--accent);color:var(--on-accent)}
+.controls{display:grid;gap:12px;padding:14px 16px;border-top:1px solid var(--line);background:var(--surface)}
+.ctrl{display:grid;grid-template-columns:minmax(110px,auto) 1fr auto;gap:12px;align-items:center;font-size:15px}
+.ctrl label{font-weight:700}
+.ctrl output{font-family:var(--f-mono);font-size:14px;min-width:64px;text-align:right}
+input[type=range]{width:100%;accent-color:var(--accent);min-width:0}
+select,input[type=number],input[type=text]{font:inherit;font-size:15px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-width:0}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;padding:12px 16px;background:var(--surface-2);font-variant-numeric:tabular-nums}
+.readout div{display:grid;gap:2px;font-size:13px;color:var(--muted);font-weight:700}
+.readout div span{font-family:var(--f-mono);font-size:16px;color:var(--ink);font-weight:700}
+.explain{padding:12px 16px;font-size:15.5px;border-top:1px solid var(--line);background:var(--surface);display:grid;gap:6px}
+@media (max-width:520px){.ctrl{grid-template-columns:1fr auto}.ctrl input[type=range]{grid-column:1/-1;order:3}}
+
+/* svg tokens */
+.s-ink{stroke:var(--ink);fill:none}
+.s-ink2{stroke:var(--ink-2);fill:none}
+.s-muted{stroke:var(--muted);fill:none}
+.s-acc{stroke:var(--accent);fill:none}
+.s-teal{stroke:var(--teal);fill:none}
+.s-warn{stroke:var(--warn);fill:none}
+.s-rose{stroke:var(--rose);fill:none}
+.f-acc{fill:var(--accent)}
+.f-accsoft{fill:var(--accent-soft)}
+.f-teal{fill:var(--teal)}
+.f-warn{fill:var(--warn)}
+.f-rose{fill:var(--rose)}
+.f-ink{fill:var(--ink)}
+.f-ink2{fill:var(--ink-2)}
+.f-muted{fill:var(--muted)}
+.f-surface{fill:var(--surface)}
+.f-surface2{fill:var(--surface-2)}
+svg text{font-family:var(--f-body);font-size:14px;fill:var(--ink-2)}
+svg text.m{font-family:var(--f-mono);font-size:12.5px}
+svg text.b{font-weight:700}
+svg text.lg{font-size:17px}
+
+/* grid of cards (formulario) */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:12px}
+.fcard{border-radius:var(--r);border:1px solid var(--line);background:var(--surface);padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.fcard h4{font-size:15px;color:var(--accent-ink);letter-spacing:.02em}
+.fcard .row{overflow-x:auto;overflow-y:hidden}
+
+/* method steps */
+.method{list-style:none;padding:0!important;margin:0;display:grid;gap:10px;counter-reset:m}
+.method li{counter-increment:m;display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;max-width:none!important}
+.method li::before{content:counter(m);font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1;color:var(--accent)}
+.method b{display:block}
+
+/* legend of boxes */
+.kinds{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.kinds>div{border-radius:var(--r-sm);padding:10px 12px;font-size:14.5px;display:grid;gap:2px}
+.kinds b{font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.kinds .k-idea{background:var(--accent-soft)} .kinds .k-idea b{color:var(--accent-ink)}
+.kinds .k-form{background:var(--surface);border:1px solid var(--line)} .kinds .k-form b{color:var(--accent-ink)}
+.kinds .k-ej{background:var(--hero-bg);color:var(--hero-ink)} .kinds .k-ej b{color:var(--hero-muted)}
+.kinds .k-cui{background:var(--warn-soft)} .kinds .k-cui b{color:var(--warn)}
+.kinds .k-tru{background:var(--teal-soft)} .kinds .k-tru b{color:var(--teal)}
+.kinds .k-pra{border:2px dashed var(--line)} .kinds .k-pra b{color:var(--lime)}
+
+/* quiz */
+.quiz{display:grid;gap:14px}
+.q{border-radius:var(--r);border:1px solid var(--line);background:var(--surface);padding:16px 18px;display:grid;gap:10px}
+.q .qt{font-weight:700}
+.q .opts{display:grid;gap:8px}
+.q .opts button{font:inherit;text-align:left;padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.q .opts button:hover{border-color:var(--accent)}
+.q .opts button.ok{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.q .opts button.ko{background:var(--rose-soft);border-color:var(--rose);color:var(--rose)}
+.q .why{font-size:15px;color:var(--ink-2);padding:10px 12px;border-radius:var(--r-sm);background:var(--surface-2)}
+.score{position:relative;font-family:var(--f-display);font-weight:700;font-size:18px;padding:14px 18px;border-radius:var(--r);background:var(--hero-bg);color:var(--hero-ink);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+.done-btn{justify-self:start;font:inherit;font-weight:700;font-size:14.5px;padding:9px 16px;border-radius:99px;border:2px solid var(--accent);background:transparent;color:var(--accent-ink);cursor:pointer}
+.done-btn[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+
+/* math */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;padding:4px 0;margin:4px 0!important}
+mjx-container{color:inherit}
+.big mjx-container[display="true"]{font-size:118%}
+
+footer.foot{border-top:1px solid var(--line);padding-block:24px 40px;color:var(--muted);font-size:14px}
+
+/* evita que fórmulas largas ensanchen la columna */
+.content,.sec,.box,.formula .f-body,.step .st-b,.ej-q,.practica,details.sol>div,.explain,.q,.fcard{grid-template-columns:minmax(0,1fr)}
+.sec ul,.sec ol{grid-template-columns:minmax(0,1fr)}
+.sec li{min-width:0}
+.step::before{grid-row:1 / span 2}
+.step .st-t,.step .st-b{grid-column:2}
+.widget .art svg{max-width:600px;margin-inline:auto}
+.readout{grid-template-columns:repeat(auto-fit,minmax(118px,1fr))}
+@media (max-width:560px){
+  .widget svg text{font-size:21px}
+  .widget svg text.m{font-size:19px}
+}
+
+/* notas de calculadora dentro de los pasos */
+.calc-note{font-size:14.5px;line-height:1.5;padding:9px 12px;border-radius:var(--r-sm);background:var(--teal-soft);color:var(--ink-2);border-left:3px solid var(--teal)}
+.calc-note b:first-child{color:var(--teal);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-right:4px}
+/* serie con enlaces */
+.series a{padding:4px 10px;border-radius:99px;border:1px solid var(--hero-muted);color:var(--hero-ink);font-weight:700;letter-spacing:.02em;text-decoration:none}
+.series a:hover{background:var(--hero-line)}
+/* arrastrable */
+.drag{cursor:grab;touch-action:none}
+.drag:active{cursor:grabbing}
+.theory{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.theory>div{border-radius:var(--r-sm);border:1px solid var(--line);background:var(--surface);padding:12px 14px;display:grid;gap:4px;align-content:start}
+.theory b{font-family:var(--f-display);font-size:16px}
+.theory p{font-size:15px;color:var(--ink-2)}
+
+/* cuadro de relaciones F-E-Ep-V */
+.magic{display:grid;grid-template-columns:minmax(0,1fr) minmax(70px,.8fr) minmax(0,1fr);grid-template-rows:auto auto auto;gap:6px;align-items:stretch}
+.magic .mb{border-radius:var(--r);padding:12px;text-align:center;display:grid;gap:2px;align-content:center;border:2px solid transparent}
+.magic .mb b{font-family:var(--f-display);font-size:19px}
+.magic .mb span{font-size:13px;color:var(--ink-2)}
+.magic .vec{background:var(--accent-soft);border-color:var(--accent)}
+.magic .esc{background:var(--teal-soft);border-color:var(--teal)}
+.magic .ar{display:grid;place-items:center;text-align:center;font-size:14px;color:var(--ink-2);padding:4px;min-width:0}
+.magic .ar b{color:var(--ink);font-family:var(--f-mono);font-size:13px}
+.magic .mid{font-size:13px;color:var(--muted);display:grid;place-items:center;text-align:center}
+@media (max-width:520px){.magic .mb b{font-size:16px}.magic .ar{font-size:12.5px}}
+
+/* tabla de símbolos en móvil: tarjetas */
+@media (max-width:600px){
+  .symtab thead{display:none}
+  .symtab tr{display:grid;grid-template-columns:110px minmax(0,1fr);align-items:center;border-bottom:1px solid var(--line)}
+  .symtab td{border-bottom:0;padding:8px 10px}
+  .symtab td:nth-child(3){grid-column:1/-1;padding-top:0;font-size:14.5px}
+  .symtab svg{width:100px;height:42px}
+}
+
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']],
+    macros: { ii: '\\hat{\\imath}', jj: '\\hat{\\jmath}', kk: '\\hat{k}', sen: '\\operatorname{sen}' }
+  },
+  svg: { fontCache: 'global' },
+  options: { enableMenu: false }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<div data-topic="2">
+<header class="hero">
+  <div class="wrap">
+    <nav class="series" aria-label="Serie de apuntes">
+      <a href="https://claude.ai/artifact/HSC9RVR4F1vLX3NZBy3KcX" target="_blank" rel="noopener">0 · Mates ↗</a><a href="https://claude.ai/artifact/5UzQ4YaArXtxVZQKoz7Yef" target="_blank" rel="noopener">1 · Magnitudes y vectores ↗</a><span class="on">2 · Campo eléctrico</span><a href="https://claude.ai/artifact/6rCvw1sDeePkWPNUY6Wumw" target="_blank" rel="noopener">3 · Conductores y condensadores ↗</a><a href="https://claude.ai/artifact/CaaQ7auFrzq2YzLsexy798" target="_blank" rel="noopener">4 · Corriente eléctrica ↗</a><a href="https://claude.ai/artifact/Ljjm57gVSz8f4iPBnsdq1W" target="_blank" rel="noopener">5 · Teoría de bandas ↗</a>
+    </nav>
+    <div class="hero-main">
+      <div class="bignum" aria-hidden="true">2</div>
+      <div>
+        <div class="eyebrow">Física · Tema 2 · Electricidad</div>
+        <h1>Campo y potencial eléctricos</h1>
+        <p class="lead">Coulomb, campo, cargas repartidas, Gauss y potencial. Están los 20 ejercicios de tu relación de Campo y Potencial, resueltos paso a paso y agrupados por tipo.</p>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <span><b>12</b> apartados + formulario y test</span>
+      <span><b>≈ 6 h</b> de estudio</span>
+      <span>Relación: <b>Campo y Potencial 1–20</b></span>
+    </div>
+  </div>
+</header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <marker id="ah-ink" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-ink" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-acc" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-acc" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-teal" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-teal" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-rose" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-rose" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-warn" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-warn" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-muted" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path class="f-muted" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+</svg>
+
+<div class="wrap layout">
+  <nav class="toc" aria-label="Índice del tema">
+    <div class="toc-title">En este tema</div>
+    <ol data-toc></ol>
+    <div class="progress"><span data-prog-txt></span><div class="bar"><i data-prog-bar></i></div></div>
+  </nav>
+
+  <main>
+    <details class="toc-mobile">
+      <summary>Índice del tema</summary>
+      <ol data-toc></ol>
+      <div class="progress" style="margin:0 12px 12px"><span data-prog-txt></span><div class="bar"><i data-prog-bar></i></div></div>
+    </details>
+
+    <div class="content">
+
+<!-- ======================= 00 ======================= -->
+<section class="sec" id="mapa" data-n="00" data-title="El mapa del tema">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 00</div>
+    <h2>El mapa del tema</h2>
+    <p class="sec-sub">Cuatro magnitudes y cómo se pasa de una a otra. Si entiendes este cuadro, entiendes el tema.</p>
+  </div>
+
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>Una carga cambia el espacio que la rodea: crea un <b>campo eléctrico</b>. Si pones otra carga ahí, nota una <b>fuerza</b>. Ese mismo efecto también se puede describir con energías: el <b>potencial</b> y la <b>energía potencial</b>. Arriba están los dos vectores (flechas) y abajo los dos escalares (números). A la derecha está lo que crea la carga por sí sola; a la izquierda, lo que nota otra carga \(q\) colocada en ese punto.</p>
+  </div>
+
+  <div class="magic" role="img" aria-label="Relaciones entre fuerza, campo, energía potencial y potencial">
+    <div class="mb vec"><b>Fuerza \(\vec F\)</b><span>vector · N</span></div>
+    <div class="ar"><div>← <b>× q</b><br><b>÷ q</b> →</div></div>
+    <div class="mb vec"><b>Campo \(\vec E\)</b><span>vector · N/C = V/m</span></div>
+    <div class="ar"><div>↑ <b>−dE<sub>p</sub>/dr</b><br><b>−∫F·dr</b> ↓</div></div>
+    <div class="mid">vectores arriba<br>escalares abajo</div>
+    <div class="ar"><div>↑ <b>−dV/dr</b><br><b>−∫E·dr</b> ↓</div></div>
+    <div class="mb esc"><b>Energía \(E_p\)</b><span>escalar · J</span></div>
+    <div class="ar"><div>← <b>× q</b><br><b>÷ q</b> →</div></div>
+    <div class="mb esc"><b>Potencial \(V\)</b><span>escalar · V = J/C</span></div>
+  </div>
+  <p>Para una carga puntual \(Q\) a distancia \(r\), las cuatro valen:</p>
+  <div class="formula">
+    <div class="f-head">Las cuatro fórmulas de la carga puntual</div>
+    <div class="f-body big">
+      \[F = k\frac{Q\,q}{r^2}\qquad E = k\frac{Q}{r^2}\qquad E_p = k\frac{Q\,q}{r}\qquad V = k\frac{Q}{r}\]
+      <p>Fíjate: las de la izquierda llevan las <b>dos</b> cargas y las de la derecha solo la que crea el campo. Las de arriba llevan \(r^2\) y las de abajo \(r\).</p>
+      <dl class="legend">
+        <dt>\(k\)</dt><dd>\(9\cdot10^{9}\) N·m²/C², que es lo mismo que \(\dfrac{1}{4\pi\varepsilon_0}\)</dd>
+        <dt>\(\varepsilon_0\)</dt><dd>\(8.85\cdot10^{-12}\) C²/(N·m²), la permitividad del vacío (la «constante dieléctrica del vacío» de las diapositivas)</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="theory">
+    <div><b>Tipo 1 · Cargas puntuales</b><p>Sumar fuerzas, campos o potenciales de varias cargas. Ejercicios 1–6. Apartados 02–04.</p></div>
+    <div><b>Tipo 2 · Cargas repartidas</b><p>Hilos, anillos, esferas, planos. Con integrales o con Gauss. Ejercicios 9–16. Apartados 05–06.</p></div>
+    <div><b>Tipo 3 · Potencial y energía</b><p>Potencial, trabajo, conductores y cargas que se mueven. Ejercicios 3, 7, 8 y 17–20. Apartados 07–10.</p></div>
+  </div>
+</section>
+
+<!-- ======================= 01 ======================= -->
+<section class="sec" id="carga" data-n="01" data-title="La carga eléctrica">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 01</div>
+    <h2>La carga eléctrica</h2>
+    <p class="sec-sub">Teoría corta.</p>
+  </div>
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>Los átomos tienen protones (+), electrones (−) y neutrones (sin carga). La materia normal es <b>neutra</b>: tiene tantos protones como electrones. Un cuerpo está cargado cuando le sobran o le faltan electrones.</p>
+  </div>
+  <ul>
+    <li><b>Cuantización de la carga:</b> la carga siempre es un número entero de veces la carga del electrón: \(Q = \pm N\cdot e\), con \(e = 1.6\cdot10^{-19}\) C.</li>
+    <li><b>Conservación:</b> la carga total no se crea ni se destruye, solo pasa de un cuerpo a otro (lo usarás en el ejercicio 7).</li>
+    <li><b>El culombio</b> (C) se define a partir del amperio: es la carga que pasa por un cable en 1 s cuando la intensidad es de 1 A. Por eso C = A·s.</li>
+    <li>Cargas del mismo signo <b>se repelen</b> y de distinto signo <b>se atraen</b>.</li>
+  </ul>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 02 ======================= -->
+<section class="sec" id="coulomb" data-n="02" data-title="Ley de Coulomb">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 02</div>
+    <h2>Ley de Coulomb</h2>
+    <p class="sec-sub">La fuerza entre dos cargas puntuales. Ejercicios 1, 2 y 4.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Campo y Potencial 1</span><span class="chip rel">2</span><span class="chip rel">4</span></div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-coul" viewBox="0 0 560 190" style="max-width:560px;margin-inline:auto" role="img" aria-label="Dos cargas iguales se repelen y dos cargas opuestas se atraen"></svg></div>
+    <figcaption>La fuerza va siempre por la recta que une las cargas. Las dos cargas sienten fuerzas iguales y opuestas (acción y reacción).</figcaption>
+  </figure>
+
+  <div class="formula">
+    <div class="f-head">Fórmula · Ley de Coulomb</div>
+    <div class="f-body big">
+      \[F = k\,\frac{|q_1|\,|q_2|}{r^2}\qquad\qquad \vec F_{1,2} = k\,\frac{q_1\,q_2}{r_{12}^2}\,\hat r_{1,2}\]
+      <dl class="legend">
+        <dt>\(r\)</dt><dd>distancia entre las cargas (en m)</dd>
+        <dt>\(\hat r_{1,2}\)</dt><dd>vector unitario que va de \(q_1\) a \(q_2\) (Tema 1, apartado 07)</dd>
+        <dt>\(\vec F_{1,2}\)</dt><dd>fuerza que \(q_1\) hace sobre \(q_2\)</dd>
+      </dl>
+      <p>Con la versión vectorial, si el producto \(q_1q_2\) es positivo la fuerza sale en el sentido de \(\hat r\) (repulsión); si es negativo, en sentido contrario (atracción).</p>
+    </div>
+  </div>
+
+  <div class="box truco">
+    <div class="tag">Cómo trabajar en los ejercicios</div>
+    <p>Calcula primero el <b>módulo</b> con la fórmula de la izquierda, usando las cargas sin signo. Después decide la <b>dirección</b> mirando el dibujo: se repelen o se atraen. Así no te lías con los signos.</p>
+  </div>
+
+  <p><b>Características</b> (diapositivas 5–6): no depende de si las cargas se mueven · cumple acción y reacción (\(\vec F_{1,2} = -\vec F_{2,1}\)) · es <b>conservativa</b> (tiene energía potencial asociada) · es <b>central</b> (va por la recta que une las cargas) · cumple el <b>principio de superposición</b>: la fuerza total sobre una carga es la suma vectorial de las fuerzas de cada una de las demás, \(\vec F_T = \sum\vec F_i\).</p>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 1 · Eléctrica contra gravitatoria</span><span class="src">Campo y Potencial 1</span></div>
+    <div class="ej-q"><p>Halla la relación entre la fuerza eléctrica y la gravitatoria entre dos electrones en el vacío.</p><div class="data"><span>e = 1.6·10⁻¹⁹ C</span><span>m = 9.11·10⁻³¹ kg</span><span>G = 6.67·10⁻¹¹ N·m²/kg²</span></div></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Escribe las dos fuerzas</div><div class="st-b">\[F_e = k\,\frac{e^2}{r^2}\qquad F_g = G\,\frac{m^2}{r^2}\]<p>No nos dan la distancia, pero no hace falta: va a desaparecer.</p></div></li>
+      <li class="step"><div class="st-t">Divide una entre otra</div><div class="st-b">\[\frac{F_e}{F_g} = \frac{k\,e^2/r^2}{G\,m^2/r^2} = \frac{k\,e^2}{G\,m^2}\]<p>Las \(r^2\) se anulan.</p></div></li>
+      <li class="step"><div class="st-t">Sustituye</div><div class="st-b">\[\frac{F_e}{F_g} = \frac{9\cdot10^{9}\cdot(1.6\cdot10^{-19})^2}{6.67\cdot10^{-11}\cdot(9.11\cdot10^{-31})^2} = \frac{2.304\cdot10^{-28}}{5.536\cdot10^{-71}}\]\[\frac{F_e}{F_g} = 4.16\cdot10^{42}\]<div class="result">La fuerza eléctrica es 4.16·10⁴² veces mayor. Por eso en electricidad la gravedad entre partículas se desprecia siempre.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 2 · Las esferitas colgadas</span><span class="src">Campo y Potencial 2</span></div>
+    <div class="ej-q"><p>Dos esferitas iguales e igualmente cargadas, de 0.1 g cada una, cuelgan del mismo punto con hilos de 13 cm. Por la repulsión se separan 10 cm. Halla la carga de cada una.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Datos al SI</div><div class="st-b"><p>\(m = 0.1\) g \(= 10^{-4}\) kg, hilo \(L = 0.13\) m, separación \(r = 0.10\) m.</p></div></li>
+      <li class="step"><div class="st-t">Geometría (Tema 0, apartado 05)</div><div class="st-b"><p>Cada esfera está a 5 cm de la vertical. Con el hilo de 13 cm, la vertical mide \(\sqrt{13^2-5^2} = 12\) cm, así que:</p>\[\tan\theta = \frac{5}{12} = 0.417\]</div></li>
+      <li class="step"><div class="st-t">Equilibrio de una esfera (Tema 0, apartado 10)</div><div class="st-b"><p>Sobre cada esfera actúan el peso, la tensión del hilo y la fuerza eléctrica horizontal. Del equilibrio sale:</p>\[\tan\theta = \frac{F}{m\,g}\ \Rightarrow\ F = m\,g\tan\theta = 10^{-4}\cdot9.8\cdot0.417 = 4.08\cdot10^{-4}\ \text{N}\]</div></li>
+      <li class="step"><div class="st-t">Esa fuerza es la de Coulomb: despeja q</div><div class="st-b"><p>Las dos cargas son iguales: \(F = k\,\dfrac{q^2}{r^2}\), así que:</p>\[q = r\sqrt{\frac{F}{k}} = 0.1\cdot\sqrt{\frac{4.08\cdot10^{-4}}{9\cdot10^{9}}} = 0.1\cdot2.13\cdot10^{-7}\]\[q = 2.13\cdot10^{-8}\ \text{C} = 21.3\ \text{nC}\]<div class="result">q ≈ 21 nC. Con g = 10 m/s² sale 21.5 nC; la hoja da 21.6 nC. La diferencia es solo de redondeo.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 4 · ¿Dónde se queda quieta una carga?</span><span class="src">Campo y Potencial 4</span></div>
+    <div class="ej-q"><p>Dos cargas A y B están separadas 1 m, y \(|q_B| = 3|q_A|\). ¿En qué punto estaría en equilibrio una carga positiva unidad si a) A y B tienen el mismo signo, b) tienen signos contrarios?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">La idea: las dos fuerzas se anulan</div><div class="st-b"><p>Pon A en \(x = 0\) y B en \(x = 1\). En el punto de equilibrio, las fuerzas de A y de B tienen que tener el <b>mismo módulo</b> y <b>sentidos opuestos</b>.</p><ul><li><b>Mismo signo:</b> solo se oponen <b>entre</b> las dos cargas.</li><li><b>Signos contrarios:</b> solo se oponen <b>fuera</b>, y además del lado de la carga pequeña (si no, la grande siempre ganaría).</li></ul></div></li>
+      <li class="step"><div class="st-t">Iguala módulos (la carga de prueba se va)</div><div class="st-b"><p>A una distancia \(x\) de A y \(1-x\) de B:</p>\[k\frac{q}{x^2} = k\frac{3q}{(1-x)^2}\ \Rightarrow\ (1-x)^2 = 3x^2\]</div></li>
+      <li class="step"><div class="st-t">Resuelve la ecuación de 2º grado</div><div class="st-b">\[1 - 2x + x^2 = 3x^2\ \Rightarrow\ 2x^2 + 2x - 1 = 0\]\[x = \frac{-2\pm\sqrt{4+8}}{4} = \frac{-2\pm3.464}{4}\ \Rightarrow\ x = 0.366\ \text{ó}\ x = -1.366\]<div class="calc-note"><b>Casio (opcional)</b> HOME → Ecuación → Polinomio → grado 2. Coeficientes a = 2, b = 2, c = −1. Te da las dos soluciones.</div></div></li>
+      <li class="step"><div class="st-t">Elige la que vale en cada caso</div><div class="st-b"><p>a) Mismo signo: el punto está entre las cargas → \(x = 0.366\) m.</p><p>b) Signos contrarios: fuera, del lado de A → \(x = -1.366\) m, es decir, 1.37 m a la izquierda de A.</p><div class="result">a) 0.37 m desde A, hacia B. b) 1.37 m desde A, por el lado contrario a B.</div></div></li>
+    </ol>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 03 ======================= -->
+<section class="sec" id="campo" data-n="03" data-title="Campo eléctrico y superposición">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 03</div>
+    <h2>Campo eléctrico y superposición</h2>
+    <p class="sec-sub">El campo de una o varias cargas puntuales, y cómo se suman los vectores. Ejercicio 5.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Campo y Potencial 5</span><span class="chip rel">3 (campo)</span><span class="chip rel">6</span></div>
+
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>El <b>campo eléctrico</b> es la zona del espacio donde una carga nota fuerzas eléctricas. En cada punto se mide como la fuerza que notaría una carga de prueba positiva, dividida entre esa carga: «fuerza por cada culombio». Si conoces el campo en un punto, la fuerza sobre cualquier carga \(q\) que pongas ahí es \(\vec F = q\,\vec E\).</p>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Fórmula · Campo de una carga y superposición</div>
+    <div class="f-body big">
+      \[\vec E = \frac{\vec F}{q}\qquad E = k\,\frac{|Q|}{r^2}\qquad \vec E_{total} = \sum_i k\,\frac{Q_i}{r_i^2}\,\hat r_i\]
+      <p>Unidad: N/C (que es lo mismo que V/m). <b>Dirección:</b> sale de las cargas positivas y entra en las negativas. Con varias cargas, se calcula el campo de cada una y se <b>suman como vectores</b> (componente x con x, y con y).</p>
+    </div>
+  </div>
+
+  <div class="fig widget paper" id="w-field">
+    <div class="w-head"><b>Campo de dos cargas: arrastra las cargas y el punto P</b><span class="pill">Interactivo</span></div>
+    <div class="art"><svg id="field-svg" viewBox="0 0 640 400" role="img" aria-label="Mapa de flechas del campo eléctrico de dos cargas con un punto de prueba"></svg></div>
+    <div class="controls">
+      <div class="ctrl"><label for="fq1">Carga q₁</label><input type="range" id="fq1" min="-5" max="5" step="1" value="3"><output id="fq1-o">3 μC</output></div>
+      <div class="ctrl"><label for="fq2">Carga q₂</label><input type="range" id="fq2" min="-5" max="5" step="1" value="-3"><output id="fq2-o">−3 μC</output></div>
+    </div>
+    <div class="readout" id="field-read"></div>
+    <div class="explain" id="field-exp"></div>
+  </div>
+
+  <div class="box truco">
+    <div class="tag">Líneas de campo (diapositivas 8–9)</div>
+    <ul>
+      <li>Salen de las cargas positivas y acaban en las negativas.</li>
+      <li>En cada punto son <b>tangentes</b> al campo: marcan su dirección.</li>
+      <li><b>Nunca se cortan</b>, porque en cada punto el campo tiene una sola dirección.</li>
+      <li>Donde están más juntas, el campo es más intenso.</li>
+    </ul>
+    <p>En el dibujo de arriba, cada flechita marca la dirección del campo en ese punto. Si las vas siguiendo, recorres una línea de campo.</p>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Método · Campo de varias cargas puntuales</div>
+    <div class="f-body">
+      <ol>
+        <li>Dibuja las cargas y el punto P.</li>
+        <li>Para cada carga: vector \(\vec r\) <b>de la carga al punto</b> (punta menos cola), su módulo \(r\) y su unitario \(\hat r\).</li>
+        <li>Módulo del campo de cada carga: \(E_i = k|Q_i|/r_i^2\).</li>
+        <li>Dirección: \(+\hat r\) si la carga es positiva, \(-\hat r\) si es negativa.</li>
+        <li>Suma componente a componente. Si te piden la fuerza sobre una carga \(q\), multiplica: \(\vec F = q\,\vec E\).</li>
+      </ol>
+    </div>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-ej5" viewBox="0 0 520 360" style="max-width:520px;margin-inline:auto" role="img" aria-label="Tres cargas en A, B y C, y los campos que crean en el origen"></svg></div>
+    <figcaption>Ejercicio 5. Las flechas en el origen son los campos de cada carga (a escala). Todas las cargas son positivas, así que cada campo apunta alejándose de su carga.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 5 · Tres cargas</span><span class="src">Campo y Potencial 5</span></div>
+    <div class="ej-q"><p>\(Q_1 = 2\ \mu\)C en A(−2, 0), \(Q_2 = 5\ \mu\)C en B(3, 0) y \(Q_3 = 4\ \mu\)C en C(0, 4) (distancias en m). Halla a) el campo en el origen, b) la fuerza sobre \(Q_2\) debida a las otras dos.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">a) Campo de Q₁ en O</div><div class="st-b"><p>De A a O: \(\vec r = (2, 0)\), \(r = 2\) m, \(\hat r = \ii\).</p>\[E_1 = \frac{9\cdot10^9\cdot2\cdot10^{-6}}{2^2} = 4500\ \text{N/C}\ \Rightarrow\ \vec E_1 = 4500\,\ii\]</div></li>
+      <li class="step"><div class="st-t">Campo de Q₂ en O</div><div class="st-b"><p>De B a O: \(\vec r = (-3, 0)\), \(r = 3\) m, \(\hat r = -\ii\).</p>\[E_2 = \frac{9\cdot10^9\cdot5\cdot10^{-6}}{3^2} = 5000\ \text{N/C}\ \Rightarrow\ \vec E_2 = -5000\,\ii\]</div></li>
+      <li class="step"><div class="st-t">Campo de Q₃ en O</div><div class="st-b"><p>De C a O: \(\vec r = (0, -4)\), \(r = 4\) m, \(\hat r = -\jj\).</p>\[E_3 = \frac{9\cdot10^9\cdot4\cdot10^{-6}}{4^2} = 2250\ \text{N/C}\ \Rightarrow\ \vec E_3 = -2250\,\jj\]</div></li>
+      <li class="step"><div class="st-t">Suma</div><div class="st-b">\[\vec E = (4500 - 5000)\,\ii - 2250\,\jj = -500\,\ii - 2250\,\jj\ \text{N/C}\]\[|\vec E| = \sqrt{500^2+2250^2} = 2305\ \text{N/C}\]<p class="check">La hoja pone +500 i, pero la carga de B (5 μC a 3 m) empuja hacia la izquierda más que la de A (2 μC a 2 m) hacia la derecha: 5000 &gt; 4500, así que la componente x es negativa.</p><div class="calc-note"><b>Casio (opcional)</b> App Vector: VctA = (4500, 0), VctB = (−5000, 0), VctC = (0, −2250). Escribe VctA + VctB + VctC y pulsa =.</div></div></li>
+      <li class="step"><div class="st-t">b) Fuerza de Q₁ sobre Q₂</div><div class="st-b"><p>De A a B: \(\vec r = (5, 0)\), \(r = 5\) m. Las dos son positivas, así que se repelen y la fuerza va hacia \(+\ii\):</p>\[F_{12} = \frac{9\cdot10^9\cdot2\cdot10^{-6}\cdot5\cdot10^{-6}}{25} = 3.6\cdot10^{-3}\ \text{N}\ \Rightarrow\ \vec F_{12} = (3.6\cdot10^{-3},\ 0)\]</div></li>
+      <li class="step"><div class="st-t">Fuerza de Q₃ sobre Q₂</div><div class="st-b"><p>De C a B: \(\vec r = (3, -4)\), \(r = 5\) m, \(\hat r = (0.6, -0.8)\). Se repelen:</p>\[F_{32} = \frac{9\cdot10^9\cdot4\cdot10^{-6}\cdot5\cdot10^{-6}}{25} = 7.2\cdot10^{-3}\ \text{N}\]\[\vec F_{32} = 7.2\cdot10^{-3}\,(0.6,\ -0.8) = (4.32\cdot10^{-3},\ -5.76\cdot10^{-3})\]</div></li>
+      <li class="step"><div class="st-t">Suma y módulo</div><div class="st-b">\[\vec F = (7.92\cdot10^{-3},\ -5.76\cdot10^{-3})\ \text{N}\qquad |\vec F| = 9.79\cdot10^{-3}\ \text{N}\]<p class="check">La hoja da 0.0108 N, que es sumar los módulos 0.0036 + 0.0072 como si las dos fuerzas fueran en la misma dirección. No lo hacen (una es horizontal y la otra inclinada), así que la suma vectorial da 9.79·10⁻³ N. Si en clase os dan otro resultado, pregúntaselo al profesor.</p><div class="result">a) E = −500 i − 2250 j N/C, con módulo 2305 N/C. b) F = 7.92·10⁻³ i − 5.76·10⁻³ j N, con módulo 9.79·10⁻³ N.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="box cuidado">
+    <div class="tag">Cuidado</div>
+    <ul>
+      <li>Nunca sumes módulos de campos o fuerzas que no van en la misma dirección. Pasa siempre a componentes.</li>
+      <li>El vector \(\vec r\) va <b>de la carga que crea el campo al punto</b>, no al revés.</li>
+      <li>Las cargas suelen venir en μC: multiplica por 10⁻⁶ antes de nada.</li>
+    </ul>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 04 ======================= -->
+<section class="sec" id="dipolo" data-n="04" data-title="El dipolo eléctrico">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 04</div>
+    <h2>El dipolo eléctrico</h2>
+    <p class="sec-sub">Dos cargas iguales y opuestas. Es el ejercicio 6, con resultados en letras en vez de números.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Campo y Potencial 6</span></div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-dip" viewBox="0 0 520 300" style="max-width:520px;margin-inline:auto" role="img" aria-label="Dipolo: carga +q en (0,a) y −q en (0,−a), con el campo en un punto del eje X"></svg></div>
+    <figcaption>En un punto del eje X, los dos campos tienen el mismo módulo. Sus componentes x se anulan y las y se suman: el campo total apunta hacia −y.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 6 · Dipolo</span><span class="src">Campo y Potencial 6</span></div>
+    <div class="ej-q"><p>\(+q\) en \((0, a)\) y \(-q\) en \((0, -a)\). Halla el campo a) en el eje Y, b) en el eje X, c) en el eje X lejos (\(x \gg a\)), y d) la energía potencial del dipolo.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">a) Eje Y: los dos campos van por el eje</div><div class="st-b"><p>En un punto \((0, y)\), llama \(A = \dfrac{kq}{(y-a)^2}\) (módulo del campo de +q) y \(B = \dfrac{kq}{(y+a)^2}\) (módulo del de −q). Solo falta el sentido de cada uno según la zona:</p><ul><li>\(y &gt; a\) (por encima de las dos): +q empuja hacia arriba (+A) y −q tira hacia abajo (−B) → \(\vec E = (A - B)\,\jj\)</li><li>\(-a &lt; y &lt; a\) (entre las dos): +q empuja hacia abajo y −q tira hacia abajo → \(\vec E = (-A - B)\,\jj\)</li><li>\(y &lt; -a\) (por debajo): +q empuja hacia abajo (−A) y −q tira hacia arriba (+B) → \(\vec E = (-A + B)\,\jj\)</li></ul></div></li>
+      <li class="step"><div class="st-t">b) Eje X: misma distancia a las dos cargas</div><div class="st-b"><p>En \((x, 0)\) las dos cargas están a \(r = \sqrt{x^2+a^2}\), así que los dos campos miden lo mismo: \(E_\pm = \dfrac{kq}{x^2+a^2}\).</p><p>Vector de +q al punto: \((x, -a)\). El campo de +q va en ese sentido. Vector de −q al punto: \((x, a)\). El campo de −q va en sentido <b>contrario</b>, \((-x, -a)\).</p></div></li>
+      <li class="step"><div class="st-t">Suma: las x se anulan</div><div class="st-b">\[\vec E = \frac{kq}{r^2}\cdot\frac{(x, -a)}{r} + \frac{kq}{r^2}\cdot\frac{(-x, -a)}{r} = \frac{kq}{r^3}\,(0,\ -2a)\]\[\vec E = -\frac{2kqa}{\left(x^2+a^2\right)^{3/2}}\,\jj\]</div></li>
+      <li class="step"><div class="st-t">c) Muy lejos: \(x \gg a\)</div><div class="st-b"><p>Si \(x\) es mucho mayor que \(a\), entonces \(x^2 + a^2 \approx x^2\) y \(\left(x^2\right)^{3/2} = x^3\):</p>\[\vec E \approx -\frac{2kqa}{x^3}\,\jj\]<p>Lejos, el campo del dipolo cae con \(1/x^3\): más rápido que el de una carga sola (\(1/x^2\)), porque las dos cargas casi se compensan.</p></div></li>
+      <li class="step"><div class="st-t">d) Energía potencial del dipolo</div><div class="st-b"><p>Es la energía de la pareja, \(E_p = k\,q_1q_2/r\), con las cargas separadas \(2a\):</p>\[E_p = k\,\frac{(+q)(-q)}{2a} = -\frac{kq^2}{2a}\]<div class="result">a) Por zonas, como arriba. b) \(-2kqa/(x^2+a^2)^{3/2}\,\jj\). c) \(-2kqa/x^3\,\jj\). d) \(-kq^2/2a\). Coincide con las soluciones.</div></div></li>
+    </ol>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 05 ======================= -->
+<section class="sec" id="continuas" data-n="05" data-title="Cargas repartidas: hilos y anillos">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 05</div>
+    <h2>Cargas repartidas: hilos y anillos</h2>
+    <p class="sec-sub">Cuando la carga no es un punto sino un objeto: se parte en trocitos \(dq\) y se integra. Ejercicios 10, 11 y 12.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Campo y Potencial 10</span><span class="chip rel">11</span><span class="chip rel">12</span><span class="chip">Repasa: Tema 0, apartado 09</span></div>
+
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>Un hilo cargado no es una carga puntual, pero cada trocito minúsculo sí lo es. Calculas el campo de un trocito con la fórmula de siempre y sumas (integras) los de todos los trocitos. Para saber cuánta carga tiene cada trocito se usan las <b>densidades de carga</b>.</p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Densidad</th><th>Definición</th><th>Trocito</th><th>Unidad</th></tr></thead>
+      <tbody>
+        <tr><td><b>Lineal</b> λ (hilos, anillos)</td><td>\(\lambda = Q/L\)</td><td>\(dq = \lambda\,dl\)</td><td>C/m</td></tr>
+        <tr><td><b>Superficial</b> σ (placas, cortezas)</td><td>\(\sigma = Q/S\)</td><td>\(dq = \sigma\,dS\)</td><td>C/m²</td></tr>
+        <tr><td><b>Volumétrica</b> ρ (esferas o cilindros macizos)</td><td>\(\rho = Q/V\)</td><td>\(dq = \rho\,dV\)</td><td>C/m³</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Método · 4 pasos</div>
+    <div class="f-body">
+      <ol>
+        <li><b>Trocito:</b> elige un \(dq\) en una posición cualquiera del objeto (por ejemplo \(dq = \lambda\,dx\)).</li>
+        <li><b>Su campo:</b> \(dE = k\,\dfrac{dq}{r^2}\), con \(r\) la distancia del trocito al punto.</li>
+        <li><b>Simetría:</b> mira qué componentes se anulan entre trocitos simétricos y quédate solo con la que sobrevive.</li>
+        <li><b>Integra</b> a lo largo de todo el objeto.</li>
+      </ol>
+    </div>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-rod" viewBox="0 0 560 200" style="max-width:560px;margin-inline:auto" role="img" aria-label="Varilla de longitud L en el eje x con un trocito dx, y un punto P en x0"></svg></div>
+    <figcaption>Varilla de la diapositiva 12. El trocito en la posición \(x\) mide \(dx\), tiene carga \(dq = \lambda\,dx\) y está a \(x_0 - x\) del punto P.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejemplo resuelto · Varilla en su propio eje</span><span class="src">Diapositiva 12</span></div>
+    <div class="ej-q"><p>Una varilla de longitud \(L\) con carga \(Q\) uniforme va de \(x = 0\) a \(x = L\). Halla el campo en el punto P en \(x = x_0\) (más allá del extremo).</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Trocito y su campo</div><div class="st-b">\[dq = \lambda\,dx\qquad dE = k\,\frac{\lambda\,dx}{(x_0 - x)^2}\]<p>Todos los trocitos empujan en la misma dirección (+x), así que se pueden sumar los módulos directamente.</p></div></li>
+      <li class="step"><div class="st-t">Integra de 0 a L</div><div class="st-b">\[E = k\lambda\int_0^L\frac{dx}{(x_0-x)^2} = k\lambda\left[\frac{1}{x_0 - x}\right]_0^L\]<p>(La primitiva de \(1/(x_0-x)^2\) es \(+1/(x_0-x)\), porque al derivar \((x_0-x)^{-1}\) la regla de la cadena da un menos extra que compensa el otro.)</p></div></li>
+      <li class="step"><div class="st-t">Barrow y simplifica</div><div class="st-b">\[E = k\lambda\left(\frac{1}{x_0 - L} - \frac{1}{x_0}\right) = \frac{k\lambda L}{x_0(x_0 - L)} = \frac{kQ}{x_0(x_0-L)}\]<div class="result">\(E = \dfrac{kQ}{x_0(x_0-L)}\) en la dirección de la varilla. Si \(x_0 \gg L\), sale \(kQ/x_0^2\): de lejos, la varilla parece una carga puntual.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 12 · Fuerza de un hilo sobre una carga</span><span class="src">Campo y Potencial 12</span></div>
+    <div class="ej-q"><p>Un hilo de 12 cm tiene \(\lambda = 4\cdot10^{-4}\) C/m. A 50 cm de uno de sus extremos, en la misma línea del hilo, hay una carga de 2 μC. Halla la fuerza.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Elige la variable: distancia de cada trocito a la carga</div><div class="st-b"><p>Llama \(s\) a la distancia de un trocito a la carga. El extremo cercano está a \(s = 0.50\) m y el lejano a \(s = 0.62\) m.</p></div></li>
+      <li class="step"><div class="st-t">Fuerza de un trocito</div><div class="st-b">\[dF = k\,\frac{q\,dq}{s^2} = k\,\frac{q\,\lambda\,ds}{s^2}\]</div></li>
+      <li class="step"><div class="st-t">Integra (Tema 0, apartado 09)</div><div class="st-b">\[F = kq\lambda\int_{0.5}^{0.62}\frac{ds}{s^2} = kq\lambda\left[-\frac{1}{s}\right]_{0.5}^{0.62} = kq\lambda\left(\frac{1}{0.5} - \frac{1}{0.62}\right)\]<div class="calc-note"><b>Casio (opcional)</b> CATALOG → Análisis de funciones → Integración: ∫(1/x², 0.5, 0.62) = 0.3871.</div></div></li>
+      <li class="step"><div class="st-t">Números</div><div class="st-b">\[F = 9\cdot10^9\cdot2\cdot10^{-6}\cdot4\cdot10^{-4}\cdot0.3871 = 7.2\cdot0.3871 = 2.787\ \text{N}\]<div class="result">F = 2.79 N, a lo largo del hilo. Es lo mismo que sale con la fórmula de la varilla, usando \(x_0 = 0.62\) m y \(L = 0.12\) m.</div></div></li>
+    </ol>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-ring" viewBox="0 0 560 280" style="max-width:560px;margin-inline:auto" role="img" aria-label="Anillo de radio a con dos trocitos opuestos y sus campos en un punto del eje"></svg></div>
+    <figcaption>Dos trocitos opuestos del anillo crean campos (\(dE\)) cuyas componentes perpendiculares al eje se anulan. Solo sobreviven las componentes a lo largo del eje.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 10 · Fuerza de un anillo sobre una carga en su eje</span><span class="src">Campo y Potencial 10</span></div>
+    <div class="ej-q"><p>Un anillo de radio \(a\) tiene densidad lineal \(\lambda\). En su eje, a distancia \(b\) del centro, hay una carga \(q\). Halla la fuerza sobre \(q\).</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Trocito y distancia</div><div class="st-b"><p>Un trocito del anillo de longitud \(dl\) tiene \(dq = \lambda\,dl\). <b>Todos</b> los trocitos están a la misma distancia del punto (Pitágoras):</p>\[r = \sqrt{a^2+b^2}\qquad dE = k\,\frac{\lambda\,dl}{a^2+b^2}\]</div></li>
+      <li class="step"><div class="st-t">Simetría: solo queda la componente del eje</div><div class="st-b"><p>Las componentes perpendiculares al eje se anulan de dos en dos (mira el dibujo). La componente a lo largo del eje es \(dE\cos\alpha\), con \(\cos\alpha = \dfrac{b}{\sqrt{a^2+b^2}}\):</p>\[dE_{eje} = k\,\frac{\lambda\,dl}{a^2+b^2}\cdot\frac{b}{\sqrt{a^2+b^2}} = \frac{k\lambda b}{\left(a^2+b^2\right)^{3/2}}\,dl\]</div></li>
+      <li class="step"><div class="st-t">Integra por todo el anillo</div><div class="st-b"><p>Todo es constante salvo \(dl\), y \(\int dl\) es la longitud del anillo, \(2\pi a\):</p>\[E = \frac{k\lambda b}{\left(a^2+b^2\right)^{3/2}}\cdot2\pi a = \frac{k\,Q\,b}{\left(a^2+b^2\right)^{3/2}}\quad (Q = 2\pi a\lambda)\]</div></li>
+      <li class="step"><div class="st-t">Fuerza = q·E, y pon k = 1/(4πε₀)</div><div class="st-b">\[F = qE = \frac{q\cdot2\pi a\lambda\cdot b}{4\pi\varepsilon_0\left(a^2+b^2\right)^{3/2}} = \frac{q\,\lambda\,a\,b}{2\varepsilon_0\left(a^2+b^2\right)^{3/2}}\]<div class="result">\(F = \dfrac{q\lambda ab}{2\varepsilon_0(a^2+b^2)^{3/2}}\) a lo largo del eje. Coincide con la solución.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="practica">
+    <div class="tag">Inténtalo tú · Ejercicio 11</div>
+    <p>Con el campo del anillo, \(E(b) = \dfrac{kQ\,b}{(a^2+b^2)^{3/2}}\), ¿a qué distancia \(b\) es mínimo el campo? ¿Y máximo?</p>
+    <details class="sol"><summary>Ver solución</summary><div>
+      <p>Esta derivada está hecha paso a paso en el Tema 0 (apartado 08, ejemplo 5):</p>
+      \[E'(b) = kQ\,\frac{a^2 - 2b^2}{(a^2+b^2)^{5/2}}\]
+      <p>Se anula en \(b = a/\sqrt2\), y ahí el campo es <b>máximo</b>. El <b>mínimo</b> está en \(b = 0\): en el centro del anillo todos los trocitos empujan en direcciones opuestas y el campo vale 0. Como el campo nunca es negativo (para \(b \ge 0\)), ese es el valor más pequeño posible. Por eso la solución de la hoja es \(b = 0\).</p>
+    </div></details>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 06 ======================= -->
+<section class="sec" id="gauss" data-n="06" data-title="Flujo y teorema de Gauss">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 06</div>
+    <h2>Flujo y teorema de Gauss</h2>
+    <p class="sec-sub">El atajo para esferas, cilindros y planos: con simetría no hace falta integrar. Ejercicios 9, 13, 14, 15 y 16.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Campo y Potencial 9</span><span class="chip rel">13</span><span class="chip rel">14</span><span class="chip rel">15</span><span class="chip rel">16</span></div>
+
+  <div class="box idea">
+    <div class="tag">La idea · flujo</div>
+    <p>El <b>flujo</b> \(\Phi\) mide cuántas líneas de campo atraviesan una superficie. Depende del campo, del tamaño de la superficie y de cómo está orientada: si la superficie está de cara al campo, la atraviesan todas las líneas; si está de canto, ninguna.</p>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Fórmula · Flujo</div>
+    <div class="f-body big">
+      \[\Phi = \int\vec E\cdot d\vec S\qquad\text{(campo uniforme y superficie plana)}\quad \Phi = \vec E\cdot\vec S = E\,S\cos\theta\]
+      <p>\(\vec S\) es el vector superficie del Tema 1: su módulo es el área y es perpendicular a la superficie. En una superficie cerrada apunta siempre <b>hacia fuera</b>. θ es el ángulo entre \(\vec E\) y \(\vec S\). Unidad: N·m²/C = V·m.</p>
+    </div>
+  </div>
+
+  <div class="fig widget paper" id="w-flux">
+    <div class="w-head"><b>Gira la superficie y mira el flujo</b><span class="pill">Interactivo</span></div>
+    <div class="art"><svg id="flux-svg" viewBox="0 0 460 260" style="max-width:500px" role="img" aria-label="Superficie que gira dentro de un campo uniforme"></svg></div>
+    <div class="controls">
+      <div class="ctrl"><label for="flux-t">Ángulo θ entre E y S</label><input type="range" id="flux-t" min="0" max="180" step="5" value="30"><output id="flux-t-o">30°</output></div>
+    </div>
+    <div class="readout" id="flux-read"></div>
+    <div class="explain" id="flux-exp"></div>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-cube" viewBox="0 0 460 300" style="max-width:460px;margin-inline:auto" role="img" aria-label="Cubo de arista a con sus caras inferior y superior marcadas"></svg></div>
+    <figcaption>Ejercicio 9. El cubo tiene arista \(a\). Su cara de abajo está en \(y = 0\) y la de arriba en \(y = a\). Los vectores \(d\vec S\) de cada cara apuntan hacia fuera.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 9 · Flujo a través de un cubo</span><span class="src">Campo y Potencial 9</span></div>
+    <div class="ej-q"><p>Calcula el flujo a través del cubo de la figura y la carga que contiene, si a) \(\vec E = 5\,\jj\), b) \(\vec E = y\,\jj\).</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Qué caras cuentan</div><div class="st-b"><p>En los dos casos \(\vec E\) solo tiene componente \(y\). En las 4 caras laterales, \(d\vec S\) apunta en ±x o ±z: es perpendicular a \(\vec E\) y su flujo es 0. Solo cuentan la cara de <b>abajo</b> (\(y = 0\), \(d\vec S\) hacia \(-\jj\)) y la de <b>arriba</b> (\(y = a\), \(d\vec S\) hacia \(+\jj\)), cada una de área \(a^2\).</p></div></li>
+      <li class="step"><div class="st-t">a) E = 5 j (uniforme)</div><div class="st-b">\[\Phi_{abajo} = 5\jj\cdot(-a^2\jj) = -5a^2\qquad \Phi_{arriba} = 5\jj\cdot(a^2\jj) = +5a^2\]\[\Phi = -5a^2 + 5a^2 = 0\ \Rightarrow\ q = \varepsilon_0\Phi = 0\]<p>Las líneas que entran por abajo salen por arriba: dentro no hay carga.</p></div></li>
+      <li class="step"><div class="st-t">b) E = y j (depende de la altura)</div><div class="st-b"><p>Abajo, \(y = 0\), así que \(\vec E = 0\) y su flujo es 0. Arriba, \(y = a\), así que \(\vec E = a\,\jj\):</p>\[\Phi_{arriba} = a\,\jj\cdot a^2\,\jj = a^3\qquad \Phi = 0 + a^3 = a^3\ \text{V·m}\]</div></li>
+      <li class="step"><div class="st-t">Carga con Gauss (lo vemos justo abajo)</div><div class="st-b">\[q = \varepsilon_0\,\Phi = \varepsilon_0\,a^3\ \text{C}\]<div class="result">a) Φ = 0 y q = 0. b) Φ = a³ V·m y q = ε₀a³ C.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="box idea">
+    <div class="tag">Teorema de Gauss</div>
+    <p>El flujo total que sale de <b>cualquier superficie cerrada</b> (la «superficie de Gauss») es igual a la carga que hay dentro dividida entre \(\varepsilon_0\). La carga que está fuera no cuenta: sus líneas entran por un lado y salen por otro.</p>
+    <div class="big">\[\oint\vec E\cdot d\vec S = \frac{Q_{int}}{\varepsilon_0}\]</div>
+    <p>De dónde sale (diapositiva 14): una esfera de radio \(R\) alrededor de una carga \(Q\). El campo vale \(kQ/R^2\) en toda la esfera y sale perpendicular a ella, así que \(\Phi = \dfrac{kQ}{R^2}\cdot4\pi R^2 = 4\pi kQ = \dfrac{Q}{\varepsilon_0}\). El radio desaparece: vale para cualquier superficie.</p>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-gauss" viewBox="0 0 660 230" style="min-width:560px" role="img" aria-label="Tres superficies de Gauss: esfera alrededor de una esfera, cilindro alrededor de un hilo y cilindro corto atravesando un plano"></svg></div>
+    <figcaption>Elige la superficie de Gauss con la misma forma que la carga, para que el campo sea constante y perpendicular a ella. En verde la superficie de Gauss, en rosa la carga.</figcaption>
+  </figure>
+
+  <div class="formula">
+    <div class="f-head">Método · Gauss en 4 pasos</div>
+    <div class="f-body">
+      <ol>
+        <li><b>Simetría:</b> ¿la carga es una esfera, un cilindro o hilo, o un plano? Elige una superficie de Gauss de esa forma que pase por el punto donde quieres el campo (a distancia \(r\)).</li>
+        <li><b>Flujo:</b> el campo es constante y perpendicular a la superficie, así que \(\Phi = E\cdot S\): <span class="hl">esfera \(E\cdot4\pi r^2\)</span>, <span class="hl">cilindro \(E\cdot2\pi r L\)</span> (las tapas no cuentan), <span class="hl">plano \(E\cdot2A\)</span> (las dos tapas).</li>
+        <li><b>Carga interior</b> \(Q_{int}\): la que queda dentro de la superficie de Gauss. Si estás dentro de un cuerpo macizo, solo una parte: \(Q_{int} = \rho\cdot V_{dentro}\).</li>
+        <li><b>Iguala</b> \(\Phi = Q_{int}/\varepsilon_0\) y despeja \(E\).</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 14 · Corteza esférica</span><span class="src">Campo y Potencial 14</span></div>
+    <div class="ej-q"><p>Una corteza esférica (hueca) de radio \(a\) tiene carga \(Q\) repartida por su superficie. Halla el campo y el potencial en todo el espacio.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Fuera, r &gt; a: esfera de Gauss de radio r</div><div class="st-b"><p>Dentro de la esfera de Gauss queda toda la carga \(Q\):</p>\[E\cdot4\pi r^2 = \frac{Q}{\varepsilon_0}\ \Rightarrow\ E = \frac{Q}{4\pi\varepsilon_0 r^2} = \frac{kQ}{r^2}\]<p>Fuera, la corteza se comporta como una carga puntual en su centro, así que su potencial también es \(V = kQ/r\).</p></div></li>
+      <li class="step"><div class="st-t">Dentro, r &lt; a: no hay carga dentro de la esfera de Gauss</div><div class="st-b">\[E\cdot4\pi r^2 = \frac{0}{\varepsilon_0}\ \Rightarrow\ E = 0\]</div></li>
+      <li class="step"><div class="st-t">Potencial dentro</div><div class="st-b"><p>Si \(E = 0\), el potencial no cambia: \(\Delta V = -\int E\,dr = 0\). Vale lo mismo que en la superficie:</p>\[V = \frac{kQ}{a}\ \ (\text{constante})\]<div class="result">r &gt; a: E = kQ/r², V = kQ/r. r &lt; a: E = 0, V = kQ/a.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 13 · Esfera maciza</span><span class="src">Campo y Potencial 13</span></div>
+    <div class="ej-q"><p>Una esfera maciza de radio \(a\) tiene carga \(Q\) repartida uniformemente por todo su volumen. Halla el campo y el potencial en todo el espacio.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Fuera, r &gt; a</div><div class="st-b"><p>Igual que la corteza: queda toda la carga dentro, así que \(E = kQ/r^2\) y \(V = kQ/r\).</p></div></li>
+      <li class="step"><div class="st-t">Dentro, r &lt; a: ¿cuánta carga queda dentro?</div><div class="st-b"><p>La densidad es \(\rho = \dfrac{Q}{\tfrac43\pi a^3}\). Una esfera de radio \(r\) contiene:</p>\[Q_{int} = \rho\cdot\tfrac43\pi r^3 = Q\,\frac{r^3}{a^3}\]</div></li>
+      <li class="step"><div class="st-t">Gauss dentro</div><div class="st-b">\[E\cdot4\pi r^2 = \frac{Q\,r^3}{\varepsilon_0\,a^3}\ \Rightarrow\ E = \frac{Q\,r}{4\pi\varepsilon_0\,a^3} = \frac{kQ\,r}{a^3}\]<p>Dentro, el campo crece en línea recta desde 0 en el centro hasta \(kQ/a^2\) en la superficie.</p></div></li>
+      <li class="step"><div class="st-t">Potencial dentro: integra desde la superficie</div><div class="st-b"><p>\(V(r) = V(a) + \int_r^a E\,dr\) (el potencial aumenta al ir hacia el centro, contra el campo):</p>\[V(r) = \frac{kQ}{a} + \frac{kQ}{a^3}\int_r^a r\,dr = \frac{kQ}{a} + \frac{kQ}{a^3}\cdot\frac{a^2 - r^2}{2}\]\[V(r) = \frac{3kQ}{2a} - \frac{kQ\,r^2}{2a^3}\]<div class="result">r &gt; a: E = kQ/r², V = kQ/r. r &lt; a: E = kQr/a³, V = 3kQ/2a − kQr²/2a³.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 15 · Dos láminas paralelas</span><span class="src">Campo y Potencial 15 · base del condensador del Tema 3</span></div>
+    <div class="ej-q"><p>Dos láminas planas paralelas de área \(A\), separadas \(d\), tienen cargas \(+Q\) y \(-Q\). Halla el campo en todo el espacio.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Una sola lámina: cilindro corto que la atraviesa</div><div class="st-b"><p>Con \(\sigma = Q/A\), el cilindrito (de tapas de área \(S\)) encierra la carga \(\sigma S\). El campo sale por las <b>dos</b> tapas:</p>\[E\cdot2S = \frac{\sigma S}{\varepsilon_0}\ \Rightarrow\ E_1 = \frac{\sigma}{2\varepsilon_0}\]<p>No depende de la distancia: una lámina grande crea un campo uniforme a cada lado.</p></div></li>
+      <li class="step"><div class="st-t">Superpón las dos láminas</div><div class="st-b"><p>La positiva empuja hacia fuera de ella y la negativa tira hacia sí. <b>Entre</b> las láminas los dos campos van en el mismo sentido (de + a −) y se suman. <b>Fuera</b> van en sentidos opuestos y se anulan.</p>\[E_{dentro} = \frac{\sigma}{2\varepsilon_0} + \frac{\sigma}{2\varepsilon_0} = \frac{\sigma}{\varepsilon_0} = \frac{Q}{A\,\varepsilon_0}\qquad E_{fuera} = 0\]<div class="result">Entre las láminas, E = Q/(Aε₀), dirigido de la positiva a la negativa. Fuera, 0.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 16 · Cilindro macizo largo</span><span class="src">Campo y Potencial 16</span></div>
+    <div class="ej-q"><p>Un cilindro de longitud \(L\) grande y radio \(a\) tiene carga \(Q\) positiva repartida por todo su volumen (\(\rho = Q/\pi a^2L\)). Halla \(E\) y \(V\) a una distancia \(r\) del eje, con \(V = 0\) en la superficie, y representa \(E(r)\).</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Superficie de Gauss: cilindro de radio r y longitud L</div><div class="st-b"><p>El campo sale radial, perpendicular a la cara lateral. Por las tapas no hay flujo. \(\Phi = E\cdot2\pi rL\).</p></div></li>
+      <li class="step"><div class="st-t">Fuera, r &gt; a: dentro está toda la carga</div><div class="st-b">\[E\cdot2\pi rL = \frac{\rho\,\pi a^2L}{\varepsilon_0}\ \Rightarrow\ E = \frac{\rho\,a^2}{2\varepsilon_0\,r}\]</div></li>
+      <li class="step"><div class="st-t">Dentro, r &lt; a: solo la carga del cilindro de radio r</div><div class="st-b">\[E\cdot2\pi rL = \frac{\rho\,\pi r^2L}{\varepsilon_0}\ \Rightarrow\ E = \frac{\rho\,r}{2\varepsilon_0}\]</div></li>
+      <li class="step"><div class="st-t">Potencial fuera, con V(a) = 0</div><div class="st-b">\[V(r) = -\int_a^r E\,dr = -\frac{\rho a^2}{2\varepsilon_0}\int_a^r\frac{dr}{r} = -\frac{\rho a^2}{2\varepsilon_0}\ln\frac{r}{a} = \frac{\rho a^2}{2\varepsilon_0}\ln\frac{a}{r}\]<p>Fuera sale negativo: el potencial baja al alejarte, siguiendo el campo.</p></div></li>
+      <li class="step"><div class="st-t">Potencial dentro</div><div class="st-b">\[V(r) = \int_r^a E\,dr = \frac{\rho}{2\varepsilon_0}\cdot\frac{a^2 - r^2}{2} = \frac{\rho\,(a^2 - r^2)}{4\varepsilon_0}\]<div class="result">r &gt; a: E = ρa²/(2ε₀r), V = (ρa²/2ε₀)·ln(a/r). r &lt; a: E = ρr/(2ε₀), V = ρ(a² − r²)/(4ε₀). La gráfica de E(r) está en el dibujo interactivo de abajo: crece en línea recta hasta r = a y luego cae como 1/r.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="fig widget paper" id="w-gauss">
+    <div class="w-head"><b>E(r) y V(r) de cada distribución</b><span class="pill">Interactivo</span></div>
+    <div class="art"><svg id="gauss-svg" viewBox="0 0 460 400" style="max-width:520px" role="img" aria-label="Gráficas del campo y del potencial en función de la distancia"></svg></div>
+    <div class="controls">
+      <div class="ctrl"><label for="g-type">Distribución</label><select id="g-type"><option value="shell">Corteza esférica (ej. 14)</option><option value="sphere">Esfera maciza (ej. 13)</option><option value="cyl">Cilindro macizo (ej. 16)</option></select><span></span></div>
+      <div class="ctrl"><label for="g-r">Distancia r</label><input type="range" id="g-r" min="0.05" max="3" step="0.05" value="0.5"><output id="g-r-o"></output></div>
+    </div>
+    <div class="explain" id="gauss-exp"></div>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 07 ======================= -->
+<section class="sec" id="potencial" data-n="07" data-title="Energía potencial y potencial">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 07</div>
+    <h2>Energía potencial y potencial</h2>
+    <p class="sec-sub">La versión «con energías» del tema. Los potenciales se suman como números, sin vectores. Ejercicio 3 completo.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Campo y Potencial 3</span><span class="chip rel">6 d)</span></div>
+
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>La fuerza eléctrica es <b>conservativa</b>: el trabajo para llevar una carga de un punto a otro no depende del camino, solo del principio y del final. Por eso se le puede asociar una <b>energía potencial</b> \(E_p\), como la de una piedra a cierta altura. El <b>potencial</b> \(V\) es esa energía por cada culombio: \(V = E_p/q\). Su unidad es el voltio (V = J/C).</p>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Fórmulas · Trabajo, energía potencial y potencial</div>
+    <div class="f-body big">
+      \[W_{1\to2} = -\Delta E_p = E_p(1) - E_p(2)\qquad E_p = k\,\frac{q_1q_2}{r}\quad (E_p(\infty) = 0)\]
+      \[V = \frac{E_p}{q} = k\,\frac{Q}{r}\qquad \Delta V = V_b - V_a = -\int_a^b\vec E\cdot d\vec l\qquad E_p = q\,V\]
+      \[\textbf{Superposición:}\quad V = k\sum_i\frac{Q_i}{r_i}\quad\text{(suma de números, con el signo de cada carga)}\]
+      <p>Aquí las cargas van <b>con su signo</b>: una carga negativa crea un potencial negativo. Al ser escalares, no hay que descomponer nada: el potencial es mucho más cómodo que el campo.</p>
+    </div>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-ej3" viewBox="0 0 760 236" style="min-width:640px" role="img" aria-label="Tres distribuciones de cargas del ejercicio 3: en línea, en las esquinas de un cuadrado y en un hexágono"></svg></div>
+    <figcaption>Ejercicio 3 (cargas en μC). a) En línea, con P en el centro. b) Cuadrado de 2 m de lado, con P en el centro. c) Hexágono regular de 1 m de lado, con P en el centro.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 3 a) · Cargas en línea</span><span class="src">Campo y Potencial 3</span></div>
+    <div class="ej-q"><p>Halla en P el campo y el potencial, la fuerza sobre una carga de 1 μC colocada en P y su energía potencial.</p><div class="data"><span>1 μC en x = −3</span><span>−2 μC en x = −1</span><span>−3 μC en x = +1</span><span>2 μC en x = +3</span></div></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Un número que se repite</div><div class="st-b"><p>Todas las cargas van en μC, así que conviene calcular una vez:</p>\[k\cdot1\ \mu\text{C} = 9\cdot10^9\cdot10^{-6} = 9000\]<p>Cada campo es \(9000\cdot q/r^2\) y cada potencial \(9000\cdot q/r\), con \(q\) en μC.</p></div></li>
+      <li class="step"><div class="st-t">Campo: módulo y sentido de cada carga</div><div class="st-b"><p>Las positivas empujan alejándose de ellas y las negativas tiran hacia sí:</p><ul><li>1 μC a 3 m, por la izquierda: empuja a la derecha, \(+9000/9 = +1000\)</li><li>−2 μC a 1 m, por la izquierda: tira a la izquierda, \(-18\,000\)</li><li>−3 μC a 1 m, por la derecha: tira a la derecha, \(+27\,000\)</li><li>2 μC a 3 m, por la derecha: empuja a la izquierda, \(-2000\)</li></ul>\[\vec E = (1000 - 18\,000 + 27\,000 - 2000)\,\ii = 8000\,\ii\ \text{N/C}\]</div></li>
+      <li class="step"><div class="st-t">Potencial: suma con signos, sin direcciones</div><div class="st-b">\[V = 9000\left(\frac{1}{3} + \frac{-2}{1} + \frac{-3}{1} + \frac{2}{3}\right) = 9000\cdot(-4) = -36\,000\ \text{V}\]</div></li>
+      <li class="step"><div class="st-t">Fuerza y energía de 1 μC en P</div><div class="st-b">\[\vec F = q\vec E = 10^{-6}\cdot8000\,\ii = 8\cdot10^{-3}\,\ii\ \text{N}\qquad U = qV = 10^{-6}\cdot(-36\,000) = -36\cdot10^{-3}\ \text{J}\]<div class="result">E = 8·10³ i N/C · V = −36·10³ V · F = 8·10⁻³ i N · U = −36·10⁻³ J</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 3 b) · Cuadrado</span><span class="src">Campo y Potencial 3</span></div>
+    <div class="ej-q"><p>P en el centro (0, 0) de un cuadrado de 2 m de lado. Cargas: 1 μC en (−1, 1), 3 μC en (1, 1), −5 μC en (−1, −1) y −2 μC en (1, −1).</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Distancia y unitarios</div><div class="st-b"><p>Todas están a \(r = \sqrt{1+1} = \sqrt2\) m, así que \(r^2 = 2\). El vector de cada carga a P es «menos su posición»: por ejemplo, de (−1, 1) a P es (1, −1), y su unitario es \((1, -1)/\sqrt2\).</p></div></li>
+      <li class="step"><div class="st-t">Campo de cada una: \(\vec E_i = \dfrac{9000\,q_i}{2}\cdot\dfrac{(-x_i,\,-y_i)}{\sqrt2}\)</div><div class="st-b"><p>Saca factor común \(\dfrac{9000}{2\sqrt2} = 3182\) y suma \(q_i\cdot(-x_i, -y_i)\):</p>\[1\cdot(1,-1) + 3\cdot(-1,-1) + (-5)\cdot(1,1) + (-2)\cdot(-1,1) = (-5,\ -11)\]\[\vec E = 3182\cdot(-5,\ -11) = -15.9\cdot10^3\,\ii - 35.0\cdot10^3\,\jj\ \text{N/C}\]<div class="calc-note"><b>Casio (opcional)</b> Con la app Vector puedes sumar los cuatro vectores \(q_i(-x_i,-y_i)\) y multiplicar el resultado por 3182.</div></div></li>
+      <li class="step"><div class="st-t">Potencial</div><div class="st-b">\[V = \frac{9000}{\sqrt2}\,(1 + 3 - 5 - 2) = 6364\cdot(-3) = -19.1\cdot10^3\ \text{V}\]</div></li>
+      <li class="step"><div class="st-t">Fuerza y energía de 1 μC</div><div class="st-b">\[\vec F = -16\cdot10^{-3}\,\ii - 35\cdot10^{-3}\,\jj\ \text{N}\qquad U = -19.1\cdot10^{-3}\ \text{J}\]<p class="check">En la tabla de soluciones, el campo aparece dividido entre √2, pero la fila de la fuerza (que es el campo multiplicado por 10⁻⁶) no lo está. El resultado correcto es el de arriba, sin dividir.</p><div class="result">E = −16·10³ i − 35·10³ j N/C · V = −19.1·10³ V · F = −16·10⁻³ i − 35·10⁻³ j N · U = −19.1·10⁻³ J</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 3 c) · Hexágono</span><span class="src">Campo y Potencial 3</span></div>
+    <div class="ej-q"><p>P en el centro de un hexágono regular de 1 m de lado. Cargas (todas negativas): −5, −1, −2, −5, −1, −2 μC, con cada carga enfrente de otra igual.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Distancias</div><div class="st-b"><p>En un hexágono regular, la distancia del centro a cada vértice es igual al lado: \(r = 1\) m para las seis.</p></div></li>
+      <li class="step"><div class="st-t">Campo: las parejas opuestas se anulan</div><div class="st-b"><p>Cada carga tiene enfrente otra <b>igual</b> a la misma distancia. Sus campos en P son iguales y opuestos y se cancelan de dos en dos:</p>\[\vec E = 0\ \Rightarrow\ \vec F = 0\]</div></li>
+      <li class="step"><div class="st-t">Potencial: no se anula (es una suma de números)</div><div class="st-b">\[V = 9000\cdot\frac{-5-1-2-5-1-2}{1} = 9000\cdot(-16) = -144\cdot10^3\ \text{V}\]\[U = 10^{-6}\cdot(-144\cdot10^3) = -0.144\ \text{J}\]<p class="check">La hoja pone 144 kV y 0.144 J sin signo. Como todas las cargas son negativas, el potencial tiene que ser negativo: −144 kV y −0.144 J.</p><div class="result">E = 0 y F = 0, pero V = −144 kV y U = −0.144 J. Que el campo sea 0 no significa que el potencial lo sea.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="box cuidado">
+    <div class="tag">Cuidado</div>
+    <ul>
+      <li>En el <b>campo</b>, el signo de la carga decide el sentido de la flecha. En el <b>potencial</b>, el signo va dentro de la suma.</li>
+      <li>\(E = 0\) en un punto no implica \(V = 0\), ni al revés.</li>
+      <li>El potencial lleva \(r\) y el campo \(r^2\). Es el despiste más típico.</li>
+    </ul>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 08 ======================= -->
+<section class="sec" id="gradiente" data-n="08" data-title="Del potencial al campo y trabajo">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 08</div>
+    <h2>Del potencial al campo, y trabajo</h2>
+    <p class="sec-sub">Si te dan \(V(x,y,z)\), el campo sale derivando. Si te dan \(\vec E\), el trabajo sale integrando. Ejercicios 19 y 20.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Campo y Potencial 19</span><span class="chip rel">20</span><span class="chip">Repasa: Tema 0, apartados 08 y 09</span></div>
+
+  <div class="formula">
+    <div class="f-head">Fórmulas · Gradiente y trabajo</div>
+    <div class="f-body big">
+      \[\vec E = -\nabla V = -\left(\frac{\partial V}{\partial x}\,\ii + \frac{\partial V}{\partial y}\,\jj + \frac{\partial V}{\partial z}\,\kk\right)\]
+      \[W_{A\to B} = q\int_A^B\vec E\cdot d\vec l = q\,(V_A - V_B)\]
+      <p>El <b>gradiente</b> \(\nabla V\) es el vector de las tres derivadas parciales (Tema 0, apartado 08). El campo apunta hacia donde el potencial <b>baja</b> más deprisa. El trabajo que hace el campo es la carga por la «caída» de potencial.</p>
+    </div>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 20 · Del potencial a la fuerza y el trabajo</span><span class="src">Campo y Potencial 20</span></div>
+    <div class="ej-q"><p>\(V = 3x + \dfrac{y^2}{x} - 3yz + 35\) (SI). a) Fuerza sobre una carga de 200 μC en A(1, 2, 1) m. b) Trabajo del campo al llevarla de A a B(−1, 3, 4) m.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Derivadas parciales</div><div class="st-b">\[\frac{\partial V}{\partial x} = 3 - \frac{y^2}{x^2}\qquad \frac{\partial V}{\partial y} = \frac{2y}{x} - 3z\qquad \frac{\partial V}{\partial z} = -3y\]<p>Hechas paso a paso en el Tema 0, apartado 08, ejemplo 4.</p></div></li>
+      <li class="step"><div class="st-t">En A(1, 2, 1) y con el signo menos</div><div class="st-b">\[\nabla V(A) = (3-4,\ 4-3,\ -6) = (-1,\ 1,\ -6)\ \Rightarrow\ \vec E(A) = (1,\ -1,\ 6)\ \text{V/m}\]</div></li>
+      <li class="step"><div class="st-t">a) Fuerza</div><div class="st-b">\[\vec F = q\vec E = 200\cdot10^{-6}\,(1, -1, 6) = 200\,\ii - 200\,\jj + 1200\,\kk\ \ \mu\text{N}\]</div></li>
+      <li class="step"><div class="st-t">b) Potencial en A y en B</div><div class="st-b">\[V_A = 3 + \frac{4}{1} - 6 + 35 = 36\ \text{V}\qquad V_B = -3 + \frac{9}{-1} - 36 + 35 = -13\ \text{V}\]</div></li>
+      <li class="step"><div class="st-t">Trabajo</div><div class="st-b">\[W_{AB} = q\,(V_A - V_B) = 200\cdot10^{-6}\cdot(36 - (-13)) = 200\cdot10^{-6}\cdot49 = 9.8\cdot10^{-3}\ \text{J}\]<div class="result">a) F = 200 i − 200 j + 1200 k μN. b) W = 9.8 mJ.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 19 · Trabajo con un campo dado</span><span class="src">Campo y Potencial 19</span></div>
+    <div class="ej-q"><p>\(\vec E = 6xy\,\ii + (3x^2 - 3y^2)\,\jj\) (SI). Calcula el trabajo al mover una carga de 10 μC de (0, 0) a (3, 2).</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Elige un camino cómodo</div><div class="st-b"><p>El campo eléctrico es conservativo, así que el trabajo no depende del camino. Elige uno fácil: primero en horizontal de (0, 0) a (3, 0), y luego en vertical de (3, 0) a (3, 2).</p>\[\vec E\cdot d\vec l = E_x\,dx + E_y\,dy\]</div></li>
+      <li class="step"><div class="st-t">Tramo 1: horizontal, y = 0, dy = 0</div><div class="st-b">\[\int_0^3 E_x\,dx = \int_0^3 6x\cdot0\,dx = 0\]</div></li>
+      <li class="step"><div class="st-t">Tramo 2: vertical, x = 3, dx = 0</div><div class="st-b">\[\int_0^2 E_y\,dy = \int_0^2\left(3\cdot9 - 3y^2\right)dy = \Big[27y - y^3\Big]_0^2 = 54 - 8 = 46\ \text{V}\]<div class="calc-note"><b>Casio (opcional)</b> CATALOG → Análisis de funciones → Integración: ∫(27 − 3x², 0, 2) = 46.</div></div></li>
+      <li class="step"><div class="st-t">Multiplica por la carga</div><div class="st-b">\[W = q\cdot46 = 10\cdot10^{-6}\cdot46 = 4.6\cdot10^{-4}\ \text{J} = 460\ \mu\text{J}\]<div class="result">W = 460 μJ</div><p class="check">Otra forma: el potencial de este campo es \(V = -(3x^2y - y^3)\) (compruébalo derivando). Como \(V(0,0) = 0\) y \(V(3,2) = -46\), sale \(W = q\cdot46\), lo mismo.</p></div></li>
+    </ol>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 09 ======================= -->
+<section class="sec" id="conductores" data-n="09" data-title="Esferas conductoras en contacto">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 09</div>
+    <h2>Esferas conductoras en contacto</h2>
+    <p class="sec-sub">Cuando dos conductores se tocan, la carga se reparte hasta que los dos quedan al mismo potencial. Ejercicios 7 y 8.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Campo y Potencial 7</span><span class="chip rel">8</span><span class="chip">Tema 3: conductores</span></div>
+
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>En un <b>conductor</b> las cargas se mueven libremente y se reparten hasta que no les queda fuerza que las empuje. En equilibrio, todo el conductor tiene el <b>mismo potencial</b>. Una esfera conductora de radio \(R\) y carga \(Q\) tiene potencial \(V = kQ/R\), igual que la corteza del ejercicio 14.</p>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 7 · Dos esferas que se tocan</span><span class="src">Campo y Potencial 7</span></div>
+    <div class="ej-q"><p>Una esfera de 5 cm con \(10^{-6}\) C toca a otra de 15 cm con \(10^{-5}\) C. ¿Qué carga queda en cada una?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Se conserva la carga total</div><div class="st-b">\[Q_1 + Q_2 = 10^{-6} + 10^{-5} = 11\cdot10^{-6}\ \text{C}\]</div></li>
+      <li class="step"><div class="st-t">Quedan al mismo potencial</div><div class="st-b">\[\frac{kQ_1}{R_1} = \frac{kQ_2}{R_2}\ \Rightarrow\ \frac{Q_1}{0.05} = \frac{Q_2}{0.15}\ \Rightarrow\ Q_2 = 3\,Q_1\]<p>La esfera grande se queda con más carga, en proporción a su radio.</p></div></li>
+      <li class="step"><div class="st-t">Sustituye en la primera</div><div class="st-b">\[Q_1 + 3Q_1 = 11\ \mu\text{C}\ \Rightarrow\ Q_1 = 2.75\ \mu\text{C}\qquad Q_2 = 8.25\ \mu\text{C}\]<div class="result">2.75 μC en la pequeña y 8.25 μC en la grande.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 8 · Cincuenta gotas de mercurio</span><span class="src">Campo y Potencial 8</span></div>
+    <div class="ej-q"><p>50 gotas iguales de mercurio, cada una a 100 V, se juntan en una sola gota grande. ¿Qué potencial tiene la gota grande?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Una gota pequeña</div><div class="st-b">\[V_0 = \frac{kq}{r} = 100\ \text{V}\]</div></li>
+      <li class="step"><div class="st-t">La carga se suma</div><div class="st-b"><p>La gota grande tiene \(Q = 50q\).</p></div></li>
+      <li class="step"><div class="st-t">El volumen se suma: radio nuevo</div><div class="st-b">\[\tfrac43\pi R^3 = 50\cdot\tfrac43\pi r^3\ \Rightarrow\ R = \sqrt[3]{50}\,r = 3.684\,r\]</div></li>
+      <li class="step"><div class="st-t">Potencial de la gota grande</div><div class="st-b">\[V = \frac{k\cdot50q}{3.684\,r} = \frac{50}{3.684}\cdot\frac{kq}{r} = 13.57\cdot100 = 1357\ \text{V}\]<div class="result">V ≈ 1360 V (es \(50^{2/3}\cdot100\)).</div></div></li>
+    </ol>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 10 ======================= -->
+<section class="sec" id="movimiento" data-n="10" data-title="Cargas que se mueven en un campo">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 10</div>
+    <h2>Cargas que se mueven en un campo uniforme</h2>
+    <p class="sec-sub">Un electrón acelerado o frenado por un campo. Se resuelve con la mecánica del Tema 0. Ejercicios 17 y 18.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Campo y Potencial 17</span><span class="chip rel">18</span><span class="chip">Repasa: Tema 0, apartado 10</span></div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-plates" viewBox="0 0 520 220" style="max-width:520px;margin-inline:auto" role="img" aria-label="Campo uniforme entre dos placas y un electrón que nota una fuerza contraria al campo"></svg></div>
+    <figcaption>Entre dos placas cargadas el campo es uniforme. Una carga positiva nota fuerza a favor del campo; un <b>electrón</b> (negativo), en contra.</figcaption>
+  </figure>
+
+  <div class="formula">
+    <div class="f-head">Fórmulas · Carga en un campo uniforme</div>
+    <div class="f-body big">
+      \[F = |q|\,E\qquad a = \frac{|q|\,E}{m}\qquad \Delta E_c = W = q\,(V_a - V_b)\qquad \Delta V = E\cdot d\ \ (\text{campo uniforme})\]
+      <p>Con la aceleración, usa las ecuaciones del movimiento con aceleración constante: \(v^2 = v_0^2 + 2a\,x\) y \(x = v_0t + \tfrac12at^2\).</p>
+    </div>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 17 · Electrón frenado</span><span class="src">Campo y Potencial 17</span></div>
+    <div class="ej-q"><p>Un electrón entra en un campo uniforme de \(E = 1000\) V/m con \(v_0 = 2\cdot10^6\) m/s, paralela al campo. ¿Qué distancia recorre hasta pararse?</p><div class="data"><span>m = 9.1·10⁻²⁸ g</span><span>q = 1.6·10⁻¹⁹ C</span></div></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Masa en kg</div><div class="st-b">\[m = 9.1\cdot10^{-28}\ \text{g} = 9.1\cdot10^{-31}\ \text{kg}\]</div></li>
+      <li class="step"><div class="st-t">¿Acelera o frena?</div><div class="st-b"><p>El electrón es negativo, así que la fuerza va <b>en contra</b> del campo. Como se mueve <b>a favor</b> del campo, la fuerza lo frena.</p></div></li>
+      <li class="step"><div class="st-t">Aceleración</div><div class="st-b">\[a = \frac{eE}{m} = \frac{1.6\cdot10^{-19}\cdot1000}{9.1\cdot10^{-31}} = 1.758\cdot10^{14}\ \text{m/s}^2\]</div></li>
+      <li class="step"><div class="st-t">Distancia de frenado</div><div class="st-b"><p>Con \(v = 0\) al final, \(0 = v_0^2 - 2a\,d\):</p>\[d = \frac{v_0^2}{2a} = \frac{(2\cdot10^6)^2}{2\cdot1.758\cdot10^{14}} = \frac{4\cdot10^{12}}{3.516\cdot10^{14}} = 0.0114\ \text{m}\]<div class="result">d = 1.14 cm</div><p class="check">Con energías: toda la energía cinética se gasta en el trabajo del campo, \(\tfrac12mv_0^2 = eEd\). Sale lo mismo.</p></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 18 · Electrón que arranca desde el reposo</span><span class="src">Campo y Potencial 18</span></div>
+    <div class="ej-q"><p>Un electrón en reposo en un campo uniforme recorre 10 cm en \(10^{-7}\) s. Halla el campo y la diferencia de potencial entre los dos puntos.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Aceleración, con el tiempo</div><div class="st-b"><p>Parte del reposo: \(d = \tfrac12at^2\), así que:</p>\[a = \frac{2d}{t^2} = \frac{2\cdot0.1}{(10^{-7})^2} = 2\cdot10^{13}\ \text{m/s}^2\]</div></li>
+      <li class="step"><div class="st-t">Campo, de \(eE = ma\)</div><div class="st-b">\[E = \frac{m\,a}{e} = \frac{9.11\cdot10^{-31}\cdot2\cdot10^{13}}{1.6\cdot10^{-19}} = 113.9\ \text{N/C}\]</div></li>
+      <li class="step"><div class="st-t">Diferencia de potencial (campo uniforme)</div><div class="st-b">\[|\Delta V| = E\cdot d = 113.9\cdot0.1 = 11.39\ \text{V}\]</div></li>
+      <li class="step"><div class="st-t">El signo</div><div class="st-b"><p>El electrón se mueve en contra del campo, es decir, hacia potenciales <b>más altos</b>: el punto de llegada está 11.39 V por encima del de salida. Visto como «salida menos llegada», \(V_{salida} - V_{llegada} = -11.39\) V, que es lo que pone la hoja.</p><div class="result">E = 113.9 N/C y ΔV = −11.39 V (el electrón gana energía cinética al subir de potencial).</div></div></li>
+    </ol>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 11 ======================= -->
+<section class="sec" id="formulario" data-n="11" data-title="Formulario del Tema 2">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 11</div>
+    <h2>Formulario del Tema 2</h2>
+    <p class="sec-sub">Todo el tema en una vista.</p>
+  </div>
+  <div class="fgrid">
+    <div class="fcard"><h4>Constantes</h4><p>k = 9·10⁹ N·m²/C² = 1/(4πε₀) · ε₀ = 8.85·10⁻¹² C²/(N·m²) · e = 1.6·10⁻¹⁹ C · mₑ = 9.11·10⁻³¹ kg</p></div>
+    <div class="fcard"><h4>Coulomb</h4><div class="row">\[F = k\frac{|q_1q_2|}{r^2}\qquad \vec F_{12} = k\frac{q_1q_2}{r^2}\hat r_{12}\]</div><p>Igual signo: se repelen. Superposición: suma vectorial.</p></div>
+    <div class="fcard"><h4>Campo</h4><div class="row">\[\vec E = \frac{\vec F}{q}\qquad E = k\frac{|Q|}{r^2}\qquad \vec E = \sum k\frac{Q_i}{r_i^2}\hat r_i\]</div><p>Sale de las +, entra en las −. N/C = V/m.</p></div>
+    <div class="fcard"><h4>Potencial y energía</h4><div class="row">\[V = k\frac{Q}{r}\quad V = k\sum\frac{Q_i}{r_i}\quad E_p = qV = k\frac{q_1q_2}{r}\]</div><p>Escalares: se suman con signo.</p></div>
+    <div class="fcard"><h4>Relaciones E ↔ V</h4><div class="row">\[\Delta V = -\int\vec E\cdot d\vec l\qquad \vec E = -\nabla V\]\[W_{A\to B} = q\,(V_A - V_B)\qquad \Delta V = Ed\ (\text{uniforme})\]</div></div>
+    <div class="fcard"><h4>Densidades</h4><div class="row">\[\lambda = \frac QL\quad \sigma = \frac QS\quad \rho = \frac QV\quad dq = \lambda\,dl\]</div></div>
+    <div class="fcard"><h4>Varilla y anillo</h4><div class="row">\[E_{varilla} = \frac{kQ}{x_0(x_0-L)}\qquad E_{anillo} = \frac{kQ\,b}{(a^2+b^2)^{3/2}}\]</div></div>
+    <div class="fcard"><h4>Flujo y Gauss</h4><div class="row">\[\Phi = \vec E\cdot\vec S = ES\cos\theta\qquad \oint\vec E\cdot d\vec S = \frac{Q_{int}}{\varepsilon_0}\]</div><p>Esfera: E·4πr² · Cilindro: E·2πrL · Plano: E·2A</p></div>
+    <div class="fcard"><h4>Resultados de Gauss</h4><p>Corteza: fuera kQ/r², dentro 0 · Esfera maciza: fuera kQ/r², dentro kQr/a³ · Hilo o cilindro: λ/(2πε₀r) fuera · Lámina: σ/2ε₀ · Dos láminas: σ/ε₀ dentro, 0 fuera</p></div>
+    <div class="fcard"><h4>Dipolo</h4><div class="row">\[E_{eje\,X} = \frac{2kqa}{(x^2+a^2)^{3/2}} \to \frac{2kqa}{x^3}\qquad E_p = -\frac{kq^2}{2a}\]</div></div>
+    <div class="fcard"><h4>Conductores</h4><p>Todo el conductor al mismo potencial. Esfera: V = kQ/R. Al tocarse: Q₁ + Q₂ se conserva y Q₁/R₁ = Q₂/R₂.</p></div>
+    <div class="fcard"><h4>Cargas en movimiento</h4><div class="row">\[a = \frac{|q|E}{m}\qquad v^2 = v_0^2 + 2ax\qquad \tfrac12mv^2 = |q|\,\Delta V\]</div><p>Electrón: fuerza en contra del campo.</p></div>
+  </div>
+</section>
+
+<!-- ======================= 12 ======================= -->
+<section class="sec" id="test" data-n="12" data-title="Test rápido">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 12</div>
+    <h2>Test rápido</h2>
+    <p class="sec-sub">10 preguntas. Haz las cuentas en papel antes de elegir.</p>
+  </div>
+  <div class="quiz" data-quiz>
+    <div class="q" data-ans="2"><p class="qt">1. Si se duplica la distancia entre dos cargas, la fuerza…</p><div class="opts"><button>se duplica</button><button>se reduce a la mitad</button><button>se reduce a la cuarta parte</button><button>no cambia</button></div><p class="why" hidden>Va con \(1/r^2\): \(1/2^2 = 1/4\).</p></div>
+    <div class="q" data-ans="0"><p class="qt">2. El campo de una carga negativa…</p><div class="opts"><button>apunta hacia la carga</button><button>apunta alejándose de la carga</button><button>es nulo</button><button>depende de la carga de prueba</button></div><p class="why" hidden>Las líneas salen de las + y entran en las −.</p></div>
+    <div class="q" data-ans="3"><p class="qt">3. Una carga de 2 μC está a 3 m. ¿Cuánto vale el campo que crea?</p><div class="opts"><button>6000 N/C</button><button>18 000 N/C</button><button>667 N/C</button><button>2000 N/C</button></div><p class="why" hidden>\(9\cdot10^9\cdot2\cdot10^{-6}/9 = 2000\) N/C. La opción de 6000 sería el potencial (\(kQ/r\)) en V.</p></div>
+    <div class="q" data-ans="1"><p class="qt">4. En el centro de un cuadrado con cuatro cargas iguales en las esquinas…</p><div class="opts"><button>E = 0 y V = 0</button><button>E = 0 y V ≠ 0</button><button>E ≠ 0 y V = 0</button><button>E ≠ 0 y V ≠ 0</button></div><p class="why" hidden>Los campos se anulan de dos en dos (como en el ejercicio 3c), pero los potenciales son números del mismo signo y se suman.</p></div>
+    <div class="q" data-ans="2"><p class="qt">5. El flujo a través de una superficie cerrada que no contiene carga es…</p><div class="opts"><button>positivo</button><button>negativo</button><button>cero</button><button>depende de la forma</button></div><p class="why" hidden>Gauss: \(\Phi = Q_{int}/\varepsilon_0 = 0\). Lo que entra, sale.</p></div>
+    <div class="q" data-ans="0"><p class="qt">6. Dentro de una corteza esférica cargada, el campo es…</p><div class="opts"><button>0</button><button>kQ/r²</button><button>kQ/a²</button><button>kQr/a³</button></div><p class="why" hidden>La superficie de Gauss interior no contiene carga, así que E = 0 (ejercicio 14). La opción kQr/a³ es la de la esfera maciza.</p></div>
+    <div class="q" data-ans="3"><p class="qt">7. Para hallar el campo de un hilo infinito con Gauss, la superficie de Gauss es…</p><div class="opts"><button>una esfera</button><button>un cubo</button><button>un plano</button><button>un cilindro coaxial con el hilo</button></div><p class="why" hidden>Simetría cilíndrica: el campo es radial y constante en la cara lateral del cilindro, \(\Phi = E\cdot2\pi rL\).</p></div>
+    <div class="q" data-ans="1"><p class="qt">8. Si \(V = 5x^2\), el campo en x = 1 es…</p><div class="opts"><button>10 i V/m</button><button>−10 i V/m</button><button>5 i V/m</button><button>−5 i V/m</button></div><p class="why" hidden>\(E = -dV/dx = -10x = -10\) V/m en x = 1. No te olvides del signo menos.</p></div>
+    <div class="q" data-ans="2"><p class="qt">9. Una carga de 2 C va de un punto a 10 V a otro a 4 V. El trabajo del campo es…</p><div class="opts"><button>−12 J</button><button>28 J</button><button>12 J</button><button>3 J</button></div><p class="why" hidden>\(W = q(V_A - V_B) = 2\cdot(10-4) = 12\) J. Es positivo porque una carga positiva «cae» de potencial.</p></div>
+    <div class="q" data-ans="0"><p class="qt">10. Un electrón soltado en reposo en un campo uniforme…</p><div class="opts"><button>acelera en sentido contrario al campo</button><button>acelera en el sentido del campo</button><button>se queda quieto</button><button>se mueve a velocidad constante</button></div><p class="why" hidden>Su carga es negativa, así que \(\vec F = q\vec E\) apunta en contra del campo.</p></div>
+    <div class="score" data-score></div>
+  </div>
+</section>
+
+    </div><!-- /content -->
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap">
+    <p><b>Siguiente: <a href="https://claude.ai/artifact/6rCvw1sDeePkWPNUY6Wumw" target="_blank" rel="noopener">Tema 3 · Conductores y condensadores</a></b> (conductor en equilibrio, condensadores, asociaciones, energía y dieléctricos, con la relación de Condensadores).</p>
+  </div>
+</footer>
+
+</div>
+<script>
+/* ===== utilidades comunes a todos los temas ===== */
+(function(){
+  const holder = document.querySelector("[data-topic]");
+  const TOPIC = (holder && holder.dataset.topic) || "x";
+  const KEY = "fisica-apuntes-" + TOPIC + "-hecho";
+  const store = {
+    get(){ try{ return JSON.parse(localStorage.getItem(KEY) || "[]"); }catch(e){ return []; } },
+    set(v){ try{ localStorage.setItem(KEY, JSON.stringify(v)); }catch(e){} }
+  };
+
+  /* ---- índice ---- */
+  const secs = [...document.querySelectorAll("section.sec[id]")];
+  const tocLists = [...document.querySelectorAll("[data-toc]")];
+  tocLists.forEach(ol=>{
+    secs.forEach(s=>{
+      const li=document.createElement("li");
+      const a=document.createElement("a");
+      a.href="#"+s.id; a.dataset.id=s.id;
+      a.innerHTML='<span class="n">'+(s.dataset.n||"")+'</span><span>'+(s.dataset.title||s.id)+'</span><span class="ck">✓</span>';
+      li.appendChild(a); ol.appendChild(li);
+    });
+  });
+  const links = id => document.querySelectorAll('[data-toc] a[data-id="'+id+'"]');
+  if("IntersectionObserver" in window){
+    const io=new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting){
+        document.querySelectorAll("[data-toc] a.active").forEach(a=>a.classList.remove("active"));
+        links(e.target.id).forEach(a=>a.classList.add("active"));
+      }});
+    },{rootMargin:"-30% 0px -60% 0px"});
+    secs.forEach(s=>io.observe(s));
+  }
+
+  /* ---- "lo tengo" por sección ---- */
+  const countable = secs.filter(s=>s.querySelector(".done-btn"));
+  function paint(){
+    const done=store.get();
+    countable.forEach(s=>{
+      const on=done.includes(s.id);
+      const b=s.querySelector(".done-btn");
+      b.setAttribute("aria-pressed", on?"true":"false");
+      b.textContent = on ? "✓ Entendido" : "Marcar como entendido";
+      links(s.id).forEach(a=>a.classList.toggle("done",on));
+    });
+    const n=countable.filter(s=>done.includes(s.id)).length;
+    document.querySelectorAll("[data-prog-txt]").forEach(el=>el.textContent=n+" de "+countable.length+" apartados entendidos");
+    document.querySelectorAll("[data-prog-bar]").forEach(el=>el.style.width=(countable.length? (100*n/countable.length):0)+"%");
+  }
+  countable.forEach(s=>{
+    s.querySelector(".done-btn").addEventListener("click",()=>{
+      let d=store.get();
+      d = d.includes(s.id) ? d.filter(x=>x!==s.id) : d.concat(s.id);
+      store.set(d); paint();
+    });
+  });
+  paint();
+
+  /* ---- ejemplos paso a paso ---- */
+  document.querySelectorAll("[data-ej]").forEach(ej=>{
+    const steps=[...ej.querySelectorAll(".step")];
+    let shown=0;
+    let ctrl=ej.querySelector(".ej-ctrl");
+    if(!ctrl){ ctrl=document.createElement("div"); ctrl.className="ej-ctrl"; ej.appendChild(ctrl); }
+    const next=document.createElement("button"); next.className="btn primary"; next.type="button";
+    const all=document.createElement("button"); all.className="btn"; all.type="button"; all.textContent="Ver todos los pasos";
+    const reset=document.createElement("button"); reset.className="btn"; reset.type="button"; reset.textContent="Ocultar y empezar de nuevo";
+    ctrl.append(next,all,reset);
+    function render(flash){
+      steps.forEach((s,i)=>{
+        s.classList.toggle("locked", i>=shown);
+        if(flash && i===shown-1){ s.classList.remove("just"); void s.offsetWidth; s.classList.add("just"); }
+      });
+      next.disabled = shown>=steps.length;
+      next.textContent = shown>=steps.length ? "Resuelto ✓" : "Ver paso "+(shown+1)+" de "+steps.length;
+      reset.hidden = shown===0;
+    }
+    next.addEventListener("click",()=>{ if(shown<steps.length){ shown++; render(true);} });
+    all.addEventListener("click",()=>{ shown=steps.length; render(false); });
+    reset.addEventListener("click",()=>{ shown=0; render(false); });
+    render(false);
+  });
+
+  /* ---- test ---- */
+  document.querySelectorAll("[data-quiz]").forEach(qz=>{
+    const qs=[...qz.querySelectorAll(".q")];
+    const out=qz.querySelector("[data-score]");
+    let ok=0, answered=0;
+    function upd(){ if(out) out.innerHTML="<span>Aciertos: "+ok+" / "+qs.length+"</span><span>"+(answered<qs.length?"Te quedan "+(qs.length-answered):(ok>=qs.length-1?"¡Listo para seguir!":"Repasa los apartados que has fallado"))+"</span>"; }
+    qs.forEach(q=>{
+      const right=+q.dataset.ans;
+      const bs=[...q.querySelectorAll(".opts button")];
+      bs.forEach((b,i)=>{
+        b.type="button";
+        b.addEventListener("click",()=>{
+          if(q.dataset.done) return;
+          q.dataset.done="1"; answered++;
+          if(i===right) ok++;
+          bs.forEach((x,j)=>{ if(j===right) x.classList.add("ok"); else if(j===i) x.classList.add("ko"); x.disabled=true; });
+          const w=q.querySelector(".why"); if(w) w.hidden=false;
+          upd();
+        });
+      });
+    });
+    upd();
+  });
+})();
+
+/* ---- helpers para dibujos ---- */
+window.SV = function(tag, attrs, parent){
+  const e=document.createElementNS("http://www.w3.org/2000/svg",tag);
+  for(const k in (attrs||{})) e.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(e);
+  return e;
+};
+window.fmt = function(x, d){
+  if(!isFinite(x)) return "—";
+  const v = Math.abs(x)<1e-12 ? 0 : x;
+  let s = (+v.toPrecision(d||4)).toString();
+  if(/e/.test(s)) return sci(v, d);
+  return s.replace("-", "−");
+};
+window.sci = function(x, d){
+  if(x===0) return "0";
+  const k=Math.floor(Math.log10(Math.abs(x)));
+  let m=x/Math.pow(10,k);
+  let ms=(+m.toPrecision(d||3)).toString();
+  if(ms==="10"||ms==="-10"){ ms = ms[0]==="-"?"-1":"1"; return ms.replace("-","−")+" × 10<sup>"+String(k+1).replace("-","−")+"</sup>"; }
+  return ms.replace("-","−")+" × 10<sup>"+String(k).replace("-","−")+"</sup>";
+};
+
+</script>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const T = (parent, x, y, txt, cls, extra) => { const t=SV("text", Object.assign({x, y}, cls?{class:cls}:{}, extra||{}), parent); t.textContent=txt; return t; };
+  const L = (p, x1,y1,x2,y2, cls, w, extra) => SV("line", Object.assign({x1,y1,x2,y2,class:cls,"stroke-width":w||2}, extra||{}), p);
+  const f3 = x => fmt(x,3);
+  const charge = (p,x,y,q,r) => { r=r||13; SV("circle",{cx:x,cy:y,r,class:q>0?"f-rose":(q<0?"f-teal":"f-muted")},p); T(p,x,y+5,q>0?"+":(q<0?"−":"0"),"b",{"text-anchor":"middle",style:"fill:var(--surface);font-size:17px"}); };
+  const fmtE = v => { const a=Math.abs(v); if(a>=1e4||(a<1&&a>0)) return sci(v,3); return fmt(v,4); };
+
+  /* ---------- Coulomb ---------- */
+  (function(){
+    const s=$("fig-coul"); if(!s) return;
+    T(s,24,34,"Mismo signo: se repelen","b");
+    L(s,200,62,360,62,"s-muted",1.2,{"stroke-dasharray":"4 4"});
+    L(s,186,62,112,62,"s-rose",4,{"marker-end":"url(#ah-rose)"}); L(s,374,62,448,62,"s-rose",4,{"marker-end":"url(#ah-rose)"});
+    charge(s,200,62,1); charge(s,360,62,1);
+    T(s,112,52,"F₂,₁","m b",{"text-anchor":"middle"}); T(s,448,52,"F₁,₂","m b",{"text-anchor":"middle"});
+    T(s,280,54,"r","b",{"text-anchor":"middle"});
+    T(s,24,124,"Distinto signo: se atraen","b");
+    L(s,214,152,262,152,"s-teal",4,{"marker-end":"url(#ah-teal)"}); L(s,346,152,298,152,"s-teal",4,{"marker-end":"url(#ah-teal)"});
+    charge(s,200,152,1); charge(s,360,152,-1);
+    T(s,200,184,"q₁","m b",{"text-anchor":"middle"}); T(s,360,184,"q₂","m b",{"text-anchor":"middle"});
+  })();
+
+  /* ---------- mapa de campo interactivo ---------- */
+  (function(){
+    const svg=$("field-svg"); if(!svg) return;
+    const W=640,H=400,S=76,CX=320,CY=200, k=9e9;
+    const X=x=>CX+S*x, Y=y=>CY-S*y, IX=px=>(px-CX)/S, IY=py=>(CY-py)/S;
+    for(let x=-4;x<=4;x++) L(svg,X(x),0,X(x),H,"s-muted",1,{opacity:x===0?.35:.12});
+    for(let y=-2;y<=2;y++) L(svg,0,Y(y),W,Y(y),"s-muted",1,{opacity:y===0?.35:.12});
+    const grid=[]; const gG=SV("g",{},svg);
+    for(let gx=-4;gx<=4.001;gx+=0.5) for(let gy=-2.5;gy<=2.501;gy+=0.5){ grid.push([gx,gy,SV("path",{class:"s-ink2","stroke-width":1.6,fill:"none","stroke-linecap":"round"},gG)]); }
+    const gV=SV("g",{},svg);
+    const e1=L(gV,0,0,0,0,"s-rose",2.5,{"marker-end":"url(#ah-rose)",opacity:.75});
+    const e2=L(gV,0,0,0,0,"s-teal",2.5,{"marker-end":"url(#ah-teal)",opacity:.75});
+    const et=L(gV,0,0,0,0,"s-acc",4.5,{"marker-end":"url(#ah-acc)"});
+    const gC=SV("g",{},svg);
+    const st={c:[{x:-1.5,y:0,q:3},{x:1.5,y:0,q:-3}], p:{x:0,y:1.4}};
+    const cEls=st.c.map((c,i)=>{ const g=SV("g",{class:"drag"},gC); const ci=SV("circle",{r:17},g); const t=T(g,0,0,"","b",{"text-anchor":"middle",style:"fill:var(--surface);font-size:13px"}); const lab=T(g,0,0,"q"+(i?"₂":"₁"),"b",{"text-anchor":"middle"}); return {g,ci,t,lab}; });
+    const pG=SV("g",{class:"drag"},gC);
+    const pc=SV("circle",{r:8,class:"f-surface s-acc","stroke-width":3},pG);
+    const pl=T(pG,0,0,"P","b lg");
+    const Q1=$("fq1"), Q2=$("fq2");
+    function field(x,y,c){ const dx=x-c.x, dy=y-c.y; let r=Math.hypot(dx,dy); r=Math.max(r,0.15); const m=k*c.q*1e-6/(r*r); return [m*dx/r, m*dy/r]; }
+    function pot(x,y,c){ const r=Math.max(Math.hypot(x-c.x,y-c.y),0.15); return k*c.q*1e-6/r; }
+    function draw(){
+      st.c[0].q=+Q1.value; st.c[1].q=+Q2.value;
+      grid.forEach(([gx,gy,el])=>{
+        const near=st.c.some(c=>Math.hypot(gx-c.x,gy-c.y)<0.38);
+        if(near||st.c.every(c=>c.q===0)){ el.setAttribute("d",""); return; }
+        let ex=0,ey=0; st.c.forEach(c=>{const f=field(gx,gy,c); ex+=f[0]; ey+=f[1];});
+        const m=Math.hypot(ex,ey); if(m<1e-9){el.setAttribute("d",""); return;}
+        const ux=ex/m, uy=-ey/m, cx=X(gx), cy=Y(gy), h=8;
+        const x1=cx-ux*h, y1=cy-uy*h, x2=cx+ux*h, y2=cy+uy*h;
+        const hx=-ux*5, hy=-uy*5, px=-uy*3.2, py=ux*3.2;
+        el.setAttribute("d",`M${x1.toFixed(1)},${y1.toFixed(1)}L${x2.toFixed(1)},${y2.toFixed(1)}M${(x2+hx+px).toFixed(1)},${(y2+hy+py).toFixed(1)}L${x2.toFixed(1)},${y2.toFixed(1)}L${(x2+hx-px).toFixed(1)},${(y2+hy-py).toFixed(1)}`);
+        el.setAttribute("opacity",Math.max(0.18,Math.min(1,(Math.log10(m)-2.6)/2)).toFixed(2));
+      });
+      st.c.forEach((c,i)=>{ const e=cEls[i]; e.ci.setAttribute("cx",X(c.x)); e.ci.setAttribute("cy",Y(c.y)); e.ci.setAttribute("class",c.q>0?"f-rose":(c.q<0?"f-teal":"f-muted"));
+        e.t.setAttribute("x",X(c.x)); e.t.setAttribute("y",Y(c.y)+5); e.t.textContent=(c.q>0?"+":c.q<0?"−":"")+Math.abs(c.q);
+        e.lab.setAttribute("x",X(c.x)); e.lab.setAttribute("y",Y(c.y)+36); });
+      const p=st.p; pc.setAttribute("cx",X(p.x)); pc.setAttribute("cy",Y(p.y)); pl.setAttribute("x",X(p.x)+12); pl.setAttribute("y",Y(p.y)-10);
+      const E1=field(p.x,p.y,st.c[0]), E2=field(p.x,p.y,st.c[1]); const E=[E1[0]+E2[0],E1[1]+E2[1]];
+      const m1=Math.hypot(...E1), m2=Math.hypot(...E2), m=Math.hypot(...E);
+      const sc=95/Math.max(m1,m2,m,1e-9);
+      const set=(l,v)=>{l.setAttribute("x1",X(p.x));l.setAttribute("y1",Y(p.y));l.setAttribute("x2",X(p.x)+v[0]*sc);l.setAttribute("y2",Y(p.y)-v[1]*sc);l.style.display=Math.hypot(...v)*sc<4?"none":"";};
+      set(e1,E1); set(e2,E2); set(et,E);
+      const V=pot(p.x,p.y,st.c[0])+pot(p.x,p.y,st.c[1]);
+      $("fq1-o").textContent=String(st.c[0].q).replace("-","−")+" μC"; $("fq2-o").textContent=String(st.c[1].q).replace("-","−")+" μC";
+      $("field-read").innerHTML=`<div>|E₁| (rosa)<span>${fmtE(m1)}</span></div><div>|E₂| (azul)<span>${fmtE(m2)}</span></div><div>E total (verde)<span>${fmtE(m)} N/C</span></div><div>potencial V en P<span>${fmtE(V)} V</span></div>`;
+      $("field-exp").innerHTML=`<p>P está en (${f3(p.x)}, ${f3(p.y)}) m. El campo total es la suma vectorial: E = E₁ + E₂ = (${fmtE(E[0])}, ${fmtE(E[1])}) N/C. El potencial es la suma de números: V = kq₁/r₁ + kq₂/r₂ = ${fmtE(V)} V. Las tres flechas en P están a escala entre sí.</p><p>Prueba: dos cargas iguales (punto medio, E = 0); una carga a 0 (solo queda la otra); cargas +3 y −3 (dipolo, como el ejercicio 6).</p>`;
+    }
+    let drag=null;
+    function pt(e){ const q=svg.createSVGPoint(); q.x=e.clientX; q.y=e.clientY; return q.matrixTransform(svg.getScreenCTM().inverse()); }
+    svg.addEventListener("pointerdown",e=>{
+      const q=pt(e); let best=null, bd=34;
+      st.c.forEach((c,i)=>{const d=Math.hypot(X(c.x)-q.x,Y(c.y)-q.y); if(d<bd){bd=d;best=i;}});
+      const dp=Math.hypot(X(st.p.x)-q.x,Y(st.p.y)-q.y); if(dp<bd) best="p";
+      drag = best===null ? "p" : best;
+      try{svg.setPointerCapture(e.pointerId);}catch(_){}
+      move(e); e.preventDefault();
+    });
+    function move(e){ if(drag===null) return; const q=pt(e); const x=Math.max(-4,Math.min(4,Math.round(IX(q.x)*10)/10)), y=Math.max(-2.5,Math.min(2.5,Math.round(IY(q.y)*10)/10));
+      if(drag==="p"){st.p.x=x;st.p.y=y;} else {st.c[drag].x=x;st.c[drag].y=y;} draw(); }
+    svg.addEventListener("pointermove",move);
+    svg.addEventListener("pointerup",()=>drag=null); svg.addEventListener("pointercancel",()=>drag=null);
+    svg.style.touchAction="none";
+    [Q1,Q2].forEach(el=>el.addEventListener("input",draw)); draw();
+  })();
+
+  /* ---------- figura ejercicio 5 ---------- */
+  (function(){
+    const s=$("fig-ej5"); if(!s) return;
+    const S=46, X=x=>200+S*x, Y=y=>275-S*y;
+    for(let x=-3;x<=6;x++) L(s,X(x),Y(-1.4),X(x),Y(5.4),"s-muted",1,{opacity:.15});
+    for(let y=-1;y<=5;y++) L(s,X(-3.8),Y(y),X(6.4),Y(y),"s-muted",1,{opacity:.15});
+    L(s,X(-3.9),Y(0),X(6.6),Y(0),"s-ink",1.6,{"marker-end":"url(#ah-ink)"}); L(s,X(0),Y(-1.5),X(0),Y(5.6),"s-ink",1.6,{"marker-end":"url(#ah-ink)"});
+    T(s,X(6.5),Y(0)+20,"x (m)","m",{"text-anchor":"end"}); T(s,X(0)+8,Y(5.5)+4,"y (m)","m");
+    charge(s,X(-2),Y(0),1,12); T(s,X(-2),Y(0)-20,"A · Q₁ = 2 μC","m b",{"text-anchor":"middle"});
+    charge(s,X(3),Y(0),1,12); T(s,X(3),Y(0)-20,"B · Q₂ = 5 μC","m b",{"text-anchor":"middle"});
+    charge(s,X(0),Y(4),1,12); T(s,X(0)+18,Y(4)+5,"C · Q₃ = 4 μC","m b");
+    const sc=0.0135;
+    L(s,X(0),Y(0)-6,X(0)+4500*sc,Y(0)-6,"s-rose",3,{"marker-end":"url(#ah-rose)"}); T(s,X(0)+4500*sc+4,Y(0)-10,"E₁","b",{style:"fill:var(--rose)"});
+    L(s,X(0),Y(0)+6,X(0)-5000*sc,Y(0)+6,"s-teal",3,{"marker-end":"url(#ah-teal)"}); T(s,X(0)-5000*sc+6,Y(0)+24,"E₂","b",{style:"fill:var(--teal)"});
+    L(s,X(0)-7,Y(0),X(0)-7,Y(0)+2250*sc,"s-warn",3,{"marker-end":"url(#ah-warn)"}); T(s,X(0)-14,Y(0)+2250*sc+4,"E₃","b",{"text-anchor":"end",style:"fill:var(--warn)"});
+    L(s,X(0),Y(0),X(0)-500*sc,Y(0)+2250*sc,"s-acc",4.5,{"marker-end":"url(#ah-acc)"}); T(s,X(0)+8,Y(0)+2250*sc+6,"E total","b",{style:"fill:var(--accent-ink)"});
+    SV("circle",{cx:X(0),cy:Y(0),r:4,class:"f-ink"},s);
+  })();
+
+  /* ---------- dipolo ---------- */
+  (function(){
+    const s=$("fig-dip"); if(!s) return;
+    const O=[170,150], a=80, P=[390,150];
+    L(s,30,O[1],500,O[1],"s-ink",1.5,{"marker-end":"url(#ah-ink)"}); L(s,O[0],280,O[0],18,"s-ink",1.5,{"marker-end":"url(#ah-ink)"});
+    T(s,496,O[1]+20,"x","b",{"text-anchor":"end"}); T(s,O[0]+10,24,"y","b");
+    L(s,O[0],O[1]-a,P[0],P[1],"s-muted",1.3,{"stroke-dasharray":"5 4"}); L(s,O[0],O[1]+a,P[0],P[1],"s-muted",1.3,{"stroke-dasharray":"5 4"});
+    charge(s,O[0],O[1]-a,1); charge(s,O[0],O[1]+a,-1);
+    T(s,O[0]-20,O[1]-a+5,"+q","b",{"text-anchor":"end"}); T(s,O[0]-20,O[1]+a+5,"−q","b",{"text-anchor":"end"});
+    T(s,O[0]+10,O[1]-a/2,"a","m b"); T(s,O[0]+10,O[1]+a/2+8,"a","m b");
+    const dx=P[0]-O[0], u1=[dx/Math.hypot(dx,a),a/Math.hypot(dx,a)], len=90;
+    L(s,P[0],P[1],P[0]+u1[0]*len,P[1]+u1[1]*len,"s-rose",3.5,{"marker-end":"url(#ah-rose)"}); T(s,P[0]+u1[0]*len+6,P[1]+u1[1]*len+4,"E₊","b",{style:"fill:var(--rose)"});
+    L(s,P[0],P[1],P[0]-u1[0]*len,P[1]+u1[1]*len,"s-teal",3.5,{"marker-end":"url(#ah-teal)"}); T(s,P[0]-u1[0]*len-30,P[1]+u1[1]*len+4,"E₋","b",{style:"fill:var(--teal)"});
+    L(s,P[0],P[1],P[0],P[1]+2*u1[1]*len,"s-acc",4.5,{"marker-end":"url(#ah-acc)"}); T(s,P[0]+10,P[1]+2*u1[1]*len+4,"E","b lg",{style:"fill:var(--accent-ink)"});
+    SV("circle",{cx:P[0],cy:P[1],r:4.5,class:"f-ink"},s); T(s,P[0]+8,P[1]-10,"(x, 0)","m b");
+  })();
+
+  /* ---------- varilla ---------- */
+  (function(){
+    const s=$("fig-rod"); if(!s) return;
+    L(s,30,100,540,100,"s-ink",1.4,{"marker-end":"url(#ah-ink)"}); T(s,536,120,"x","b",{"text-anchor":"end"});
+    SV("rect",{x:60,y:88,width:240,height:24,rx:5,class:"f-rose",opacity:.25},s);
+    SV("rect",{x:60,y:88,width:240,height:24,rx:5,class:"s-rose","stroke-width":2,fill:"none"},s);
+    for(let i=0;i<8;i++) T(s,78+i*30,105,"+","b",{"text-anchor":"middle",style:"fill:var(--rose)"});
+    SV("rect",{x:200,y:84,width:16,height:32,class:"f-warn",opacity:.8},s);
+    T(s,208,76,"dq = λ dx","m b",{"text-anchor":"middle",style:"fill:var(--warn)"});
+    SV("circle",{cx:460,cy:100,r:5,class:"f-ink"},s); T(s,460,84,"P","b lg",{"text-anchor":"middle"});
+    L(s,466,100,520,100,"s-acc",4,{"marker-end":"url(#ah-acc)"}); T(s,505,86,"dE","b",{style:"fill:var(--accent-ink)"});
+    const dim=(x1,x2,y,lab)=>{ L(s,x1,y,x2,y,"s-ink2",1.3,{"marker-start":"url(#ah-muted)","marker-end":"url(#ah-muted)"}); T(s,(x1+x2)/2,y-6,lab,"m b",{"text-anchor":"middle"}); };
+    dim(60,300,140,"L"); dim(60,208,46,"x"); dim(208,460,46,"x₀ − x"); dim(60,460,178,"x₀");
+    T(s,52,124,"0","m",{"text-anchor":"end"});
+  })();
+
+  /* ---------- anillo ---------- */
+  (function(){
+    const s=$("fig-ring"); if(!s) return;
+    const C=[140,140], R=100, P=[390,140];
+    L(s,40,C[1],545,C[1],"s-ink",1.3,{"marker-end":"url(#ah-ink)"}); T(s,44,C[1]-8,"eje del anillo","m");
+    SV("ellipse",{cx:C[0],cy:C[1],rx:32,ry:R,class:"s-rose","stroke-width":3.5,fill:"none"},s);
+    const top=[C[0],C[1]-R], bot=[C[0],C[1]+R];
+    SV("circle",{cx:top[0],cy:top[1],r:6,class:"f-warn"},s); SV("circle",{cx:bot[0],cy:bot[1],r:6,class:"f-warn"},s);
+    T(s,top[0]-12,top[1]-6,"dq","b",{"text-anchor":"end",style:"fill:var(--warn)"}); T(s,bot[0]-12,bot[1]+16,"dq","b",{"text-anchor":"end",style:"fill:var(--warn)"});
+    L(s,C[0],C[1],top[0],top[1],"s-ink2",1.3); T(s,C[0]+8,C[1]-R/2,"a","b");
+    T(s,(C[0]+P[0])/2,C[1]+20,"b","b",{"text-anchor":"middle"});
+    L(s,top[0],top[1],P[0],P[1],"s-muted",1.3,{"stroke-dasharray":"5 4"}); L(s,bot[0],bot[1],P[0],P[1],"s-muted",1.3,{"stroke-dasharray":"5 4"});
+    T(s,265,72,"√(a² + b²)","m",{"text-anchor":"middle"});
+    SV("circle",{cx:P[0],cy:P[1],r:5,class:"f-ink"},s); T(s,P[0]-4,P[1]-14,"q","b lg",{"text-anchor":"end"});
+    const d=[P[0]-top[0],P[1]-top[1]], m=Math.hypot(...d), u=[d[0]/m,d[1]/m], len=86;
+    L(s,P[0],P[1],P[0]+u[0]*len,P[1]+u[1]*len,"s-teal",3,{"marker-end":"url(#ah-teal)"});
+    L(s,P[0],P[1],P[0]+u[0]*len,P[1]-u[1]*len,"s-teal",3,{"marker-end":"url(#ah-teal)"});
+    T(s,P[0]+u[0]*len+4,P[1]+u[1]*len+14,"dE","b",{style:"fill:var(--teal)"}); T(s,P[0]+u[0]*len+4,P[1]-u[1]*len-4,"dE","b",{style:"fill:var(--teal)"});
+    L(s,P[0]+u[0]*len,P[1]+u[1]*len,P[0]+u[0]*len,P[1]-u[1]*len,"s-muted",1.3,{"stroke-dasharray":"3 3"});
+    T(s,550,268,"las componentes verticales se anulan","m",{"text-anchor":"end"});
+    L(s,P[0],P[1]+4,P[0]+2*u[0]*len*0.55,P[1]+4,"s-acc",4.5,{"marker-end":"url(#ah-acc)"});
+  })();
+
+  /* ---------- flujo ---------- */
+  (function(){
+    const s=$("flux-svg"); if(!s) return;
+    const lines=[]; for(let i=0;i<9;i++){ const y=30+i*25; lines.push([y,L(s,20,y,440,y,"s-muted",1.6,{"marker-end":"url(#ah-muted)"})]); }
+    T(s,440,20,"E","b lg",{"text-anchor":"end"});
+    const seg=L(s,0,0,0,0,"s-acc",7,{"stroke-linecap":"round"});
+    const nv=L(s,0,0,0,0,"s-rose",3.5,{"marker-end":"url(#ah-rose)"});
+    const nt=T(s,0,0,"S","b lg",{style:"fill:var(--rose)"});
+    const R=$("flux-t"), c=[230,130], half=85;
+    function upd(){
+      const th=+R.value*Math.PI/180, n=[Math.cos(th),-Math.sin(th)], d=[Math.sin(th),Math.cos(th)];
+      seg.setAttribute("x1",c[0]-half*d[0]); seg.setAttribute("y1",c[1]-half*d[1]); seg.setAttribute("x2",c[0]+half*d[0]); seg.setAttribute("y2",c[1]+half*d[1]);
+      nv.setAttribute("x1",c[0]); nv.setAttribute("y1",c[1]); nv.setAttribute("x2",c[0]+70*n[0]); nv.setAttribute("y2",c[1]+70*n[1]);
+      nt.setAttribute("x",c[0]+80*n[0]-4); nt.setAttribute("y",c[1]+80*n[1]+6);
+      const ext=half*Math.abs(d[1]); let cnt=0;
+      lines.forEach(([y,el])=>{ const on=Math.abs(y-c[1])<=ext+0.01; el.setAttribute("class",on?"s-teal":"s-muted"); el.setAttribute("opacity",on?1:.45); if(on) cnt++; });
+      const cs=Math.cos(th); const phi=100*2*cs;
+      $("flux-t-o").textContent=R.value+"°";
+      $("flux-read").innerHTML=`<div>cos θ<span>${f3(cs)}</span></div><div>líneas que la cruzan<span>${cnt}</span></div><div>Φ = E·S·cos θ<span>${f3(phi)} V·m</span></div>`;
+      let msg = Math.abs(cs)<0.02 ? "Con θ = 90° la superficie está de canto: no la atraviesa ninguna línea y el flujo es 0." :
+        (cs>0 ? "Las líneas atraviesan la superficie en el mismo sentido que S: el flujo es positivo (en una superficie cerrada, flujo que sale)." :
+                "Las líneas entran por el lado al que apunta S: el flujo es negativo (en una superficie cerrada, flujo que entra).");
+      $("flux-exp").innerHTML=`<p>Con E = 100 N/C y S = 2 m²: Φ = 100 · 2 · cos ${R.value}° = <b>${f3(phi)} V·m</b>. ${msg}</p>`;
+    }
+    R.addEventListener("input",upd); upd();
+  })();
+
+  /* ---------- cubo ---------- */
+  (function(){
+    const s=$("fig-cube"); if(!s) return;
+    const sc=95, ox=110, oy=200;
+    const P=(x,y,z)=>[ox+sc*(x-0.45*z), oy-sc*y+sc*0.32*z];
+    const ln=(a,b,cls,w,ex)=>{const p=P(...a),q=P(...b); return L(s,p[0],p[1],q[0],q[1],cls,w,ex);};
+    ln([0,0,0],[3.6,0,0],"s-ink",1.6,{"marker-end":"url(#ah-ink)"}); ln([0,0,0],[0,2.2,0],"s-ink",1.6,{"marker-end":"url(#ah-ink)"}); ln([0,0,0],[0,0,1.9],"s-ink",1.6,{"marker-end":"url(#ah-ink)"});
+    let q=P(3.6,0,0); T(s,q[0]-4,q[1]+20,"x","b"); q=P(0,2.2,0); T(s,q[0]+8,q[1]+4,"y","b"); q=P(0,0,1.9); T(s,q[0]-14,q[1]+6,"z","b"); q=P(0,0,0); T(s,q[0]-14,q[1]-6,"o","b");
+    const poly=(pts,cls,ex)=>SV("polygon",Object.assign({points:pts.map(p=>P(...p).join(",")).join(" "),class:cls},ex||{}),s);
+    poly([[1,0,0],[2,0,0],[2,0,1],[1,0,1]],"f-teal",{opacity:.35});
+    poly([[1,1,0],[2,1,0],[2,1,1],[1,1,1]],"f-acc",{opacity:.35});
+    const edges=[[[1,0,0],[2,0,0]],[[2,0,0],[2,1,0]],[[2,1,0],[1,1,0]],[[1,1,0],[1,0,0]],[[1,0,1],[2,0,1]],[[2,0,1],[2,1,1]],[[2,1,1],[1,1,1]],[[1,1,1],[1,0,1]],[[1,0,0],[1,0,1]],[[2,0,0],[2,0,1]],[[2,1,0],[2,1,1]],[[1,1,0],[1,1,1]]];
+    edges.forEach(([a,b])=>ln(a,b,"s-ink2",2));
+    ln([1.5,1,0.5],[1.5,1.75,0.5],"s-acc",3.5,{"marker-end":"url(#ah-acc)"}); q=P(1.5,1.75,0.5); T(s,q[0]+8,q[1]+4,"dS (+j) · cara y = a","m b",{style:"fill:var(--accent-ink)"});
+    ln([1.5,0,0.5],[1.5,-0.6,0.5],"s-teal",3.5,{"marker-end":"url(#ah-teal)"}); q=P(1.5,-0.6,0.5); T(s,q[0]+10,q[1]+2,"dS (−j) · cara y = 0","m b",{style:"fill:var(--teal)"});
+    q=P(1,0,0); const q2=P(2,0,0); T(s,(q[0]+q2[0])/2,q[1]-6,"a","m b",{"text-anchor":"middle"});
+  })();
+
+  /* ---------- superficies de Gauss ---------- */
+  (function(){
+    const s=$("fig-gauss"); if(!s) return;
+    // esfera
+    SV("circle",{cx:110,cy:105,r:30,class:"f-rose",opacity:.75},s);
+    SV("circle",{cx:110,cy:105,r:72,class:"s-acc","stroke-width":2.5,fill:"none","stroke-dasharray":"7 5"},s);
+    for(let i=0;i<8;i++){ const a=i*Math.PI/4; L(s,110+34*Math.cos(a),105+34*Math.sin(a),110+92*Math.cos(a),105+92*Math.sin(a),"s-ink2",1.6,{"marker-end":"url(#ah-muted)"}); }
+    T(s,110,212,"Esfera: Φ = E·4πr²","b",{"text-anchor":"middle"});
+    // cilindro alrededor de un hilo
+    const cx=330;
+    L(s,cx,18,cx,190,"s-rose",5);
+    SV("ellipse",{cx,cy:45,rx:52,ry:13,class:"s-acc","stroke-width":2.5,fill:"none","stroke-dasharray":"7 5"},s);
+    SV("ellipse",{cx,cy:165,rx:52,ry:13,class:"s-acc","stroke-width":2.5,fill:"none","stroke-dasharray":"7 5"},s);
+    L(s,cx-52,45,cx-52,165,"s-acc",2.5,{"stroke-dasharray":"7 5"}); L(s,cx+52,45,cx+52,165,"s-acc",2.5,{"stroke-dasharray":"7 5"});
+    [75,105,135].forEach(y=>{ L(s,cx+6,y,cx+78,y,"s-ink2",1.6,{"marker-end":"url(#ah-muted)"}); L(s,cx-6,y,cx-78,y,"s-ink2",1.6,{"marker-end":"url(#ah-muted)"}); });
+    T(s,cx,212,"Cilindro: Φ = E·2πrL","b",{"text-anchor":"middle"});
+    // plano con pastillero
+    const px=550;
+    SV("polygon",{points:`${px-95},120 ${px+55},120 ${px+95},90 ${px-55},90`,class:"f-rose",opacity:.35},s);
+    SV("polygon",{points:`${px-95},120 ${px+55},120 ${px+95},90 ${px-55},90`,class:"s-rose","stroke-width":2,fill:"none"},s);
+    SV("ellipse",{cx:px,cy:60,rx:24,ry:8,class:"s-acc","stroke-width":2.5,fill:"none","stroke-dasharray":"6 4"},s);
+    SV("ellipse",{cx:px,cy:150,rx:24,ry:8,class:"s-acc","stroke-width":2.5,fill:"none","stroke-dasharray":"6 4"},s);
+    L(s,px-24,60,px-24,150,"s-acc",2.5,{"stroke-dasharray":"6 4"}); L(s,px+24,60,px+24,150,"s-acc",2.5,{"stroke-dasharray":"6 4"});
+    L(s,px,60,px,16,"s-ink2",1.8,{"marker-end":"url(#ah-muted)"}); L(s,px,150,px,194,"s-ink2",1.8,{"marker-end":"url(#ah-muted)"});
+    T(s,px,212,"Plano: Φ = E·2A","b",{"text-anchor":"middle"});
+  })();
+
+  /* ---------- E(r) y V(r) ---------- */
+  (function(){
+    const s=$("gauss-svg"); if(!s) return;
+    const X0=56,X1=440,R=3, X=r=>X0+(X1-X0)*r/R;
+    const D={
+      shell:{E:r=>r<1?0:1/(r*r), V:r=>r<1?1:1/r, er:[0,1.15], vr:[0,1.6], eu:"kQ/a²", vu:"kQ/a",
+        txt:r=>r<1?`Dentro de la corteza (r &lt; a): no hay carga dentro de la superficie de Gauss, así que <b>E = 0</b> y el potencial es constante, <b>V = kQ/a</b>.`:`Fuera (r &gt; a): como una carga puntual, <b>E = kQ/r²</b> y <b>V = kQ/r</b>.`},
+      sphere:{E:r=>r<1?r:1/(r*r), V:r=>r<1?1.5-0.5*r*r:1/r, er:[0,1.15], vr:[0,1.6], eu:"kQ/a²", vu:"kQ/a",
+        txt:r=>r<1?`Dentro de la esfera maciza: solo cuenta la carga de dentro, Q·r³/a³. Sale <b>E = kQr/a³</b> (recta) y <b>V = 3kQ/2a − kQr²/2a³</b>.`:`Fuera: como una carga puntual, <b>E = kQ/r²</b> y <b>V = kQ/r</b>.`},
+      cyl:{E:r=>r<1?r:1/r, V:r=>r<1?(1-r*r)/2:Math.log(1/r), er:[0,1.15], vr:[-1.2,0.6], eu:"ρa/2ε₀", vu:"ρa²/2ε₀",
+        txt:r=>r<1?`Dentro del cilindro: <b>E = ρr/2ε₀</b> (recta) y <b>V = ρ(a² − r²)/4ε₀</b>.`:`Fuera: <b>E = ρa²/(2ε₀r)</b> (cae como 1/r, más despacio que en la esfera) y <b>V = (ρa²/2ε₀)·ln(a/r)</b>, negativo porque se tomó V = 0 en la superficie.`}
+    };
+    const panels=[{y0:30,y1:170,key:"E",lab:"E"},{y0:225,y1:365,key:"V",lab:"V"}];
+    const dyn=SV("g",{},s);
+    const TY=$("g-type"), RR=$("g-r");
+    function upd(){
+      const d=D[TY.value], r=+RR.value; dyn.innerHTML="";
+      panels.forEach(pn=>{
+        const rg=pn.key==="E"?d.er:d.vr, Y=v=>pn.y1-(pn.y1-pn.y0)*(v-rg[0])/(rg[1]-rg[0]);
+        SV("rect",{x:X0,y:pn.y0,width:X1-X0,height:pn.y1-pn.y0,class:"f-surface s-muted","stroke-width":1,opacity:.9},dyn);
+        if(rg[0]<0) L(dyn,X0,Y(0),X1,Y(0),"s-ink",1.2);
+        L(dyn,X(1),pn.y0,X(1),pn.y1,"s-warn",1.5,{"stroke-dasharray":"5 4"});
+        T(dyn,X(1)+4,pn.y0+14,"r = a","m",{style:"fill:var(--warn)"});
+        [0,1,2,3].forEach(t=>T(dyn,X(t),pn.y1+16,t===0?"0":t+"a","m",{"text-anchor":"middle"}));
+        T(dyn,X0-6,pn.y0+10,fmt(rg[1],2),"m",{"text-anchor":"end"}); T(dyn,X0-6,pn.y1,fmt(rg[0],2),"m",{"text-anchor":"end"});
+        T(dyn,X0+6,pn.y0-8,pn.lab+" (en unidades de "+(pn.key==="E"?d.eu:d.vu)+")","m b");
+        let p=""; const N=300; for(let i=0;i<=N;i++){ const rr=0.001+R*i/N; let v=d[pn.key](rr); v=Math.max(rg[0],Math.min(rg[1],v)); p+=(i?"L":"M")+X(rr).toFixed(1)+","+Y(v).toFixed(1); }
+        SV("path",{d:p,class:pn.key==="E"?"s-acc":"s-teal","stroke-width":3.2,fill:"none"},dyn);
+        const v=d[pn.key](r);
+        L(dyn,X(r),pn.y0,X(r),pn.y1,"s-rose",1.4,{opacity:.7});
+        SV("circle",{cx:X(r),cy:Y(Math.max(rg[0],Math.min(rg[1],v))),r:6,class:"f-rose"},dyn);
+        T(dyn,Math.min(X(r)+10,X1-80),Math.max(pn.y0+30,Math.min(pn.y1-8,Y(v)-10)),pn.lab+" = "+fmt(v,3),"m b",{style:"fill:var(--rose)"});
+      });
+      $("g-r-o").textContent=fmt(r,3)+" a";
+      $("gauss-exp").innerHTML=`<p>${d.txt(r)}</p>`;
+    }
+    [TY,RR].forEach(el=>el.addEventListener("input",upd)); upd();
+  })();
+
+  /* ---------- ejercicio 3: distribuciones ---------- */
+  (function(){
+    const s=$("fig-ej3"); if(!s) return;
+    const q=(x,y,v,lx,ly,anchor)=>{ SV("circle",{cx:x,cy:y,r:7,class:v>0?"f-rose":"f-teal"},s); T(s,x+(lx||0),y+(ly||-14),(v>0?"":"−")+Math.abs(v),"m b",{"text-anchor":anchor||"middle"}); };
+    // a) línea
+    const sa=34, ca=130;
+    T(s,14,30,"a)","b lg");
+    L(s,ca-3*sa,110,ca+3*sa,110,"s-ink2",1.6);
+    [[-3,1],[-1,-2],[1,-3],[3,2]].forEach(([x,v])=>q(ca+x*sa,110,v));
+    L(s,ca,102,ca,118,"s-ink",2); T(s,ca,140,"P","b",{"text-anchor":"middle"});
+    const dim=(x1,x2,y,lab)=>{ L(s,x1,y,x2,y,"s-ink2",1.2,{"marker-start":"url(#ah-muted)","marker-end":"url(#ah-muted)"}); T(s,(x1+x2)/2,y+16,lab,"m",{"text-anchor":"middle"}); };
+    dim(ca-sa,ca,160,"1 m"); dim(ca,ca+sa,160,"1 m"); dim(ca-3*sa,ca,196,"3 m"); dim(ca,ca+3*sa,196,"3 m");
+    // b) cuadrado
+    const cb=[395,115], h=72;
+    T(s,262,30,"b)","b lg");
+    SV("rect",{x:cb[0]-h,y:cb[1]-h,width:2*h,height:2*h,class:"s-ink2","stroke-width":1.6,fill:"none"},s);
+    L(s,cb[0]-h,cb[1],cb[0]+h,cb[1],"s-ink2",1); L(s,cb[0],cb[1]-h,cb[0],cb[1]+h,"s-ink2",1);
+    q(cb[0]-h,cb[1]-h,1,-6,-12,"end"); q(cb[0]+h,cb[1]-h,3,6,-12,"start"); q(cb[0]-h,cb[1]+h,-5,-6,22,"end"); q(cb[0]+h,cb[1]+h,-2,6,22,"start");
+    SV("circle",{cx:cb[0],cy:cb[1],r:4,class:"f-ink"},s); T(s,cb[0]+8,cb[1]-8,"P","b");
+    T(s,cb[0]-h/2,cb[1]-h/2+5,"1 m","m",{"text-anchor":"middle"});
+    // c) hexágono
+    const cc=[640,115], rh=64;
+    T(s,548,30,"c)","b lg");
+    const vals={0:-2,60:-1,120:-5,180:-2,240:-1,300:-5};
+    const pts=[0,60,120,180,240,300].map(a=>[cc[0]+rh*Math.cos(a*Math.PI/180),cc[1]-rh*Math.sin(a*Math.PI/180),a]);
+    SV("polygon",{points:pts.map(p=>p[0]+","+p[1]).join(" "),class:"s-ink2","stroke-width":1.6,fill:"none"},s);
+    pts.forEach(([x,y,a])=>{ const ox=Math.cos(a*Math.PI/180)*22, oy=-Math.sin(a*Math.PI/180)*22; q(x,y,vals[a],ox,oy+5,Math.abs(ox)<5?"middle":(ox>0?"start":"end")); });
+    SV("circle",{cx:cc[0],cy:cc[1],r:4,class:"f-ink"},s); T(s,cc[0]+8,cc[1]-8,"P","b");
+    T(s,cc[0],cc[1]+rh+30,"lado 1 m","m",{"text-anchor":"middle"});
+    T(s,14,224,"rosa: carga positiva · azul: carga negativa","m");
+  })();
+
+  /* ---------- placas ---------- */
+  (function(){
+    const s=$("fig-plates"); if(!s) return;
+    SV("rect",{x:40,y:20,width:14,height:180,class:"f-rose",opacity:.85},s); SV("rect",{x:466,y:20,width:14,height:180,class:"f-teal",opacity:.85},s);
+    for(let i=0;i<6;i++){ T(s,30,40+i*30,"+","b",{"text-anchor":"middle",style:"fill:var(--rose)"}); T(s,492,40+i*30,"−","b",{"text-anchor":"middle",style:"fill:var(--teal)"}); }
+    [45,90,135,180].forEach(y=>L(s,62,y,458,y,"s-muted",1.5,{"marker-end":"url(#ah-muted)"}));
+    T(s,260,212,"E uniforme →","m b",{"text-anchor":"middle"});
+    SV("circle",{cx:200,cy:112,r:12,class:"f-teal"},s); T(s,200,117,"e⁻","b",{"text-anchor":"middle",style:"fill:var(--surface);font-size:12px"});
+    L(s,186,112,120,112,"s-rose",4,{"marker-end":"url(#ah-rose)"}); T(s,120,104,"F = −eE","m b",{style:"fill:var(--rose)"});
+    SV("circle",{cx:330,cy:112,r:12,class:"f-rose"},s); T(s,330,117,"+","b",{"text-anchor":"middle",style:"fill:var(--surface);font-size:16px"});
+    L(s,344,112,410,112,"s-acc",4,{"marker-end":"url(#ah-acc)"}); T(s,372,104,"F = qE","m b",{style:"fill:var(--accent-ink)"});
+  })();
+})();
+
+</script>
+
+</body></html>

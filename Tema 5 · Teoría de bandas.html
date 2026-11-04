@@ -1,0 +1,1029 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Tema 5 · Teoría de bandas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+/* Layout: cuaderno de ingeniería — índice fijo a la izquierda, columna de lectura de ~70ch, figuras sobre papel milimetrado verde */
+:root{
+  --bg:#f1f7f2; --surface:#ffffff; --surface-2:#e6f1e9; --ink:#0f241b; --ink-2:#34503f; --muted:#5d7869; --line:#cde0d2;
+  --accent:#0a8f5a; --accent-ink:#06603d; --accent-soft:#d2f0de; --lime:#5f9a12; --on-accent:#ffffff;
+  --grid:rgba(10,143,90,.08); --grid-strong:rgba(10,143,90,.17);
+  --warn:#a3560a; --warn-soft:#fbefd7; --teal:#0b7285; --teal-soft:#d6eef3; --rose:#bf2f50; --rose-soft:#fbe3e9;
+  --hero-bg:#0b3a28; --hero-bg-2:#0f5c3d; --hero-ink:#ecfbf2; --hero-muted:#a8d8bd; --hero-line:rgba(236,251,242,.14);
+  --shadow:0 1px 2px rgba(15,36,27,.05),0 8px 24px rgba(15,36,27,.06);
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --r:14px; --r-sm:9px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#08130e; --surface:#0e1d16; --surface-2:#13281d; --ink:#e2f1e7; --ink-2:#b4ccbd; --muted:#83a091; --line:#213a2d;
+  --accent:#3ad693; --accent-ink:#7ee9b8; --accent-soft:#103727; --lime:#a6e33f; --on-accent:#05271a;
+  --grid:rgba(58,214,147,.07); --grid-strong:rgba(58,214,147,.15);
+  --warn:#f2b04a; --warn-soft:#2f230b; --teal:#4cc9de; --teal-soft:#0c2a31; --rose:#ff7d98; --rose-soft:#3a1420;
+  --hero-bg:#06261a; --hero-bg-2:#0b4630; --hero-ink:#e6faef; --hero-muted:#93cdb0; --hero-line:rgba(230,250,239,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#08130e; --surface:#0e1d16; --surface-2:#13281d; --ink:#e2f1e7; --ink-2:#b4ccbd; --muted:#83a091; --line:#213a2d;
+  --accent:#3ad693; --accent-ink:#7ee9b8; --accent-soft:#103727; --lime:#a6e33f; --on-accent:#05271a;
+  --grid:rgba(58,214,147,.07); --grid-strong:rgba(58,214,147,.15);
+  --warn:#f2b04a; --warn-soft:#2f230b; --teal:#4cc9de; --teal-soft:#0c2a31; --rose:#ff7d98; --rose-soft:#3a1420;
+  --hero-bg:#06261a; --hero-bg-2:#0b4630; --hero-ink:#e6faef; --hero-muted:#93cdb0; --hero-line:rgba(230,250,239,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.62;}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0}
+a{color:var(--accent-ink)}
+strong{font-weight:700;color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+sup,sub{line-height:0}
+
+.wrap{max-width:1180px;margin-inline:auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+
+/* ---------- HERO ---------- */
+.hero{background:
+  linear-gradient(var(--hero-line) 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(90deg,var(--hero-line) 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(135deg,var(--hero-bg),var(--hero-bg-2));
+  color:var(--hero-ink);}
+.hero .wrap{padding-block:34px 38px;display:grid;gap:22px}
+.series{display:flex;flex-wrap:wrap;gap:6px;font-size:13px}
+.series span{padding:4px 10px;border-radius:99px;border:1px solid var(--hero-line);color:var(--hero-muted);font-weight:700;letter-spacing:.02em}
+.series span.on{background:var(--hero-ink);color:var(--hero-bg);border-color:transparent}
+.hero-main{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:end}
+.bignum{font-family:var(--f-display);font-weight:800;font-size:clamp(88px,16vw,168px);line-height:.8;color:transparent;-webkit-text-stroke:2px var(--hero-muted);letter-spacing:-.04em}
+.eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--hero-muted)}
+.hero h1{font-size:clamp(34px,5.4vw,58px);font-weight:800;margin-top:6px}
+.hero .lead{font-size:18.5px;max-width:62ch;color:var(--hero-ink);opacity:.92;margin-top:12px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--hero-muted)}
+.hero-meta b{color:var(--hero-ink)}
+@media (max-width:640px){.hero-main{grid-template-columns:1fr}.bignum{font-size:84px}}
+
+/* ---------- LAYOUT ---------- */
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:44px;padding-block:34px 80px}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 18px);align-self:start;max-height:calc(100vh - 36px);overflow:auto;padding-right:4px}
+.toc-title{font-family:var(--f-display);font-weight:700;font-size:15px;margin-bottom:8px;color:var(--ink-2)}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.toc a{display:grid;grid-template-columns:26px 1fr 18px;gap:6px;align-items:baseline;padding:6px 8px;border-radius:8px;text-decoration:none;color:var(--ink-2);font-size:14.5px;line-height:1.3}
+.toc a:hover{background:var(--surface-2);color:var(--ink)}
+.toc a.active{background:var(--accent-soft);color:var(--accent-ink);font-weight:700}
+.toc .n{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.toc .ck{color:var(--accent);font-weight:800;opacity:0}
+.toc a.done .ck{opacity:1}
+.progress{margin-top:16px;padding:12px;border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--line);font-size:13.5px;color:var(--ink-2)}
+.bar{height:8px;border-radius:99px;background:var(--surface-2);margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--lime));border-radius:99px;transition:width .4s}
+.toc-mobile{display:none}
+@media (max-width:980px){
+  .layout{grid-template-columns:minmax(0,1fr);gap:0;padding-top:18px}
+  .toc{display:none}
+  .toc-mobile{display:block;margin-bottom:22px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+  .toc-mobile summary{cursor:pointer;padding:12px 16px;font-family:var(--f-display);font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
+  .toc-mobile summary::-webkit-details-marker{display:none}
+  .toc-mobile summary::after{content:"＋";color:var(--accent)}
+  .toc-mobile[open] summary::after{content:"－"}
+  .toc-mobile ol{padding:0 8px 10px}
+}
+main{min-width:0}
+.content{max-width:780px;display:grid;gap:64px}
+
+/* ---------- SECTIONS ---------- */
+.sec{display:grid;gap:22px;scroll-margin-top:20px}
+.sec-head{display:grid;gap:6px;padding-bottom:14px;border-bottom:2px solid var(--line)}
+.sec-num{font-family:var(--f-mono);font-size:13px;font-weight:700;color:var(--accent-ink);letter-spacing:.06em}
+.sec h2{font-size:clamp(27px,3.6vw,36px);font-weight:800}
+.sec-sub{color:var(--ink-2);font-size:17px}
+.sec h3{font-size:21px;font-weight:700;margin-top:6px}
+.sec h4{font-size:17px;font-weight:700}
+.sec p,.sec li{max-width:70ch}
+.sec ul,.sec ol{margin:0;padding-left:1.25em;display:grid;gap:6px}
+.uses{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13.5px}
+.uses .lbl{font-weight:700;color:var(--muted);margin-right:2px}
+.chip{display:inline-block;padding:3px 9px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);font-weight:700;font-size:12.5px;white-space:nowrap}
+.chip.rel{background:var(--accent-soft);border-color:transparent;color:var(--accent-ink)}
+.hl{background:linear-gradient(transparent 58%,var(--accent-soft) 58%);padding:0 2px}
+.key{display:inline-block;font-family:var(--f-mono);font-size:.8em;font-weight:700;padding:1px 7px 2px;border-radius:6px;background:var(--surface);border:1px solid var(--line);border-bottom-width:3px;color:var(--ink);white-space:nowrap;line-height:1.5}
+
+/* ---------- BOXES ---------- */
+.box{border-radius:var(--r);padding:16px 18px;display:grid;gap:10px;border:1px solid var(--line);background:var(--surface)}
+.box>.tag{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.box>.tag::before{content:"";width:9px;height:9px;border-radius:3px;background:currentColor}
+.box.idea{background:var(--accent-soft);border-color:transparent}
+.box.idea>.tag{color:var(--accent-ink)}
+.box.cuidado{background:var(--warn-soft);border-color:transparent}
+.box.cuidado>.tag{color:var(--warn)}
+.box.truco{background:var(--teal-soft);border-color:transparent}
+.box.truco>.tag{color:var(--teal)}
+.box.calc{background:var(--surface);border:1px dashed var(--line)}
+.box.calc>.tag{color:var(--ink-2)}
+.box ul,.box ol{padding-left:1.2em}
+
+/* formula card */
+.formula{border-radius:var(--r);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+.formula .f-head{padding:10px 18px;font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);border-bottom:1px solid var(--line);background:var(--surface-2)}
+.formula .f-body{padding:6px 18px 14px;display:grid;gap:8px}
+.formula .f-body>p{font-size:15.5px;color:var(--ink-2)}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:15px;margin:0}
+.legend dt{font-weight:700;text-align:right}
+.legend dd{margin:0;color:var(--ink-2)}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15.5px;font-variant-numeric:tabular-nums}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:var(--surface-2);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+tr:last-child td{border-bottom:0}
+td.c,th.c{text-align:center}
+
+/* ---------- WORKED EXAMPLE (stepper) ---------- */
+.ej{border-radius:var(--r);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+.ej-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:center;padding:12px 18px;background:var(--hero-bg);color:var(--hero-ink)}
+.ej-head .t{font-family:var(--f-display);font-weight:700;font-size:16.5px}
+.ej-head .src{font-size:12.5px;color:var(--hero-muted);font-weight:700}
+.ej-q{padding:16px 18px;border-bottom:1px solid var(--line);display:grid;gap:8px}
+.ej-q .data{display:flex;flex-wrap:wrap;gap:6px}
+.ej-q .data span{font-family:var(--f-mono);font-size:13.5px;padding:2px 8px;border-radius:6px;background:var(--surface-2)}
+.steps{list-style:none;margin:0;padding:0;counter-reset:st}
+.step{counter-increment:st;display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.step::before{content:counter(st);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;font-size:14px;background:var(--accent);color:var(--on-accent)}
+.step .st-t{font-weight:700;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.step .st-b{display:grid;gap:8px;margin-top:6px;min-width:0}
+.step .st-b p{max-width:none}
+.step.locked::before{background:var(--surface-2);color:var(--muted)}
+.step.locked .st-t{color:var(--muted)}
+.step.locked .st-b{max-height:0;overflow:hidden;visibility:hidden;margin:0}
+.step.locked .st-t::after{content:"· intenta este paso antes de abrirlo";font-weight:400;font-size:13px;color:var(--muted)}
+.step.just{animation:pop .45s ease}
+@keyframes pop{from{background:var(--accent-soft)}to{background:transparent}}
+.ej-ctrl{display:flex;flex-wrap:wrap;gap:8px;padding:12px 18px;background:var(--surface-2)}
+.btn{font:inherit;font-size:14.5px;font-weight:700;border-radius:99px;padding:8px 16px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:transform .12s,background .12s}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--accent);border-color:transparent;color:var(--on-accent)}
+.btn[disabled]{opacity:.45;cursor:default;transform:none}
+.result{border-radius:var(--r-sm);padding:10px 14px;background:var(--accent-soft);color:var(--accent-ink);font-weight:700;border:1px solid transparent}
+.check{font-size:14.5px;color:var(--ink-2);border-left:3px solid var(--accent);padding-left:10px}
+
+/* practice */
+.practica{border-radius:var(--r);border:2px dashed var(--line);padding:16px 18px;display:grid;gap:10px}
+.practica>.tag{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lime)}
+.practica ol{display:grid;gap:12px}
+details.sol summary{cursor:pointer;font-weight:700;color:var(--accent-ink);font-size:14.5px;width:max-content;max-width:100%}
+details.sol>div{margin-top:8px;padding:10px 14px;border-radius:var(--r-sm);background:var(--surface-2);display:grid;gap:6px}
+
+/* figures & widgets */
+.fig{border-radius:var(--r);border:1px solid var(--line);overflow:hidden;background:var(--surface)}
+.paper{background-color:var(--surface);background-image:
+  linear-gradient(var(--grid-strong) 1px,transparent 1px),linear-gradient(90deg,var(--grid-strong) 1px,transparent 1px),
+  linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:80px 80px,80px 80px,16px 16px,16px 16px}
+.fig .art{padding:14px;overflow-x:auto}
+.fig .art svg{display:block;width:100%;height:auto;max-width:100%}
+.fig figcaption,.fig .cap{padding:10px 16px;font-size:14.5px;color:var(--ink-2);border-top:1px solid var(--line);background:var(--surface)}
+.widget .w-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--surface)}
+.widget .w-head b{font-family:var(--f-display);font-size:16px}
+.widget .w-head .pill{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:var(--accent);color:var(--on-accent)}
+.controls{display:grid;gap:12px;padding:14px 16px;border-top:1px solid var(--line);background:var(--surface)}
+.ctrl{display:grid;grid-template-columns:minmax(110px,auto) 1fr auto;gap:12px;align-items:center;font-size:15px}
+.ctrl label{font-weight:700}
+.ctrl output{font-family:var(--f-mono);font-size:14px;min-width:64px;text-align:right}
+input[type=range]{width:100%;accent-color:var(--accent);min-width:0}
+select,input[type=number],input[type=text]{font:inherit;font-size:15px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-width:0}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;padding:12px 16px;background:var(--surface-2);font-variant-numeric:tabular-nums}
+.readout div{display:grid;gap:2px;font-size:13px;color:var(--muted);font-weight:700}
+.readout div span{font-family:var(--f-mono);font-size:16px;color:var(--ink);font-weight:700}
+.explain{padding:12px 16px;font-size:15.5px;border-top:1px solid var(--line);background:var(--surface);display:grid;gap:6px}
+@media (max-width:520px){.ctrl{grid-template-columns:1fr auto}.ctrl input[type=range]{grid-column:1/-1;order:3}}
+
+/* svg tokens */
+.s-ink{stroke:var(--ink);fill:none}
+.s-ink2{stroke:var(--ink-2);fill:none}
+.s-muted{stroke:var(--muted);fill:none}
+.s-acc{stroke:var(--accent);fill:none}
+.s-teal{stroke:var(--teal);fill:none}
+.s-warn{stroke:var(--warn);fill:none}
+.s-rose{stroke:var(--rose);fill:none}
+.f-acc{fill:var(--accent)}
+.f-accsoft{fill:var(--accent-soft)}
+.f-teal{fill:var(--teal)}
+.f-warn{fill:var(--warn)}
+.f-rose{fill:var(--rose)}
+.f-ink{fill:var(--ink)}
+.f-ink2{fill:var(--ink-2)}
+.f-muted{fill:var(--muted)}
+.f-surface{fill:var(--surface)}
+.f-surface2{fill:var(--surface-2)}
+svg text{font-family:var(--f-body);font-size:14px;fill:var(--ink-2)}
+svg text.m{font-family:var(--f-mono);font-size:12.5px}
+svg text.b{font-weight:700}
+svg text.lg{font-size:17px}
+
+/* grid of cards (formulario) */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:12px}
+.fcard{border-radius:var(--r);border:1px solid var(--line);background:var(--surface);padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.fcard h4{font-size:15px;color:var(--accent-ink);letter-spacing:.02em}
+.fcard .row{overflow-x:auto;overflow-y:hidden}
+
+/* method steps */
+.method{list-style:none;padding:0!important;margin:0;display:grid;gap:10px;counter-reset:m}
+.method li{counter-increment:m;display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;max-width:none!important}
+.method li::before{content:counter(m);font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1;color:var(--accent)}
+.method b{display:block}
+
+/* legend of boxes */
+.kinds{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.kinds>div{border-radius:var(--r-sm);padding:10px 12px;font-size:14.5px;display:grid;gap:2px}
+.kinds b{font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.kinds .k-idea{background:var(--accent-soft)} .kinds .k-idea b{color:var(--accent-ink)}
+.kinds .k-form{background:var(--surface);border:1px solid var(--line)} .kinds .k-form b{color:var(--accent-ink)}
+.kinds .k-ej{background:var(--hero-bg);color:var(--hero-ink)} .kinds .k-ej b{color:var(--hero-muted)}
+.kinds .k-cui{background:var(--warn-soft)} .kinds .k-cui b{color:var(--warn)}
+.kinds .k-tru{background:var(--teal-soft)} .kinds .k-tru b{color:var(--teal)}
+.kinds .k-pra{border:2px dashed var(--line)} .kinds .k-pra b{color:var(--lime)}
+
+/* quiz */
+.quiz{display:grid;gap:14px}
+.q{border-radius:var(--r);border:1px solid var(--line);background:var(--surface);padding:16px 18px;display:grid;gap:10px}
+.q .qt{font-weight:700}
+.q .opts{display:grid;gap:8px}
+.q .opts button{font:inherit;text-align:left;padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.q .opts button:hover{border-color:var(--accent)}
+.q .opts button.ok{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.q .opts button.ko{background:var(--rose-soft);border-color:var(--rose);color:var(--rose)}
+.q .why{font-size:15px;color:var(--ink-2);padding:10px 12px;border-radius:var(--r-sm);background:var(--surface-2)}
+.score{position:relative;font-family:var(--f-display);font-weight:700;font-size:18px;padding:14px 18px;border-radius:var(--r);background:var(--hero-bg);color:var(--hero-ink);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+.done-btn{justify-self:start;font:inherit;font-weight:700;font-size:14.5px;padding:9px 16px;border-radius:99px;border:2px solid var(--accent);background:transparent;color:var(--accent-ink);cursor:pointer}
+.done-btn[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+
+/* math */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;padding:4px 0;margin:4px 0!important}
+mjx-container{color:inherit}
+.big mjx-container[display="true"]{font-size:118%}
+
+footer.foot{border-top:1px solid var(--line);padding-block:24px 40px;color:var(--muted);font-size:14px}
+
+/* evita que fórmulas largas ensanchen la columna */
+.content,.sec,.box,.formula .f-body,.step .st-b,.ej-q,.practica,details.sol>div,.explain,.q,.fcard{grid-template-columns:minmax(0,1fr)}
+.sec ul,.sec ol{grid-template-columns:minmax(0,1fr)}
+.sec li{min-width:0}
+.step::before{grid-row:1 / span 2}
+.step .st-t,.step .st-b{grid-column:2}
+.widget .art svg{max-width:600px;margin-inline:auto}
+.readout{grid-template-columns:repeat(auto-fit,minmax(118px,1fr))}
+@media (max-width:560px){
+  .widget svg text{font-size:21px}
+  .widget svg text.m{font-size:19px}
+}
+
+/* notas de calculadora dentro de los pasos */
+.calc-note{font-size:14.5px;line-height:1.5;padding:9px 12px;border-radius:var(--r-sm);background:var(--teal-soft);color:var(--ink-2);border-left:3px solid var(--teal)}
+.calc-note b:first-child{color:var(--teal);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-right:4px}
+/* serie con enlaces */
+.series a{padding:4px 10px;border-radius:99px;border:1px solid var(--hero-muted);color:var(--hero-ink);font-weight:700;letter-spacing:.02em;text-decoration:none}
+.series a:hover{background:var(--hero-line)}
+/* arrastrable */
+.drag{cursor:grab;touch-action:none}
+.drag:active{cursor:grabbing}
+.theory{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.theory>div{border-radius:var(--r-sm);border:1px solid var(--line);background:var(--surface);padding:12px 14px;display:grid;gap:4px;align-content:start}
+.theory b{font-family:var(--f-display);font-size:16px}
+.theory p{font-size:15px;color:var(--ink-2)}
+
+/* cuadro de relaciones F-E-Ep-V */
+.magic{display:grid;grid-template-columns:minmax(0,1fr) minmax(70px,.8fr) minmax(0,1fr);grid-template-rows:auto auto auto;gap:6px;align-items:stretch}
+.magic .mb{border-radius:var(--r);padding:12px;text-align:center;display:grid;gap:2px;align-content:center;border:2px solid transparent}
+.magic .mb b{font-family:var(--f-display);font-size:19px}
+.magic .mb span{font-size:13px;color:var(--ink-2)}
+.magic .vec{background:var(--accent-soft);border-color:var(--accent)}
+.magic .esc{background:var(--teal-soft);border-color:var(--teal)}
+.magic .ar{display:grid;place-items:center;text-align:center;font-size:14px;color:var(--ink-2);padding:4px;min-width:0}
+.magic .ar b{color:var(--ink);font-family:var(--f-mono);font-size:13px}
+.magic .mid{font-size:13px;color:var(--muted);display:grid;place-items:center;text-align:center}
+@media (max-width:520px){.magic .mb b{font-size:16px}.magic .ar{font-size:12.5px}}
+
+/* tabla de símbolos en móvil: tarjetas */
+@media (max-width:600px){
+  .symtab thead{display:none}
+  .symtab tr{display:grid;grid-template-columns:110px minmax(0,1fr);align-items:center;border-bottom:1px solid var(--line)}
+  .symtab td{border-bottom:0;padding:8px 10px}
+  .symtab td:nth-child(3){grid-column:1/-1;padding-top:0;font-size:14.5px}
+  .symtab svg{width:100px;height:42px}
+}
+
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']],
+    macros: { ii: '\\hat{\\imath}', jj: '\\hat{\\jmath}', kk: '\\hat{k}', sen: '\\operatorname{sen}' }
+  },
+  svg: { fontCache: 'global' },
+  options: { enableMenu: false }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<div data-topic="5">
+<header class="hero">
+  <div class="wrap">
+    <nav class="series" aria-label="Serie de apuntes">
+      <a href="https://claude.ai/artifact/HSC9RVR4F1vLX3NZBy3KcX" target="_blank" rel="noopener">0 · Mates ↗</a><a href="https://claude.ai/artifact/5UzQ4YaArXtxVZQKoz7Yef" target="_blank" rel="noopener">1 · Magnitudes y vectores ↗</a><a href="https://claude.ai/artifact/EmosFbEofZfZhApDfot99i" target="_blank" rel="noopener">2 · Campo eléctrico ↗</a><a href="https://claude.ai/artifact/6rCvw1sDeePkWPNUY6Wumw" target="_blank" rel="noopener">3 · Conductores y condensadores ↗</a><a href="https://claude.ai/artifact/CaaQ7auFrzq2YzLsexy798" target="_blank" rel="noopener">4 · Corriente eléctrica ↗</a><span class="on">5 · Teoría de bandas</span>
+    </nav>
+    <div class="hero-main">
+      <div class="bignum" aria-hidden="true">5</div>
+      <div>
+        <div class="eyebrow">Física · Tema 5 · Semiconductores</div>
+        <h1>Teoría de bandas</h1>
+        <p class="lead">Por qué unos materiales conducen y otros no, y cómo se fabrican los semiconductores de los chips. Es un tema de teoría: aquí lo tienes explicado, con preguntas tipo examen y su respuesta modelo, y los pocos cálculos que pueden caer.</p>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <span><b>7</b> apartados + resumen y test</span>
+      <span><b>≈ 1.5 h</b> de estudio</span>
+      <span>Material: <b>TeoriaBandas.pdf</b></span>
+    </div>
+  </div>
+</header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <marker id="ah-ink" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path class="f-ink" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-acc" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path class="f-acc" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-teal" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path class="f-teal" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-rose" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path class="f-rose" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-warn" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path class="f-warn" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-muted" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path class="f-muted" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+</svg>
+
+<div class="wrap layout">
+  <nav class="toc" aria-label="Índice del tema">
+    <div class="toc-title">En este tema</div>
+    <ol data-toc></ol>
+    <div class="progress"><span data-prog-txt></span><div class="bar"><i data-prog-bar></i></div></div>
+  </nav>
+
+  <main>
+    <details class="toc-mobile">
+      <summary>Índice del tema</summary>
+      <ol data-toc></ol>
+      <div class="progress" style="margin:0 12px 12px"><span data-prog-txt></span><div class="bar"><i data-prog-bar></i></div></div>
+    </details>
+
+    <div class="content">
+
+<!-- ======================= 00 ======================= -->
+<section class="sec" id="mapa" data-n="00" data-title="La idea del tema">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 00</div>
+    <h2>La idea del tema en un minuto</h2>
+    <p class="sec-sub">Si solo te quedas con esto, ya sabes explicar el tema.</p>
+  </div>
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <ol>
+      <li>En un átomo aislado, los electrones solo pueden tener ciertas energías: los <b>niveles</b> (1s, 2s, 2p…).</li>
+      <li>En un sólido hay muchísimos átomos juntos (del orden de 10²³). Cada nivel se desdobla en tantos niveles como átomos, tan pegados que forman una <b>banda</b> casi continua de energías permitidas. Entre banda y banda puede quedar un hueco de energías prohibidas: el <b>gap</b>, \(E_g\).</li>
+      <li>Para conducir, un electrón tiene que poder subir un poquito de energía (a un nivel vacío). Eso solo se puede si su banda <b>no está llena</b>.</li>
+      <li><b>Conductor:</b> la banda de arriba está a medio llenar, o se solapa con una vacía. <b>Aislante:</b> la banda de arriba está llena y el gap es grande (diamante, 6 eV). <b>Semiconductor:</b> igual que un aislante, pero con un gap pequeño (Si 1.1 eV, Ge 0.7 eV): con un poco de calor algunos electrones lo saltan.</li>
+      <li>El <b>dopado</b> mete átomos de otro tipo para poner niveles dentro del gap y que el semiconductor conduzca mucho mejor: <b>tipo n</b> (un electrón de más) o <b>tipo p</b> (un electrón de menos, que deja un «hueco»).</li>
+    </ol>
+  </div>
+  <div class="box truco">
+    <div class="tag">Cómo se pregunta en el examen</div>
+    <p>Sobre todo con preguntas de razonar: por qué conduce el Na, por qué el Mg también conduce, por qué el diamante es aislante, por qué el Si conduce a temperatura ambiente, qué es el dopado… Están todas en el apartado 06 con una respuesta modelo para que veas cómo contestarlas.</p>
+  </div>
+</section>
+
+<!-- ======================= 01 ======================= -->
+<section class="sec" id="clasificacion" data-n="01" data-title="Clasificación de los materiales">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 01</div>
+    <h2>Clasificación de los materiales</h2>
+    <p class="sec-sub">Según cómo conducen la electricidad, a escala macroscópica (diapositiva 1).</p>
+  </div>
+  <div class="theory">
+    <div><b>Superconductores</b><p>Por debajo de cierta temperatura su resistencia es exactamente cero (lo viste en el Tema 4, con el mercurio a 4.2 K).</p></div>
+    <div><b>Conductores</b><p>Tienen cargas libres en su estructura atómica, que se mueven en cuanto se aplica un campo eléctrico. Metales: Cu, Na, Mg, Al…</p></div>
+    <div><b>Semiconductores</b><p>Según otras condiciones que no son eléctricas (la temperatura o la radiación que les llega) se comportan como conductores o como aislantes. Si, Ge, GaAs.</p></div>
+    <div><b>Aislantes</b><p>No tienen cargas libres. Ante un campo eléctrico solo se desplazan un poco las cargas dentro de cada átomo (es la distorsión de los dieléctricos del Tema 3). Diamante, vidrio, plástico.</p></div>
+  </div>
+  <p>La explicación de por qué cada material es de un tipo viene de la <b>mecánica cuántica</b>, con la teoría de bandas.</p>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 02 ======================= -->
+<section class="sec" id="bandas" data-n="02" data-title="De los niveles a las bandas">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 02</div>
+    <h2>De los niveles del átomo a las bandas del sólido</h2>
+    <p class="sec-sub">Por qué en un sólido aparecen bandas de energía, y cuántos electrones caben en cada una (diapositivas 2–4).</p>
+  </div>
+
+  <h3>Un átomo solo: niveles</h3>
+  <p>En mecánica cuántica, el estado de un electrón en un átomo se describe con tres números cuánticos:</p>
+  <div class="formula">
+    <div class="f-head">Números cuánticos</div>
+    <div class="f-body big">
+      \[n = 1, 2, 3, \dots\qquad 0 \le l \le n-1\qquad -l \le m \le l\]
+      <dl class="legend">
+        <dt>\(n\)</dt><dd>principal: en el modelo de Bohr del hidrógeno, la energía solo depende de él (\(E_n = -13.6/n^2\) eV)</dd>
+        <dt>\(l\)</dt><dd>tipo de orbital: \(l = 0\) es s, \(l = 1\) es p, \(l = 2\) es d, \(l = 3\) es f</dd>
+        <dt>\(m\)</dt><dd>orientación: hay \(2l + 1\) valores de \(m\) para cada \(l\)</dd>
+      </dl>
+      <p>Como varios estados distintos tienen la misma energía, se dice que son <b>estados degenerados</b>. Con el espín (dos electrones por estado), en un orbital caben \(2(2l+1)\) electrones: <b>s: 2 · p: 6 · d: 10</b>.</p>
+    </div>
+  </div>
+
+  <h3>Muchos átomos juntos: bandas</h3>
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>En un gas, los átomos están lejos y no se notan entre sí: todos tienen los mismos niveles. En un sólido están a ~1 Å (10⁻¹⁰ m) y sí se notan: cada nivel se <b>desdobla</b>. Con 2 átomos, cada nivel se parte en 2 (las funciones de onda simétrica y antisimétrica de la ecuación de Schrödinger). Con N átomos, en N niveles muy próximos. Como N es del orden del número de Avogadro, la separación entre niveles vecinos es ridícula (~10⁻²³ eV) y en la práctica forman una <b>banda continua</b>.</p>
+  </div>
+
+  <div class="fig widget paper" id="w-split">
+    <div class="w-head"><b>Cómo un nivel se convierte en banda</b><span class="pill">Interactivo</span></div>
+    <div class="art"><svg id="split-svg" viewBox="0 0 460 260" style="max-width:500px" role="img" aria-label="Niveles de energía que se desdoblan al juntar átomos"></svg></div>
+    <div class="controls">
+      <div class="ctrl"><label for="sp-n">Nº de átomos N</label><input type="range" id="sp-n" min="1" max="40" step="1" value="2"><output id="sp-n-o"></output></div>
+      <div class="ctrl"><label for="sp-d">Distancia entre átomos</label><input type="range" id="sp-d" min="1" max="5" step="0.1" value="1.4"><output id="sp-d-o"></output></div>
+    </div>
+    <div class="explain" id="split-exp"></div>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Cuántos electrones caben en cada banda (N átomos)</div>
+    <div class="f-body">
+      <div class="tbl-wrap" style="border:0">
+        <table>
+          <thead><tr><th>Banda</th><th>Estados por átomo</th><th>Capacidad de la banda</th></tr></thead>
+          <tbody>
+            <tr><td>s (1s, 2s, 3s…)</td><td>2</td><td><b>2N</b> electrones</td></tr>
+            <tr><td>p (2p, 3p…)</td><td>6</td><td><b>6N</b> electrones</td></tr>
+            <tr><td>d (3d, 4d…)</td><td>10</td><td><b>10N</b> electrones</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Las bandas de los electrones <b>más externos</b> son más anchas, porque esos electrones se solapan más con los de los átomos vecinos. Las internas (1s) casi no se ensanchan.</p>
+      <p><b>Unidad de energía:</b> el electronvoltio, \(1\ \text{eV} = 1.6\cdot10^{-19}\) J. Es la energía que gana un electrón al atravesar 1 V (\(qV\), Tema 2).</p>
+    </div>
+  </div>
+
+  <div class="box truco">
+    <div class="tag">Dos nombres clave</div>
+    <ul>
+      <li><b>Banda de valencia (BV):</b> la banda de más energía que tiene electrones.</li>
+      <li><b>Banda de conducción (BC):</b> la siguiente, por encima. Si la de valencia está a medio llenar, ella misma hace de banda de conducción.</li>
+      <li><b>Banda prohibida o gap (\(E_g\)):</b> el hueco de energías que ningún electrón puede tener, entre la BV y la BC.</li>
+    </ul>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 03 ======================= -->
+<section class="sec" id="tipos" data-n="03" data-title="Conductor, aislante o semiconductor">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 03</div>
+    <h2>Conductor, aislante o semiconductor</h2>
+    <p class="sec-sub">Los cinco ejemplos de las diapositivas: Na, Mg, diamante, Si y Ge (diapositivas 5–9).</p>
+  </div>
+
+  <div class="box idea">
+    <div class="tag">La regla</div>
+    <p>Para que un electrón contribuya a la corriente, el campo eléctrico tiene que poder acelerarlo un poco, es decir, subirlo a un nivel un pelín más alto. Si ese nivel está <b>ocupado</b>, no puede. Por eso, <b>una banda llena no conduce</b>. Solo conducen las bandas a medio llenar.</p>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-tres" viewBox="0 0 600 250" style="min-width:520px" role="img" aria-label="Diagrama de bandas de un conductor, un semiconductor y un aislante"></svg></div>
+    <figcaption>Diapositiva 10. Conductor: banda a medio llenar (o bandas solapadas). Semiconductor: gap pequeño, algunos electrones lo saltan. Aislante: gap grande, ninguno lo salta.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejemplo resuelto 1 · Sodio: conductor</span><span class="src">Diapositiva 5</span></div>
+    <div class="ej-q"><p>Na (Z = 11): 1s² 2s² 2p⁶ 3s¹. Con N átomos, ¿cómo están ocupadas las bandas? ¿Conduce?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Cuenta electrones y huecos en cada banda</div><div class="st-b"><p>1s: 2N electrones en 2N estados (llena). 2s: 2N en 2N (llena). 2p: 6N en 6N (llena). 3s: solo N electrones (uno por átomo) en 2N estados.</p></div></li>
+      <li class="step"><div class="st-t">Mira la banda de arriba</div><div class="st-b"><p>La banda 3s está <b>a medio llenar</b>: N electrones en 2N sitios. Encima de los electrones hay estados vacíos sin ningún gap.</p></div></li>
+      <li class="step"><div class="st-t">Conclusión</div><div class="st-b"><div class="result">Conductor. La banda 3s es a la vez banda de valencia y de conducción. Les pasa lo mismo a los de su columna (Li, K, Rb, Cs), que tienen un solo electrón s en la última capa.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejemplo resuelto 2 · Magnesio: conductor por solapamiento</span><span class="src">Diapositiva 6</span></div>
+    <div class="ej-q"><p>Mg (Z = 12): 1s² 2s² 2p⁶ 3s². ¿Por qué conduce?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Lo esperado</div><div class="st-b"><p>La banda 3s tiene 2N electrones en 2N estados: <b>llena</b>. Según la regla, el Mg debería ser aislante.</p></div></li>
+      <li class="step"><div class="st-t">Lo que pasa de verdad</div><div class="st-b"><p>En el sólido, la banda 3s y la 3p (vacía) son tan anchas que <b>se solapan</b> (también se llama <b>hibridación</b>). Los electrones de arriba de la 3s tienen estados vacíos de la 3p justo al lado, sin gap.</p></div></li>
+      <li class="step"><div class="st-t">Conclusión</div><div class="st-b"><div class="result">Conductor: la BV y la BC están solapadas. Lo mismo ocurre en Be, Ca y Ba. El solapamiento depende de la distancia entre los átomos de la red.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejemplo resuelto 3 · Diamante: aislante</span><span class="src">Diapositiva 7</span></div>
+    <div class="ej-q"><p>C (Z = 6): 1s² 2s² 2p². La banda 2p tendría 2N electrones en 6N estados, a medio llenar. ¿Por qué el diamante es aislante?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Lo esperado: conductor</div><div class="st-b"><p>Con la 2p a medio llenar (2N electrones en 6N sitios) debería conducir, como el sodio.</p></div></li>
+      <li class="step"><div class="st-t">Hibridación de 2s y 2p</div><div class="st-b"><p>En la estructura del diamante, las bandas 2s (2N estados) y 2p (6N estados) se mezclan y forman 8N estados, que se separan en <b>dos bandas de 4N estados cada una</b>, con un gap de 6 eV entre ellas.</p></div></li>
+      <li class="step"><div class="st-t">Recoloca los electrones</div><div class="st-b"><p>Electrones disponibles: 2N (de los 2s) + 2N (de los 2p) = 4N. Llenan <b>exactamente</b> la banda de abajo (4N estados), y la de arriba queda vacía.</p></div></li>
+      <li class="step"><div class="st-t">Conclusión</div><div class="st-b"><div class="result">Banda de valencia llena, banda de conducción vacía y un gap de \(E_g = 6\) eV: es un aislante.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejemplo resuelto 4 · Silicio y germanio</span><span class="src">Diapositivas 8–9</span></div>
+    <div class="ej-q"><p>Si (grupo IV, como el C): hibridación de 3s y 3p. Ge: hibridación de 4s y 4p. ¿Qué son?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Mismo mecanismo que el diamante</div><div class="st-b"><p>La hibridación de las bandas s y p deja una banda de valencia llena (4N electrones en 4N estados) y una de conducción vacía. En principio, son <b>aislantes</b>.</p></div></li>
+      <li class="step"><div class="st-t">Pero el gap es mucho más pequeño</div><div class="st-b">\[E_g(\text{C}) = 6\ \text{eV}\qquad E_g(\text{Si}) = 1.1\ \text{eV}\qquad E_g(\text{Ge}) = 0.7\ \text{eV}\]</div></li>
+      <li class="step"><div class="st-t">El papel de la temperatura</div><div class="st-b"><p>A temperaturas muy bajas, los tres son aislantes. A temperatura ambiente, los electrones tienen algo de energía térmica y algunos pueden saltar el gap si es pequeño. Cuanto mayor es T o menor es \(E_g\), más electrones pasan a la banda de conducción.</p><div class="result">Si y Ge son <b>semiconductores</b>: conducen algo a temperatura ambiente. El diamante sigue siendo aislante porque 6 eV es demasiado.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="fig widget paper" id="w-bands">
+    <div class="w-head"><b>Diagrama de bandas: elige material y temperatura</b><span class="pill">Interactivo</span></div>
+    <div class="art"><svg id="bands-svg" viewBox="0 0 460 270" style="max-width:500px" role="img" aria-label="Diagrama de bandas del material elegido"></svg></div>
+    <div class="controls">
+      <div class="ctrl"><label for="bd-m">Material</label><select id="bd-m">
+        <option value="Na">Sodio (conductor)</option><option value="Mg">Magnesio (conductor)</option><option value="C">Diamante (aislante)</option><option value="Si" selected>Silicio intrínseco</option><option value="Ge">Germanio intrínseco</option><option value="Sin">Silicio dopado tipo n</option><option value="Sip">Silicio dopado tipo p</option></select><span></span></div>
+      <div class="ctrl"><label for="bd-T">Temperatura</label><input type="range" id="bd-T" min="0" max="600" step="10" value="300"><output id="bd-T-o"></output></div>
+    </div>
+    <div class="readout" id="bands-read"></div>
+    <div class="explain" id="bands-exp"></div>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 04 ======================= -->
+<section class="sec" id="temperatura" data-n="04" data-title="Temperatura, luz y gap">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 04</div>
+    <h2>Temperatura, luz y gap: los cálculos que pueden caer</h2>
+    <p class="sec-sub">Pasar de eV a J, comparar la energía térmica con el gap y calcular qué luz hace saltar un electrón.</p>
+  </div>
+
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>Para saltar de la banda de valencia a la de conducción, un electrón necesita recibir una energía igual o mayor que el gap. Se la pueden dar tres cosas (diapositiva 10): la <b>agitación térmica</b> (la temperatura), la <b>radiación electromagnética</b> (la luz) o un <b>campo eléctrico</b> muy intenso.</p>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Fórmulas útiles (de física general)</div>
+    <div class="f-body big">
+      \[1\ \text{eV} = 1.6\cdot10^{-19}\ \text{J}\qquad E_{térmica} \sim k_BT\quad (k_B = 8.62\cdot10^{-5}\ \text{eV/K})\qquad E_{fotón} = h\,f = \frac{h\,c}{\lambda}\]
+      <dl class="legend">
+        <dt>\(k_B\)</dt><dd>constante de Boltzmann. A temperatura ambiente (300 K), \(k_BT \approx 0.026\) eV.</dd>
+        <dt>\(h\)</dt><dd>constante de Planck, \(6.63\cdot10^{-34}\) J·s. \(c = 3\cdot10^8\) m/s.</dd>
+      </dl>
+      <p>Estas fórmulas no están en las diapositivas: sirven para entender los números. Si en el examen cae algún cálculo de este tema, será de este estilo.</p>
+    </div>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejemplo resuelto 1 · ¿Por qué basta tan poca temperatura?</span><span class="src">Diapositiva 9</span></div>
+    <div class="ej-q"><p>A 300 K, la energía térmica típica es \(k_BT = 0.026\) eV, y el gap del Si es de 1.1 eV, 40 veces más. ¿Cómo puede ningún electrón saltarlo?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">La energía térmica es un promedio</div><div class="st-b"><p>\(k_BT\) es la energía <b>típica</b>, pero se reparte de forma desigual: unos pocos electrones tienen mucha más. La fracción que consigue saltar es del orden de \(e^{-E_g/2k_BT}\).</p></div></li>
+      <li class="step"><div class="st-t">Compara Si, Ge y diamante a 300 K</div><div class="st-b">\[\text{Si: } e^{-1.1/0.052} \approx 6\cdot10^{-10}\qquad \text{Ge: } e^{-0.7/0.052} \approx 1.3\cdot10^{-6}\qquad \text{C: } e^{-6/0.052} \approx 4\cdot10^{-51}\]</div></li>
+      <li class="step"><div class="st-t">Interpreta</div><div class="st-b"><p>Parecen fracciones minúsculas, pero en un cm³ hay unos 10²² átomos. En el Si saltan unos 10¹⁰ electrones por cm³, suficientes para conducir algo. En el diamante la fracción es 10⁴¹ veces menor que en el Si: prácticamente ninguno.</p><div class="result">El gap entra en una <b>exponencial</b>: una pequeña diferencia en \(E_g\) supone una diferencia enorme en el número de electrones de conducción.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejemplo resuelto 2 · ¿Qué luz hace conducir a cada material?</span><span class="src">Radiación EM, diapositiva 10</span></div>
+    <div class="ej-q"><p>¿Cuál es la longitud de onda máxima de la luz capaz de hacer saltar un electrón del gap en el Si (1.1 eV)? ¿Y en el diamante (6 eV)?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Condición: energía del fotón ≥ gap</div><div class="st-b">\[\frac{h\,c}{\lambda} \ge E_g\ \Rightarrow\ \lambda_{máx} = \frac{h\,c}{E_g}\]</div></li>
+      <li class="step"><div class="st-t">Gap en julios</div><div class="st-b">\[E_g(\text{Si}) = 1.1\cdot1.6\cdot10^{-19} = 1.76\cdot10^{-19}\ \text{J}\]</div></li>
+      <li class="step"><div class="st-t">Silicio</div><div class="st-b">\[\lambda_{máx} = \frac{6.63\cdot10^{-34}\cdot3\cdot10^{8}}{1.76\cdot10^{-19}} = 1.13\cdot10^{-6}\ \text{m} = 1130\ \text{nm}\]<p>Es infrarrojo: toda la luz visible (400–700 nm) tiene fotones con energía suficiente. Por eso el silicio sirve para placas solares y cámaras.</p></div></li>
+      <li class="step"><div class="st-t">Diamante</div><div class="st-b">\[\lambda_{máx} = \frac{6.63\cdot10^{-34}\cdot3\cdot10^{8}}{6\cdot1.6\cdot10^{-19}} = 2.07\cdot10^{-7}\ \text{m} = 207\ \text{nm}\]<div class="result">Si: 1130 nm (infrarrojo). Diamante: 207 nm (ultravioleta). La luz visible no tiene energía para que el diamante la absorba, y por eso es transparente.</div></div></li>
+    </ol>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-nT" viewBox="0 0 470 280" style="max-width:500px;margin-inline:auto" role="img" aria-label="Concentración de electrones de conducción frente a la temperatura para Si, Ge y Si dopado"></svg></div>
+    <figcaption>Diapositivas 10 y 12: electrones de conducción por cm³ (en unidades de 10¹⁵) frente a la temperatura. El Ge, con menos gap, empieza a conducir antes que el Si. El Si dopado tiene una meseta: sus electrones vienen de las impurezas y no dependen casi de T.</figcaption>
+  </figure>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 05 ======================= -->
+<section class="sec" id="dopado" data-n="05" data-title="Intrínsecos, extrínsecos y dopado">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 05</div>
+    <h2>Semiconductores intrínsecos, extrínsecos y dopado</h2>
+    <p class="sec-sub">Electrones, huecos y cómo se mejora la conducción metiendo impurezas (diapositivas 10–12).</p>
+  </div>
+
+  <div class="theory">
+    <div><b>Intrínseco</b><p>El semiconductor puro. La agitación térmica, la radiación o un campo intenso hacen saltar electrones de la BV a la BC.</p></div>
+    <div><b>Hueco</b><p>Cada electrón que salta deja en la BV un sitio vacío. Los electrones vecinos pueden moverse a ese sitio, y el hueco «se mueve» en sentido contrario, como si fuera una <b>carga positiva</b>. En un intrínseco hay tantos huecos como electrones de conducción.</p></div>
+    <div><b>Extrínseco</b><p>Semiconductor al que se le añaden <b>impurezas</b> (átomos de otro tipo) en la red. Crean niveles de energía <b>dentro del gap</b>, que es como reducirlo. Esta técnica se llama <b>dopado</b>.</p></div>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-dop" viewBox="0 0 640 300" style="min-width:560px" role="img" aria-label="Red de silicio con una impureza tipo p y otra tipo n, y sus diagramas de bandas"></svg></div>
+    <figcaption>Diapositiva 11. <b>Tipo p</b>: una impureza con un electrón de menos deja un hueco y crea un nivel <b>aceptor</b> justo encima de la BV. <b>Tipo n</b>: una impureza con un electrón de más aporta un electrón libre y crea un nivel <b>donador</b> justo debajo de la BC.</figcaption>
+  </figure>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th></th><th>Tipo n</th><th>Tipo p</th></tr></thead>
+      <tbody>
+        <tr><td><b>Impureza</b></td><td>átomo con <b>un electrón más</b> que el Si (grupo V, como el fósforo o el arsénico)</td><td>átomo con <b>un electrón menos</b> (grupo III, como el boro o el galio)</td></tr>
+        <tr><td><b>Nivel que crea</b></td><td>donador, justo <b>debajo de la BC</b></td><td>aceptor, justo <b>encima de la BV</b></td></tr>
+        <tr><td><b>Qué pasa</b></td><td>el electrón sobrante sube a la BC con muy poca energía</td><td>un electrón de la BV sube al nivel aceptor y deja un hueco</td></tr>
+        <tr><td><b>Portadores mayoritarios</b></td><td>electrones (carga negativa, de ahí la «n»)</td><td>huecos (carga positiva, de ahí la «p»)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box truco">
+    <div class="tag">Para entender la gráfica del Si extrínseco (diapositiva 12)</div>
+    <p>A temperatura baja, la energía térmica enseguida basta para vaciar los niveles de las impurezas (están muy cerca de la banda), así que el número de portadores sube rápido hasta el número de impurezas. Luego hay una <b>meseta</b>: ya no quedan electrones de impurezas y casi ninguno salta el gap entero. Solo a temperaturas altas el comportamiento intrínseco toma el relevo. Por eso un semiconductor dopado conduce de forma estable en un rango de temperaturas, que es lo que se busca en electrónica.</p>
+  </div>
+  <p>Prueba en el diagrama interactivo del apartado 03 con «Silicio dopado tipo n» y «tipo p», moviendo la temperatura.</p>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 06 ======================= -->
+<section class="sec" id="preguntas" data-n="06" data-title="Preguntas tipo examen">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 06</div>
+    <h2>Preguntas tipo examen con respuesta modelo</h2>
+    <p class="sec-sub">Intenta contestar cada una por escrito, en 3 o 4 líneas, y luego compara con la respuesta.</p>
+  </div>
+  <div class="practica">
+    <div class="tag">Preguntas de razonar</div>
+    <ol>
+      <li><b>¿Por qué se forman bandas de energía en un sólido?</b>
+        <details class="sol"><summary>Ver respuesta modelo</summary><div><p>En un sólido los átomos están muy próximos (~1 Å) y sus funciones de onda se solapan, así que los niveles de energía de los átomos individuales se ven alterados. Con N átomos, cada nivel atómico se desdobla en N niveles distintos. Como N es del orden del número de Avogadro, la separación entre niveles adyacentes es despreciable (~10⁻²³ eV) y forman una banda cuasicontinua. Las bandas de los electrones más externos son más anchas porque se solapan más.</p></div></details></li>
+      <li><b>Define banda de valencia, banda de conducción y banda prohibida.</b>
+        <details class="sol"><summary>Ver respuesta modelo</summary><div><p>La banda de valencia es la banda de mayor energía que contiene electrones. La banda de conducción es la siguiente banda permitida por encima. La banda prohibida (gap, \(E_g\)) es el intervalo de energías entre ambas que ningún electrón puede tener. Si la banda de valencia está parcialmente llena, ella misma actúa como banda de conducción.</p></div></details></li>
+      <li><b>¿Por qué el sodio es conductor?</b>
+        <details class="sol"><summary>Ver respuesta modelo</summary><div><p>El Na tiene configuración 1s² 2s² 2p⁶ 3s¹. En un sólido de N átomos, la banda 3s tiene capacidad para 2N electrones pero solo contiene N: está a medio llenar. Los electrones tienen estados vacíos inmediatamente por encima, así que un campo eléctrico puede acelerarlos y hay conducción. La 3s es a la vez banda de valencia y de conducción. Igual ocurre con Li, K, Rb y Cs.</p></div></details></li>
+      <li><b>Según la ocupación esperada, el Mg debería ser aislante. ¿Por qué conduce?</b>
+        <details class="sol"><summary>Ver respuesta modelo</summary><div><p>El Mg (1s² 2s² 2p⁶ 3s²) tiene la banda 3s completamente llena (2N electrones en 2N estados), lo que lo haría aislante. Sin embargo, en el sólido la banda 3s se solapa (hibrida) con la 3p vacía. Al no haber gap entre la BV y la BC, los electrones tienen estados vacíos accesibles y el Mg conduce. Igual ocurre con Be, Ca y Ba. El solapamiento depende de la distancia entre los átomos de la red.</p></div></details></li>
+      <li><b>El carbono tiene la banda 2p a medio llenar. ¿Por qué el diamante es aislante?</b>
+        <details class="sol"><summary>Ver respuesta modelo</summary><div><p>En la estructura del diamante, las bandas 2s y 2p se solapan y forman 8N estados, que se separan en dos bandas de 4N estados con un gap de 6 eV entre ellas. Los 4N electrones disponibles (2N de 2s y 2N de 2p) llenan por completo la banda inferior, que queda como banda de valencia llena, mientras que la de conducción queda vacía. Con un gap tan grande, ningún electrón puede pasar a la BC: es aislante.</p></div></details></li>
+      <li><b>¿Por qué el Si y el Ge conducen a temperatura ambiente y el diamante no, si los tres tienen la misma estructura de bandas?</b>
+        <details class="sol"><summary>Ver respuesta modelo</summary><div><p>Los tres tienen una BV llena y una BC vacía separadas por un gap, y a temperaturas muy bajas los tres son aislantes. La diferencia es el valor del gap: 6 eV en el diamante, 1.1 eV en el Si y 0.7 eV en el Ge. A temperatura ambiente, la energía térmica permite que algunos electrones salten el gap si es pequeño: cuanto mayor es T o menor es \(E_g\), más electrones pasan a la BC. En Si y Ge saltan suficientes para conducir; en el diamante, prácticamente ninguno.</p></div></details></li>
+      <li><b>Diferencia entre semiconductor intrínseco y extrínseco.</b>
+        <details class="sol"><summary>Ver respuesta modelo</summary><div><p>Un semiconductor intrínseco es el material puro: sus portadores son los electrones que saltan de la BV a la BC por agitación térmica, radiación o campo eléctrico, junto con los huecos que dejan (en igual número). Un semiconductor extrínseco es uno al que se le han añadido impurezas (dopado), que crean niveles de energía dentro de la banda prohibida y reducen de forma efectiva el gap, aumentando mucho los portadores.</p></div></details></li>
+      <li><b>Explica el dopado tipo n y tipo p.</b>
+        <details class="sol"><summary>Ver respuesta modelo</summary><div><p>Tipo n: se añaden átomos con un electrón más que el semiconductor (por ejemplo, P en Si). El electrón sobrante crea un nivel donador justo debajo de la BC y pasa a ella con muy poca energía: los portadores mayoritarios son electrones. Tipo p: se añaden átomos con un electrón menos (por ejemplo, B en Si). Se crea un nivel aceptor justo encima de la BV. Los electrones de la BV pasan a él con poca energía y dejan huecos, que son los portadores mayoritarios (positivos).</p></div></details></li>
+      <li><b>¿Qué le pasa a la conductividad de un metal y a la de un semiconductor al aumentar la temperatura?</b>
+        <details class="sol"><summary>Ver respuesta modelo</summary><div><p>En un metal, el número de electrones libres no cambia; al subir T aumentan las vibraciones de la red y los choques, así que la resistividad aumenta (\(\rho = \rho_0[1 + \alpha(T-T_0)]\), Tema 4) y la conductividad baja. En un semiconductor, al subir T muchos más electrones saltan el gap, así que el número de portadores crece de forma exponencial y la conductividad <b>aumenta</b>.</p></div></details></li>
+    </ol>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 07 ======================= -->
+<section class="sec" id="resumen" data-n="07" data-title="Resumen del Tema 5">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 07</div>
+    <h2>Resumen del Tema 5</h2>
+    <p class="sec-sub">Todo el tema en una vista.</p>
+  </div>
+  <div class="fgrid">
+    <div class="fcard"><h4>Niveles → bandas</h4><p>N átomos: cada nivel se desdobla en N niveles, que forman una banda cuasicontinua (~10⁻²³ eV entre niveles). Capacidad: s 2N, p 6N, d 10N. Las bandas externas son más anchas.</p></div>
+    <div class="fcard"><h4>Regla de conducción</h4><p>Una banda llena no conduce. Hay conducción si la banda de arriba está a medio llenar o se solapa con una vacía.</p></div>
+    <div class="fcard"><h4>Gaps</h4><p>Diamante 6 eV (aislante) · Si 1.1 eV · Ge 0.7 eV (semiconductores) · Na: banda 3s a medio llenar · Mg: 3s y 3p solapadas (conductores)</p></div>
+    <div class="fcard"><h4>Temperatura</h4><p>k<sub>B</sub>T ≈ 0.026 eV a 300 K. Fracción que salta ∝ e^(−E<sub>g</sub>/2k<sub>B</sub>T). Metal: ρ sube con T. Semiconductor: conduce más con T.</p></div>
+    <div class="fcard"><h4>Energías</h4><div class="row">\[1\ \text{eV} = 1.6\cdot10^{-19}\ \text{J}\qquad \lambda_{máx} = \frac{hc}{E_g}\]</div></div>
+    <div class="fcard"><h4>Dopado</h4><p>Intrínseco: puro, n<sub>electrones</sub> = n<sub>huecos</sub>. Extrínseco: con impurezas. Tipo n: +1 e⁻, nivel donador bajo la BC, mayoritarios electrones. Tipo p: −1 e⁻, nivel aceptor sobre la BV, mayoritarios huecos.</p></div>
+  </div>
+</section>
+
+<!-- ======================= 08 ======================= -->
+<section class="sec" id="test" data-n="08" data-title="Test rápido">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 08</div>
+    <h2>Test rápido</h2>
+    <p class="sec-sub">10 preguntas de teoría.</p>
+  </div>
+  <div class="quiz" data-quiz>
+    <div class="q" data-ans="1"><p class="qt">1. Con N átomos, la banda 2p puede alojar…</p><div class="opts"><button>2N electrones</button><button>6N electrones</button><button>10N electrones</button><button>N electrones</button></div><p class="why" hidden>Un orbital p tiene 3 valores de m y 2 espines: 6 estados por átomo.</p></div>
+    <div class="q" data-ans="2"><p class="qt">2. Una banda completamente llena…</p><div class="opts"><button>conduce muy bien</button><button>solo conduce a 0 K</button><button>no conduce</button><button>conduce si es la banda de valencia</button></div><p class="why" hidden>Los electrones no tienen estados vacíos a los que subir al acelerarlos.</p></div>
+    <div class="q" data-ans="0"><p class="qt">3. El sodio conduce porque…</p><div class="opts"><button>su banda 3s está a medio llenar</button><button>su banda 3s se solapa con la 3p</button><button>tiene un gap de 0.7 eV</button><button>está dopado</button></div><p class="why" hidden>N electrones en 2N estados. El solapamiento 3s–3p es la explicación del magnesio.</p></div>
+    <div class="q" data-ans="3"><p class="qt">4. El magnesio conduce porque…</p><div class="opts"><button>su banda 3s está a medio llenar</button><button>tiene impurezas</button><button>su gap es muy pequeño</button><button>las bandas 3s y 3p se solapan</button></div><p class="why" hidden>Su 3s está llena, pero se solapa con la 3p vacía (hibridación).</p></div>
+    <div class="q" data-ans="1"><p class="qt">5. El gap del diamante es aproximadamente…</p><div class="opts"><button>0.7 eV</button><button>6 eV</button><button>1.1 eV</button><button>0 eV</button></div><p class="why" hidden>6 eV: aislante. Si 1.1 eV y Ge 0.7 eV.</p></div>
+    <div class="q" data-ans="2"><p class="qt">6. A temperatura ambiente conduce mejor…</p><div class="opts"><button>el diamante</button><button>el silicio puro</button><button>el germanio puro</button><button>los tres igual</button></div><p class="why" hidden>El de menor gap: Ge (0.7 eV). El gap entra en una exponencial.</p></div>
+    <div class="q" data-ans="0"><p class="qt">7. Un hueco se comporta como…</p><div class="opts"><button>una carga positiva que se mueve en la BV</button><button>un electrón en la BC</button><button>un nivel dentro del gap</button><button>un átomo de impureza</button></div><p class="why" hidden>Es el sitio vacío que deja un electrón. Se «mueve» al revés que los electrones, como una carga +.</p></div>
+    <div class="q" data-ans="3"><p class="qt">8. Si dopas silicio con fósforo (un electrón más), obtienes…</p><div class="opts"><button>un aislante</button><button>un semiconductor tipo p</button><button>un superconductor</button><button>un semiconductor tipo n</button></div><p class="why" hidden>Un electrón de más: nivel donador y portadores mayoritarios negativos (n).</p></div>
+    <div class="q" data-ans="1"><p class="qt">9. En un semiconductor tipo p, el nivel de la impureza está…</p><div class="opts"><button>justo debajo de la BC</button><button>justo encima de la BV</button><button>en medio del gap</button><button>dentro de la BC</button></div><p class="why" hidden>Nivel aceptor, cerca de la BV: los electrones de la BV suben a él y dejan huecos.</p></div>
+    <div class="q" data-ans="2"><p class="qt">10. Al calentar un semiconductor, su resistencia…</p><div class="opts"><button>aumenta, como en los metales</button><button>no cambia</button><button>disminuye</button><button>se hace infinita</button></div><p class="why" hidden>Salen muchos más electrones a la BC, así que conduce mejor. En los metales es al revés.</p></div>
+    <div class="score" data-score></div>
+  </div>
+</section>
+
+    </div><!-- /content -->
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Fin de los temas de electricidad. Los temas nuevos que vayan llegando se añadirán a esta serie con el mismo formato.</p>
+  </div>
+</footer>
+
+</div>
+<script>
+/* ===== utilidades comunes a todos los temas ===== */
+(function(){
+  const holder = document.querySelector("[data-topic]");
+  const TOPIC = (holder && holder.dataset.topic) || "x";
+  const KEY = "fisica-apuntes-" + TOPIC + "-hecho";
+  const store = {
+    get(){ try{ return JSON.parse(localStorage.getItem(KEY) || "[]"); }catch(e){ return []; } },
+    set(v){ try{ localStorage.setItem(KEY, JSON.stringify(v)); }catch(e){} }
+  };
+
+  /* ---- índice ---- */
+  const secs = [...document.querySelectorAll("section.sec[id]")];
+  const tocLists = [...document.querySelectorAll("[data-toc]")];
+  tocLists.forEach(ol=>{
+    secs.forEach(s=>{
+      const li=document.createElement("li");
+      const a=document.createElement("a");
+      a.href="#"+s.id; a.dataset.id=s.id;
+      a.innerHTML='<span class="n">'+(s.dataset.n||"")+'</span><span>'+(s.dataset.title||s.id)+'</span><span class="ck">✓</span>';
+      li.appendChild(a); ol.appendChild(li);
+    });
+  });
+  const links = id => document.querySelectorAll('[data-toc] a[data-id="'+id+'"]');
+  if("IntersectionObserver" in window){
+    const io=new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting){
+        document.querySelectorAll("[data-toc] a.active").forEach(a=>a.classList.remove("active"));
+        links(e.target.id).forEach(a=>a.classList.add("active"));
+      }});
+    },{rootMargin:"-30% 0px -60% 0px"});
+    secs.forEach(s=>io.observe(s));
+  }
+
+  /* ---- "lo tengo" por sección ---- */
+  const countable = secs.filter(s=>s.querySelector(".done-btn"));
+  function paint(){
+    const done=store.get();
+    countable.forEach(s=>{
+      const on=done.includes(s.id);
+      const b=s.querySelector(".done-btn");
+      b.setAttribute("aria-pressed", on?"true":"false");
+      b.textContent = on ? "✓ Entendido" : "Marcar como entendido";
+      links(s.id).forEach(a=>a.classList.toggle("done",on));
+    });
+    const n=countable.filter(s=>done.includes(s.id)).length;
+    document.querySelectorAll("[data-prog-txt]").forEach(el=>el.textContent=n+" de "+countable.length+" apartados entendidos");
+    document.querySelectorAll("[data-prog-bar]").forEach(el=>el.style.width=(countable.length? (100*n/countable.length):0)+"%");
+  }
+  countable.forEach(s=>{
+    s.querySelector(".done-btn").addEventListener("click",()=>{
+      let d=store.get();
+      d = d.includes(s.id) ? d.filter(x=>x!==s.id) : d.concat(s.id);
+      store.set(d); paint();
+    });
+  });
+  paint();
+
+  /* ---- ejemplos paso a paso ---- */
+  document.querySelectorAll("[data-ej]").forEach(ej=>{
+    const steps=[...ej.querySelectorAll(".step")];
+    let shown=0;
+    let ctrl=ej.querySelector(".ej-ctrl");
+    if(!ctrl){ ctrl=document.createElement("div"); ctrl.className="ej-ctrl"; ej.appendChild(ctrl); }
+    const next=document.createElement("button"); next.className="btn primary"; next.type="button";
+    const all=document.createElement("button"); all.className="btn"; all.type="button"; all.textContent="Ver todos los pasos";
+    const reset=document.createElement("button"); reset.className="btn"; reset.type="button"; reset.textContent="Ocultar y empezar de nuevo";
+    ctrl.append(next,all,reset);
+    function render(flash){
+      steps.forEach((s,i)=>{
+        s.classList.toggle("locked", i>=shown);
+        if(flash && i===shown-1){ s.classList.remove("just"); void s.offsetWidth; s.classList.add("just"); }
+      });
+      next.disabled = shown>=steps.length;
+      next.textContent = shown>=steps.length ? "Resuelto ✓" : "Ver paso "+(shown+1)+" de "+steps.length;
+      reset.hidden = shown===0;
+    }
+    next.addEventListener("click",()=>{ if(shown<steps.length){ shown++; render(true);} });
+    all.addEventListener("click",()=>{ shown=steps.length; render(false); });
+    reset.addEventListener("click",()=>{ shown=0; render(false); });
+    render(false);
+  });
+
+  /* ---- test ---- */
+  document.querySelectorAll("[data-quiz]").forEach(qz=>{
+    const qs=[...qz.querySelectorAll(".q")];
+    const out=qz.querySelector("[data-score]");
+    let ok=0, answered=0;
+    function upd(){ if(out) out.innerHTML="<span>Aciertos: "+ok+" / "+qs.length+"</span><span>"+(answered<qs.length?"Te quedan "+(qs.length-answered):(ok>=qs.length-1?"¡Listo para seguir!":"Repasa los apartados que has fallado"))+"</span>"; }
+    qs.forEach(q=>{
+      const right=+q.dataset.ans;
+      const bs=[...q.querySelectorAll(".opts button")];
+      bs.forEach((b,i)=>{
+        b.type="button";
+        b.addEventListener("click",()=>{
+          if(q.dataset.done) return;
+          q.dataset.done="1"; answered++;
+          if(i===right) ok++;
+          bs.forEach((x,j)=>{ if(j===right) x.classList.add("ok"); else if(j===i) x.classList.add("ko"); x.disabled=true; });
+          const w=q.querySelector(".why"); if(w) w.hidden=false;
+          upd();
+        });
+      });
+    });
+    upd();
+  });
+})();
+
+/* ---- helpers para dibujos ---- */
+window.SV = function(tag, attrs, parent){
+  const e=document.createElementNS("http://www.w3.org/2000/svg",tag);
+  for(const k in (attrs||{})) e.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(e);
+  return e;
+};
+window.fmt = function(x, d){
+  if(!isFinite(x)) return "—";
+  const v = Math.abs(x)<1e-12 ? 0 : x;
+  let s = (+v.toPrecision(d||4)).toString();
+  if(/e/.test(s)) return sci(v, d);
+  return s.replace("-", "−");
+};
+window.sci = function(x, d){
+  if(x===0) return "0";
+  const k=Math.floor(Math.log10(Math.abs(x)));
+  let m=x/Math.pow(10,k);
+  let ms=(+m.toPrecision(d||3)).toString();
+  if(ms==="10"||ms==="-10"){ ms = ms[0]==="-"?"-1":"1"; return ms.replace("-","−")+" × 10<sup>"+String(k+1).replace("-","−")+"</sup>"; }
+  return ms.replace("-","−")+" × 10<sup>"+String(k).replace("-","−")+"</sup>";
+};
+
+</script>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const T = (parent, x, y, txt, cls, extra) => { const t=SV("text", Object.assign({x, y}, cls?{class:cls}:{}, extra||{}), parent); t.textContent=txt; return t; };
+  const L = (p, x1,y1,x2,y2, cls, w, extra) => SV("line", Object.assign({x1,y1,x2,y2,class:cls,"stroke-width":w||2}, extra||{}), p);
+  const R = (p,x,y,w,h,cls,extra) => SV("rect",Object.assign({x,y,width:w,height:h,class:cls},extra||{}),p);
+  const el = (p,x,y) => SV("circle",{cx:x,cy:y,r:4.2,class:"f-teal"},p);
+  const hole = (p,x,y) => SV("circle",{cx:x,cy:y,r:4.2,class:"f-surface s-rose","stroke-width":1.8},p);
+  const TEg = (p,x,y,suffix,cls,extra) => { const t=T(p,x,y,"E",cls,extra); const g=SV("tspan",{"baseline-shift":"sub","font-size":"75%"},t); g.textContent="g"; if(suffix){ const r=SV("tspan",{},t); r.textContent=suffix; } return t; };
+  const kB=8.62e-5, A=3.32e15;
+  const ni=(Tk,Eg)=> Tk<=0?0:A*Math.pow(Tk,1.5)*Math.exp(-Eg/(2*kB*Tk));
+  const ion=Tk=>1-Math.exp(-Tk/25);
+  const ND=1e15;
+
+  /* ---------- niveles -> bandas ---------- */
+  (function(){
+    const s=$("split-svg"); if(!s) return;
+    const N=$("sp-n"), D=$("sp-d"), g=SV("g",{},s);
+    L(s,40,245,40,15,"s-ink",1.6,{"marker-end":"url(#ah-ink)"}); T(s,48,22,"E","b");
+    const levels=[{y:70,w:55,name:"2p",cap:6},{y:140,w:45,name:"2s",cap:2},{y:225,w:6,name:"1s",cap:2}];
+    function upd(){
+      const n=+N.value, d=+D.value, f=(n===1?0:(1-1/n))*Math.min(1,Math.exp(-(d-1)*1.3));
+      g.innerHTML="";
+      const spans=levels.map(lv=>{ const half=lv.w*f; const top=lv.y-half, bot=lv.y+half;
+        if(n>=25 && half>3) R(g,110,top,240,bot-top,"f-accsoft",{opacity:.6});
+        for(let i=0;i<n;i++){ const y = n===1?lv.y : top+(bot-top)*i/(n-1); L(g,110,y,350,y,lv.name==="1s"?"s-ink2":(lv.name==="2s"?"s-acc":"s-teal"),n>20?1:1.8,{opacity:n>20?.8:1}); }
+        T(g,360,lv.y+5,(half>3?"banda ":"nivel ")+lv.name,"m b");
+        return [top,bot];
+      });
+      const ov = spans[0][1] > spans[1][0];
+      if(ov){ R(g,110,spans[1][0],240,spans[0][1]-spans[1][0],"f-warn",{opacity:.25}); T(g,230,spans[1][0]+ (spans[0][1]-spans[1][0])/2+5,"solapamiento","m b",{"text-anchor":"middle",style:"fill:var(--warn)"}); }
+      $("sp-n-o").textContent=n; $("sp-d-o").textContent=fmt(d,2)+" Å";
+      let msg;
+      if(n===1) msg="Un átomo aislado: cada nivel es una sola línea.";
+      else if(f<0.03) msg=`Con los átomos tan separados (${fmt(d,2)} Å, como en un gas), no se notan entre sí y los ${n} niveles coinciden: no se forman bandas.`;
+      else msg=`Con ${n} átomos a ${fmt(d,2)} Å, cada nivel se desdobla en ${n} niveles. Fíjate en que el 1s (interno) casi no se ensancha y los externos (2s, 2p) sí. ${n>=25?"Con muchísimos átomos (en un sólido real, ~10²³) los niveles están tan juntos que forman una banda continua.":"Sube N para ver cómo se convierten en una banda."}`;
+      if(ov) msg+=" Al acercar mucho los átomos, la banda 2s y la 2p se <b>solapan</b>: es la hibridación que explica el Mg y el diamante.";
+      $("split-exp").innerHTML=`<p>${msg}</p>`;
+    }
+    [N,D].forEach(e=>e.addEventListener("input",upd)); upd();
+  })();
+
+  /* ---------- conductor / semiconductor / aislante ---------- */
+  (function(){
+    const s=$("fig-tres"); if(!s) return;
+    const col=(x,title,gap,mode)=>{
+      const w=120, bvTop=150, bvBot=215;
+      T(s,x+w/2,240,title,"b",{"text-anchor":"middle"});
+      if(mode==="c"){ R(s,x,40,w,175,"f-surface2 s-ink2",{"stroke-width":1.5}); R(s,x,128,w,87,"f-acc",{opacity:.75}); T(s,x+w/2,88,"estados libres","m",{"text-anchor":"middle"}); T(s,x+w/2,176,"electrones","m b",{"text-anchor":"middle",style:"fill:var(--on-accent)"}); L(s,x-6,128,x+w+6,128,"s-ink",1.2,{"stroke-dasharray":"4 3"}); return; }
+      const bcBot=bvTop-gap;
+      R(s,x,30,w,bcBot-30,"f-surface2 s-ink2",{"stroke-width":1.5}); T(s,x+w/2,50,"BC","m b",{"text-anchor":"middle"});
+      R(s,x,bvTop,w,bvBot-bvTop,"f-acc",{opacity:.75}); T(s,x+w/2,bvBot-10,"BV","m b",{"text-anchor":"middle",style:"fill:var(--on-accent)"});
+      L(s,x+w+10,bcBot,x+w+10,bvTop,"s-ink2",1.3,{"marker-start":"url(#ah-muted)","marker-end":"url(#ah-muted)"}); TEg(s,x+w+16,(bcBot+bvTop)/2+4,"","m b");
+      if(mode==="s"){ [25,50,80,100].forEach(dx=>{ el(s,x+dx,bcBot-10); hole(s,x+dx,bvTop+10); L(s,x+dx,bvTop+4,x+dx,bcBot-4,"s-teal",1.2,{"stroke-dasharray":"2 3","marker-end":"url(#ah-teal)"}); }); }
+      if(mode==="a"){ T(s,x+w/2,(bcBot+bvTop)/2+8,"✕","b lg",{"text-anchor":"middle",style:"fill:var(--rose);font-size:22px"}); }
+    };
+    col(40,"Conductor",0,"c"); col(240,"Semiconductor",34,"s"); col(440,"Aislante",95,"a");
+  })();
+
+  /* ---------- diagrama de bandas interactivo ---------- */
+  (function(){
+    const s=$("bands-svg"); if(!s) return;
+    const M=$("bd-m"), TT=$("bd-T"), g=SV("g",{},s);
+    const info={
+      Na:{name:"Sodio",type:"conductor"}, Mg:{name:"Magnesio",type:"conductor"},
+      C:{name:"Diamante",Eg:6,type:"semi"}, Si:{name:"Silicio",Eg:1.1,type:"semi"}, Ge:{name:"Germanio",Eg:0.7,type:"semi"},
+      Sin:{name:"Silicio tipo n",Eg:1.1,type:"semi",dop:"n"}, Sip:{name:"Silicio tipo p",Eg:1.1,type:"semi",dop:"p"}
+    };
+    const x0=150, w=240;
+    function dots(n){ if(n<=0) return 0; return Math.max(0,Math.min(18,Math.round((Math.log10(n)-8)*2.2))); }
+    function upd(){
+      const m=M.value, Tk=+TT.value, I=info[m]; g.innerHTML="";
+      L(g,22,255,22,15,"s-ink",1.6,{"marker-end":"url(#ah-ink)"}); T(g,30,22,"E","b");
+      let nC=0, nH=0, txt="", typ="";
+      if(m==="Na"){ R(g,x0,50,w,160,"f-surface2 s-ink2",{"stroke-width":1.5}); R(g,x0,130,w,80,"f-acc",{opacity:.75});
+        T(g,x0+w/2,95,"banda 3s: 2N estados","m b",{"text-anchor":"middle"}); T(g,x0+w/2,175,"N electrones","m b",{"text-anchor":"middle",style:"fill:var(--on-accent)"});
+        nC=1e22; typ="Conductor"; txt="La banda 3s está a medio llenar: justo encima de los electrones hay estados vacíos. Conduce a cualquier temperatura, y el número de electrones libres casi no cambia con T.";
+      } else if(m==="Mg"){ R(g,x0,40,w,110,"f-teal",{opacity:.15}); R(g,x0,40,w,110,"s-teal",{"stroke-width":1.5,fill:"none"}); T(g,x0+w-6,58,"3p","m b",{"text-anchor":"end",style:"fill:var(--teal)"});
+        R(g,x0,120,w,100,"f-surface2 s-ink2",{"stroke-width":1.5,opacity:.9}); R(g,x0,135,w,85,"f-acc",{opacity:.75}); T(g,x0+6,212,"3s","m b",{style:"fill:var(--on-accent)"});
+        R(g,x0,120,w,30,"f-warn",{opacity:.2}); T(g,x0+w/2,140,"solapamiento 3s–3p","m b",{"text-anchor":"middle",style:"fill:var(--warn)"});
+        nC=1e22; typ="Conductor"; txt="La 3s estaría llena (2N electrones en 2N estados), pero se solapa con la 3p vacía. Al no haber gap, los electrones tienen sitios libres justo encima: conduce.";
+      } else {
+        const gap=20+14*I.Eg, bvTop=165, bvBot=235, bcBot=bvTop-gap, bcTop=Math.max(25,bcBot-90);
+        R(g,x0,bcTop,w,bcBot-bcTop,"f-surface2 s-ink2",{"stroke-width":1.5}); T(g,x0+w-8,bcTop+16,"banda de conducción","m",{"text-anchor":"end"});
+        R(g,x0,bvTop,w,bvBot-bvTop,"f-acc",{opacity:.75}); T(g,x0+w-8,bvBot-10,"banda de valencia","m",{"text-anchor":"end",style:"fill:var(--on-accent)"});
+        L(g,x0-14,bcBot,x0-14,bvTop,"s-ink2",1.3,{"marker-start":"url(#ah-muted)","marker-end":"url(#ah-muted)"}); TEg(g,x0-20,(bcBot+bvTop)/2+4," = "+fmt(I.Eg,2)+" eV","m b",{"text-anchor":"end"});
+        const n_i=ni(Tk,I.Eg);
+        if(I.dop==="n"){ const yD=bcBot+9; L(g,x0+10,yD,x0+w-10,yD,"s-warn",2,{"stroke-dasharray":"6 4"}); T(g,x0+w+6,yD+4,"donador","m",{style:"fill:var(--warn)"});
+          const io=ion(Tk); const left=Math.round((1-io)*8); for(let i=0;i<left;i++) el(g,x0+22+i*28,yD-5);
+          nC=ND*io+n_i; nH=n_i; typ="Semiconductor tipo n";
+          txt= Tk<20?"A temperatura muy baja, los electrones de las impurezas siguen en el nivel donador (puntos sobre la línea naranja).":(n_i<ND*0.5?"El nivel donador está tan cerca de la BC que con muy poca energía sus electrones suben. Hay una «meseta»: casi todos los portadores vienen de las impurezas (≈ 10¹⁵ cm⁻³) y apenas dependen de T.":"A temperatura alta, los electrones que saltan el gap entero ya superan a los de las impurezas: vuelve el comportamiento intrínseco.");
+        } else if(I.dop==="p"){ const yA=bvTop-9; L(g,x0+10,yA,x0+w-10,yA,"s-warn",2,{"stroke-dasharray":"6 4"}); T(g,x0+w+6,yA+4,"aceptor","m",{style:"fill:var(--warn)"});
+          const io=ion(Tk); const got=Math.round(io*8); for(let i=0;i<got;i++) el(g,x0+22+i*28,yA-5);
+          nH=ND*io+n_i; nC=n_i; typ="Semiconductor tipo p";
+          txt= Tk<20?"A temperatura muy baja, el nivel aceptor está vacío y la BV llena.":"Electrones de la BV suben al nivel aceptor (puntos sobre la línea naranja) con muy poca energía, y dejan huecos en la BV (círculos rosa). Los portadores mayoritarios son los huecos.";
+        } else { nC=n_i; nH=n_i; typ = I.Eg>3?"Aislante":"Semiconductor intrínseco";
+          txt = I.Eg>3?"Con 6 eV de gap, ni a 600 K salta prácticamente ningún electrón: el diamante es aislante.":(Tk<60?"A temperatura muy baja no salta ningún electrón: se comporta como un aislante.":`Algunos electrones saltan el gap por agitación térmica (puntos azules en la BC) y dejan el mismo número de huecos en la BV (círculos rosa). ${m==="Ge"?"Con menos gap que el Si, el Ge tiene muchos más portadores a la misma temperatura.":"Sube la temperatura y verás que el número crece muy deprisa."}`);
+        }
+        const de=dots(nC), dh=dots(nH);
+        for(let i=0;i<de;i++){ el(g,x0+14+(i%9)*26,bcBot-12-Math.floor(i/9)*14); }
+        for(let i=0;i<dh;i++){ hole(g,x0+14+(i%9)*26,bvTop+12+Math.floor(i/9)*14); }
+      }
+      $("bd-T-o").textContent=Tk+" K";
+      const nStr = nC>=1e21?"≈ 10²² (siempre)": (nC<1? "≈ 0" : sci(nC,2));
+      $("bands-read").innerHTML=`<div>material<span>${I.name}</span></div><div>gap<span>${I.Eg!==undefined?fmt(I.Eg,2)+" eV":"no hay"}</span></div><div>e⁻ en la BC (cm⁻³)<span>${nStr}</span></div><div>comportamiento<span>${typ}</span></div>`;
+      $("bands-exp").innerHTML=`<p>${txt}</p><p style="font-size:13.5px;color:var(--muted)">Los puntos son un dibujo a escala logarítmica, no electrones contados uno a uno. Los valores numéricos salen de un modelo aproximado.</p>`;
+    }
+    [M,TT].forEach(e=>e.addEventListener("input",upd)); upd();
+  })();
+
+  /* ---------- n(T) ---------- */
+  (function(){
+    const s=$("fig-nT"); if(!s) return;
+    const X0=60,X1=450,Y0=240,Y1=20, X=t=>X0+(X1-X0)*t/600, Y=v=>Y0-(Y0-Y1)*v/3;
+    for(let v=0;v<=3;v+=0.5){ L(s,X0,Y(v),X1,Y(v),"s-muted",1,{opacity:.25}); T(s,X0-8,Y(v)+4,fmt(v,2),"m",{"text-anchor":"end"}); }
+    for(let t=0;t<=600;t+=100) T(s,X(t),Y0+18,String(t),"m",{"text-anchor":"middle"});
+    L(s,X0,Y0,X1,Y0,"s-ink",1.5); L(s,X0,Y0,X0,Y1,"s-ink",1.5);
+    T(s,X1,Y0+34,"T (K)","m",{"text-anchor":"end"}); T(s,X0+4,Y1-6,"n (×10¹⁵ cm⁻³)","m b");
+    const curve=(f,cls)=>{ let d="", pt=0, pv=0; for(let i=0;i<=300;i++){ const t=600*i/300, v=f(t)/1e15;
+        if(v>3){ const tc=pt+(t-pt)*(3-pv)/(v-pv); d+="L"+X(tc).toFixed(1)+","+Y(3).toFixed(1); return [SV("path",{d,class:cls,"stroke-width":3,fill:"none"},s),tc]; }
+        d+=(i?"L":"M")+X(t).toFixed(1)+","+Y(v).toFixed(1); pt=t; pv=v; }
+      return [SV("path",{d,class:cls,"stroke-width":3,fill:"none"},s),null]; };
+    curve(t=>ni(t,1.1),"s-acc"); const [,tGe]=curve(t=>ni(t,0.7),"s-teal"); curve(t=>ND*ion(t)+ni(t,1.1),"s-warn");
+    if(tGe){ T(s,X(tGe)-4,Y1-6,"Ge: sigue subiendo ↗","m",{"text-anchor":"end",style:"fill:var(--teal)"}); }
+    const leg=[["s-acc","Si intrínseco"],["s-teal","Ge intrínseco"],["s-warn","Si dopado (10¹⁵ impurezas/cm³)"]];
+    leg.forEach(([c,l],i)=>{ L(s,X0+20,Y1+20+i*18,X0+44,Y1+20+i*18,c,3); T(s,X0+50,Y1+24+i*18,l,"m"); });
+  })();
+
+  /* ---------- dopado ---------- */
+  (function(){
+    const s=$("fig-dop"); if(!s) return;
+    const lattice=(x0,y0,center,extra)=>{
+      const sp=62, pos=[]; for(let r=0;r<3;r++) for(let c=0;c<3;c++) pos.push([x0+c*sp,y0+r*sp,r===1&&c===1]);
+      for(let r=0;r<3;r++) for(let c=0;c<3;c++){ const [x,y]=[x0+c*sp,y0+r*sp];
+        if(c<2){ L(s,x+16,y,x+sp-16,y,"s-muted",1.5); el(s,x+sp/2-6,y-6); if(!(extra==="hole"&&r===1&&c===1)) el(s,x+sp/2+6,y-6); else hole(s,x+sp/2+6,y-6); }
+        if(r<2){ L(s,x,y+16,x,y+sp-16,"s-muted",1.5); el(s,x-6,y+sp/2); el(s,x+6,y+sp/2); } }
+      pos.forEach(([x,y,isC])=>{ SV("circle",{cx:x,cy:y,r:15,class:isC?"f-warn":"f-surface2",stroke:"currentColor"},s); SV("circle",{cx:x,cy:y,r:15,class:isC?"s-warn":"s-ink2","stroke-width":1.5,fill:"none"},s); T(s,x,y+5,isC?center:"Si","m b",{"text-anchor":"middle",style:isC?"fill:var(--surface)":""}); });
+      const ly=y0+2*sp+50;
+      if(extra==="free"){ const fx=x0+sp+22, fy=y0+sp+20; el(s,fx,fy); SV("circle",{cx:fx,cy:fy,r:10,fill:"none",class:"s-teal","stroke-width":1.4,"stroke-dasharray":"3 2"},s);
+        el(s,x0-6,ly-4); T(s,x0+6,ly,"electrón libre (le sobra al P)","m b",{style:"fill:var(--teal)"}); }
+      if(extra==="hole"){ const hx=x0+sp+sp/2+6, hy=y0+sp-6; SV("circle",{cx:hx,cy:hy,r:10,fill:"none",class:"s-rose","stroke-width":1.4,"stroke-dasharray":"3 2"},s);
+        hole(s,x0-6,ly-4); T(s,x0+6,ly,"hueco (al B le falta un e⁻)","m b",{style:"fill:var(--rose)"}); }
+    };
+    const bands=(x,title,type)=>{
+      const w=80, bcTop=40, bcBot=95, bvTop=175, bvBot=230;
+      R(s,x,bcTop,w,bcBot-bcTop,"f-surface2 s-ink2",{"stroke-width":1.3}); T(s,x+w/2,bcTop+16,"BC","m b",{"text-anchor":"middle"});
+      R(s,x,bvTop,w,bvBot-bvTop,"f-acc",{opacity:.75}); T(s,x+w/2,bvBot-10,"BV","m b",{"text-anchor":"middle",style:"fill:var(--on-accent)"});
+      if(type==="n"){ L(s,x+4,bcBot+12,x+w-4,bcBot+12,"s-warn",2,{"stroke-dasharray":"5 3"}); T(s,x+w/2,bcBot+30,"donador","m",{"text-anchor":"middle",style:"fill:var(--warn)"}); [16,40,64].forEach(dx=>{ el(s,x+dx,bcBot-10); L(s,x+dx,bcBot+8,x+dx,bcBot-2,"s-teal",1.4,{"marker-end":"url(#ah-teal)"}); }); }
+      else { L(s,x+4,bvTop-12,x+w-4,bvTop-12,"s-warn",2,{"stroke-dasharray":"5 3"}); T(s,x+w/2,bvTop-24,"aceptor","m",{"text-anchor":"middle",style:"fill:var(--warn)"}); [16,40,64].forEach(dx=>{ el(s,x+dx,bvTop-12); hole(s,x+dx,bvTop+10); }); }
+    };
+    T(s,140,22,"Tipo p (boro: un electrón menos)","b",{"text-anchor":"middle"}); lattice(40,70,"B","hole"); bands(230,"","p");
+    T(s,460,22,"Tipo n (fósforo: un electrón más)","b",{"text-anchor":"middle"}); lattice(360,70,"P","free"); bands(552,"","n");
+  })();
+})();
+
+</script>
+
+</body></html>

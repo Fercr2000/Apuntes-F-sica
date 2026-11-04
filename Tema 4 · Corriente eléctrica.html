@@ -1,0 +1,1629 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Tema 4 · Corriente eléctrica</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+/* Layout: cuaderno de ingeniería — índice fijo a la izquierda, columna de lectura de ~70ch, figuras sobre papel milimetrado verde */
+:root{
+  --bg:#f1f7f2; --surface:#ffffff; --surface-2:#e6f1e9; --ink:#0f241b; --ink-2:#34503f; --muted:#5d7869; --line:#cde0d2;
+  --accent:#0a8f5a; --accent-ink:#06603d; --accent-soft:#d2f0de; --lime:#5f9a12; --on-accent:#ffffff;
+  --grid:rgba(10,143,90,.08); --grid-strong:rgba(10,143,90,.17);
+  --warn:#a3560a; --warn-soft:#fbefd7; --teal:#0b7285; --teal-soft:#d6eef3; --rose:#bf2f50; --rose-soft:#fbe3e9;
+  --hero-bg:#0b3a28; --hero-bg-2:#0f5c3d; --hero-ink:#ecfbf2; --hero-muted:#a8d8bd; --hero-line:rgba(236,251,242,.14);
+  --shadow:0 1px 2px rgba(15,36,27,.05),0 8px 24px rgba(15,36,27,.06);
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --r:14px; --r-sm:9px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#08130e; --surface:#0e1d16; --surface-2:#13281d; --ink:#e2f1e7; --ink-2:#b4ccbd; --muted:#83a091; --line:#213a2d;
+  --accent:#3ad693; --accent-ink:#7ee9b8; --accent-soft:#103727; --lime:#a6e33f; --on-accent:#05271a;
+  --grid:rgba(58,214,147,.07); --grid-strong:rgba(58,214,147,.15);
+  --warn:#f2b04a; --warn-soft:#2f230b; --teal:#4cc9de; --teal-soft:#0c2a31; --rose:#ff7d98; --rose-soft:#3a1420;
+  --hero-bg:#06261a; --hero-bg-2:#0b4630; --hero-ink:#e6faef; --hero-muted:#93cdb0; --hero-line:rgba(230,250,239,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#08130e; --surface:#0e1d16; --surface-2:#13281d; --ink:#e2f1e7; --ink-2:#b4ccbd; --muted:#83a091; --line:#213a2d;
+  --accent:#3ad693; --accent-ink:#7ee9b8; --accent-soft:#103727; --lime:#a6e33f; --on-accent:#05271a;
+  --grid:rgba(58,214,147,.07); --grid-strong:rgba(58,214,147,.15);
+  --warn:#f2b04a; --warn-soft:#2f230b; --teal:#4cc9de; --teal-soft:#0c2a31; --rose:#ff7d98; --rose-soft:#3a1420;
+  --hero-bg:#06261a; --hero-bg-2:#0b4630; --hero-ink:#e6faef; --hero-muted:#93cdb0; --hero-line:rgba(230,250,239,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.62;}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0}
+a{color:var(--accent-ink)}
+strong{font-weight:700;color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+sup,sub{line-height:0}
+
+.wrap{max-width:1180px;margin-inline:auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+
+/* ---------- HERO ---------- */
+.hero{background:
+  linear-gradient(var(--hero-line) 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(90deg,var(--hero-line) 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(135deg,var(--hero-bg),var(--hero-bg-2));
+  color:var(--hero-ink);}
+.hero .wrap{padding-block:34px 38px;display:grid;gap:22px}
+.series{display:flex;flex-wrap:wrap;gap:6px;font-size:13px}
+.series span{padding:4px 10px;border-radius:99px;border:1px solid var(--hero-line);color:var(--hero-muted);font-weight:700;letter-spacing:.02em}
+.series span.on{background:var(--hero-ink);color:var(--hero-bg);border-color:transparent}
+.hero-main{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:end}
+.bignum{font-family:var(--f-display);font-weight:800;font-size:clamp(88px,16vw,168px);line-height:.8;color:transparent;-webkit-text-stroke:2px var(--hero-muted);letter-spacing:-.04em}
+.eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--hero-muted)}
+.hero h1{font-size:clamp(34px,5.4vw,58px);font-weight:800;margin-top:6px}
+.hero .lead{font-size:18.5px;max-width:62ch;color:var(--hero-ink);opacity:.92;margin-top:12px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--hero-muted)}
+.hero-meta b{color:var(--hero-ink)}
+@media (max-width:640px){.hero-main{grid-template-columns:1fr}.bignum{font-size:84px}}
+
+/* ---------- LAYOUT ---------- */
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:44px;padding-block:34px 80px}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 18px);align-self:start;max-height:calc(100vh - 36px);overflow:auto;padding-right:4px}
+.toc-title{font-family:var(--f-display);font-weight:700;font-size:15px;margin-bottom:8px;color:var(--ink-2)}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.toc a{display:grid;grid-template-columns:26px 1fr 18px;gap:6px;align-items:baseline;padding:6px 8px;border-radius:8px;text-decoration:none;color:var(--ink-2);font-size:14.5px;line-height:1.3}
+.toc a:hover{background:var(--surface-2);color:var(--ink)}
+.toc a.active{background:var(--accent-soft);color:var(--accent-ink);font-weight:700}
+.toc .n{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.toc .ck{color:var(--accent);font-weight:800;opacity:0}
+.toc a.done .ck{opacity:1}
+.progress{margin-top:16px;padding:12px;border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--line);font-size:13.5px;color:var(--ink-2)}
+.bar{height:8px;border-radius:99px;background:var(--surface-2);margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--lime));border-radius:99px;transition:width .4s}
+.toc-mobile{display:none}
+@media (max-width:980px){
+  .layout{grid-template-columns:minmax(0,1fr);gap:0;padding-top:18px}
+  .toc{display:none}
+  .toc-mobile{display:block;margin-bottom:22px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+  .toc-mobile summary{cursor:pointer;padding:12px 16px;font-family:var(--f-display);font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
+  .toc-mobile summary::-webkit-details-marker{display:none}
+  .toc-mobile summary::after{content:"＋";color:var(--accent)}
+  .toc-mobile[open] summary::after{content:"－"}
+  .toc-mobile ol{padding:0 8px 10px}
+}
+main{min-width:0}
+.content{max-width:780px;display:grid;gap:64px}
+
+/* ---------- SECTIONS ---------- */
+.sec{display:grid;gap:22px;scroll-margin-top:20px}
+.sec-head{display:grid;gap:6px;padding-bottom:14px;border-bottom:2px solid var(--line)}
+.sec-num{font-family:var(--f-mono);font-size:13px;font-weight:700;color:var(--accent-ink);letter-spacing:.06em}
+.sec h2{font-size:clamp(27px,3.6vw,36px);font-weight:800}
+.sec-sub{color:var(--ink-2);font-size:17px}
+.sec h3{font-size:21px;font-weight:700;margin-top:6px}
+.sec h4{font-size:17px;font-weight:700}
+.sec p,.sec li{max-width:70ch}
+.sec ul,.sec ol{margin:0;padding-left:1.25em;display:grid;gap:6px}
+.uses{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13.5px}
+.uses .lbl{font-weight:700;color:var(--muted);margin-right:2px}
+.chip{display:inline-block;padding:3px 9px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);font-weight:700;font-size:12.5px;white-space:nowrap}
+.chip.rel{background:var(--accent-soft);border-color:transparent;color:var(--accent-ink)}
+.hl{background:linear-gradient(transparent 58%,var(--accent-soft) 58%);padding:0 2px}
+.key{display:inline-block;font-family:var(--f-mono);font-size:.8em;font-weight:700;padding:1px 7px 2px;border-radius:6px;background:var(--surface);border:1px solid var(--line);border-bottom-width:3px;color:var(--ink);white-space:nowrap;line-height:1.5}
+
+/* ---------- BOXES ---------- */
+.box{border-radius:var(--r);padding:16px 18px;display:grid;gap:10px;border:1px solid var(--line);background:var(--surface)}
+.box>.tag{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.box>.tag::before{content:"";width:9px;height:9px;border-radius:3px;background:currentColor}
+.box.idea{background:var(--accent-soft);border-color:transparent}
+.box.idea>.tag{color:var(--accent-ink)}
+.box.cuidado{background:var(--warn-soft);border-color:transparent}
+.box.cuidado>.tag{color:var(--warn)}
+.box.truco{background:var(--teal-soft);border-color:transparent}
+.box.truco>.tag{color:var(--teal)}
+.box.calc{background:var(--surface);border:1px dashed var(--line)}
+.box.calc>.tag{color:var(--ink-2)}
+.box ul,.box ol{padding-left:1.2em}
+
+/* formula card */
+.formula{border-radius:var(--r);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+.formula .f-head{padding:10px 18px;font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);border-bottom:1px solid var(--line);background:var(--surface-2)}
+.formula .f-body{padding:6px 18px 14px;display:grid;gap:8px}
+.formula .f-body>p{font-size:15.5px;color:var(--ink-2)}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:15px;margin:0}
+.legend dt{font-weight:700;text-align:right}
+.legend dd{margin:0;color:var(--ink-2)}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15.5px;font-variant-numeric:tabular-nums}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:var(--surface-2);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+tr:last-child td{border-bottom:0}
+td.c,th.c{text-align:center}
+
+/* ---------- WORKED EXAMPLE (stepper) ---------- */
+.ej{border-radius:var(--r);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+.ej-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:center;padding:12px 18px;background:var(--hero-bg);color:var(--hero-ink)}
+.ej-head .t{font-family:var(--f-display);font-weight:700;font-size:16.5px}
+.ej-head .src{font-size:12.5px;color:var(--hero-muted);font-weight:700}
+.ej-q{padding:16px 18px;border-bottom:1px solid var(--line);display:grid;gap:8px}
+.ej-q .data{display:flex;flex-wrap:wrap;gap:6px}
+.ej-q .data span{font-family:var(--f-mono);font-size:13.5px;padding:2px 8px;border-radius:6px;background:var(--surface-2)}
+.steps{list-style:none;margin:0;padding:0;counter-reset:st}
+.step{counter-increment:st;display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.step::before{content:counter(st);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;font-size:14px;background:var(--accent);color:var(--on-accent)}
+.step .st-t{font-weight:700;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.step .st-b{display:grid;gap:8px;margin-top:6px;min-width:0}
+.step .st-b p{max-width:none}
+.step.locked::before{background:var(--surface-2);color:var(--muted)}
+.step.locked .st-t{color:var(--muted)}
+.step.locked .st-b{max-height:0;overflow:hidden;visibility:hidden;margin:0}
+.step.locked .st-t::after{content:"· intenta este paso antes de abrirlo";font-weight:400;font-size:13px;color:var(--muted)}
+.step.just{animation:pop .45s ease}
+@keyframes pop{from{background:var(--accent-soft)}to{background:transparent}}
+.ej-ctrl{display:flex;flex-wrap:wrap;gap:8px;padding:12px 18px;background:var(--surface-2)}
+.btn{font:inherit;font-size:14.5px;font-weight:700;border-radius:99px;padding:8px 16px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:transform .12s,background .12s}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--accent);border-color:transparent;color:var(--on-accent)}
+.btn[disabled]{opacity:.45;cursor:default;transform:none}
+.result{border-radius:var(--r-sm);padding:10px 14px;background:var(--accent-soft);color:var(--accent-ink);font-weight:700;border:1px solid transparent}
+.check{font-size:14.5px;color:var(--ink-2);border-left:3px solid var(--accent);padding-left:10px}
+
+/* practice */
+.practica{border-radius:var(--r);border:2px dashed var(--line);padding:16px 18px;display:grid;gap:10px}
+.practica>.tag{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lime)}
+.practica ol{display:grid;gap:12px}
+details.sol summary{cursor:pointer;font-weight:700;color:var(--accent-ink);font-size:14.5px;width:max-content;max-width:100%}
+details.sol>div{margin-top:8px;padding:10px 14px;border-radius:var(--r-sm);background:var(--surface-2);display:grid;gap:6px}
+
+/* figures & widgets */
+.fig{border-radius:var(--r);border:1px solid var(--line);overflow:hidden;background:var(--surface)}
+.paper{background-color:var(--surface);background-image:
+  linear-gradient(var(--grid-strong) 1px,transparent 1px),linear-gradient(90deg,var(--grid-strong) 1px,transparent 1px),
+  linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:80px 80px,80px 80px,16px 16px,16px 16px}
+.fig .art{padding:14px;overflow-x:auto}
+.fig .art svg{display:block;width:100%;height:auto;max-width:100%}
+.fig figcaption,.fig .cap{padding:10px 16px;font-size:14.5px;color:var(--ink-2);border-top:1px solid var(--line);background:var(--surface)}
+.widget .w-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--surface)}
+.widget .w-head b{font-family:var(--f-display);font-size:16px}
+.widget .w-head .pill{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:var(--accent);color:var(--on-accent)}
+.controls{display:grid;gap:12px;padding:14px 16px;border-top:1px solid var(--line);background:var(--surface)}
+.ctrl{display:grid;grid-template-columns:minmax(110px,auto) 1fr auto;gap:12px;align-items:center;font-size:15px}
+.ctrl label{font-weight:700}
+.ctrl output{font-family:var(--f-mono);font-size:14px;min-width:64px;text-align:right}
+input[type=range]{width:100%;accent-color:var(--accent);min-width:0}
+select,input[type=number],input[type=text]{font:inherit;font-size:15px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-width:0}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;padding:12px 16px;background:var(--surface-2);font-variant-numeric:tabular-nums}
+.readout div{display:grid;gap:2px;font-size:13px;color:var(--muted);font-weight:700}
+.readout div span{font-family:var(--f-mono);font-size:16px;color:var(--ink);font-weight:700}
+.explain{padding:12px 16px;font-size:15.5px;border-top:1px solid var(--line);background:var(--surface);display:grid;gap:6px}
+@media (max-width:520px){.ctrl{grid-template-columns:1fr auto}.ctrl input[type=range]{grid-column:1/-1;order:3}}
+
+/* svg tokens */
+.s-ink{stroke:var(--ink);fill:none}
+.s-ink2{stroke:var(--ink-2);fill:none}
+.s-muted{stroke:var(--muted);fill:none}
+.s-acc{stroke:var(--accent);fill:none}
+.s-teal{stroke:var(--teal);fill:none}
+.s-warn{stroke:var(--warn);fill:none}
+.s-rose{stroke:var(--rose);fill:none}
+.f-acc{fill:var(--accent)}
+.f-accsoft{fill:var(--accent-soft)}
+.f-teal{fill:var(--teal)}
+.f-warn{fill:var(--warn)}
+.f-rose{fill:var(--rose)}
+.f-ink{fill:var(--ink)}
+.f-ink2{fill:var(--ink-2)}
+.f-muted{fill:var(--muted)}
+.f-surface{fill:var(--surface)}
+.f-surface2{fill:var(--surface-2)}
+svg text{font-family:var(--f-body);font-size:14px;fill:var(--ink-2)}
+svg text.m{font-family:var(--f-mono);font-size:12.5px}
+svg text.b{font-weight:700}
+svg text.lg{font-size:17px}
+
+/* grid of cards (formulario) */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:12px}
+.fcard{border-radius:var(--r);border:1px solid var(--line);background:var(--surface);padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.fcard h4{font-size:15px;color:var(--accent-ink);letter-spacing:.02em}
+.fcard .row{overflow-x:auto;overflow-y:hidden}
+
+/* method steps */
+.method{list-style:none;padding:0!important;margin:0;display:grid;gap:10px;counter-reset:m}
+.method li{counter-increment:m;display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;max-width:none!important}
+.method li::before{content:counter(m);font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1;color:var(--accent)}
+.method b{display:block}
+
+/* legend of boxes */
+.kinds{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.kinds>div{border-radius:var(--r-sm);padding:10px 12px;font-size:14.5px;display:grid;gap:2px}
+.kinds b{font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.kinds .k-idea{background:var(--accent-soft)} .kinds .k-idea b{color:var(--accent-ink)}
+.kinds .k-form{background:var(--surface);border:1px solid var(--line)} .kinds .k-form b{color:var(--accent-ink)}
+.kinds .k-ej{background:var(--hero-bg);color:var(--hero-ink)} .kinds .k-ej b{color:var(--hero-muted)}
+.kinds .k-cui{background:var(--warn-soft)} .kinds .k-cui b{color:var(--warn)}
+.kinds .k-tru{background:var(--teal-soft)} .kinds .k-tru b{color:var(--teal)}
+.kinds .k-pra{border:2px dashed var(--line)} .kinds .k-pra b{color:var(--lime)}
+
+/* quiz */
+.quiz{display:grid;gap:14px}
+.q{border-radius:var(--r);border:1px solid var(--line);background:var(--surface);padding:16px 18px;display:grid;gap:10px}
+.q .qt{font-weight:700}
+.q .opts{display:grid;gap:8px}
+.q .opts button{font:inherit;text-align:left;padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.q .opts button:hover{border-color:var(--accent)}
+.q .opts button.ok{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.q .opts button.ko{background:var(--rose-soft);border-color:var(--rose);color:var(--rose)}
+.q .why{font-size:15px;color:var(--ink-2);padding:10px 12px;border-radius:var(--r-sm);background:var(--surface-2)}
+.score{position:relative;font-family:var(--f-display);font-weight:700;font-size:18px;padding:14px 18px;border-radius:var(--r);background:var(--hero-bg);color:var(--hero-ink);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+.done-btn{justify-self:start;font:inherit;font-weight:700;font-size:14.5px;padding:9px 16px;border-radius:99px;border:2px solid var(--accent);background:transparent;color:var(--accent-ink);cursor:pointer}
+.done-btn[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+
+/* math */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;padding:4px 0;margin:4px 0!important}
+mjx-container{color:inherit}
+.big mjx-container[display="true"]{font-size:118%}
+
+footer.foot{border-top:1px solid var(--line);padding-block:24px 40px;color:var(--muted);font-size:14px}
+
+/* evita que fórmulas largas ensanchen la columna */
+.content,.sec,.box,.formula .f-body,.step .st-b,.ej-q,.practica,details.sol>div,.explain,.q,.fcard{grid-template-columns:minmax(0,1fr)}
+.sec ul,.sec ol{grid-template-columns:minmax(0,1fr)}
+.sec li{min-width:0}
+.step::before{grid-row:1 / span 2}
+.step .st-t,.step .st-b{grid-column:2}
+.widget .art svg{max-width:600px;margin-inline:auto}
+.readout{grid-template-columns:repeat(auto-fit,minmax(118px,1fr))}
+@media (max-width:560px){
+  .widget svg text{font-size:21px}
+  .widget svg text.m{font-size:19px}
+}
+
+/* notas de calculadora dentro de los pasos */
+.calc-note{font-size:14.5px;line-height:1.5;padding:9px 12px;border-radius:var(--r-sm);background:var(--teal-soft);color:var(--ink-2);border-left:3px solid var(--teal)}
+.calc-note b:first-child{color:var(--teal);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-right:4px}
+/* serie con enlaces */
+.series a{padding:4px 10px;border-radius:99px;border:1px solid var(--hero-muted);color:var(--hero-ink);font-weight:700;letter-spacing:.02em;text-decoration:none}
+.series a:hover{background:var(--hero-line)}
+/* arrastrable */
+.drag{cursor:grab;touch-action:none}
+.drag:active{cursor:grabbing}
+.theory{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.theory>div{border-radius:var(--r-sm);border:1px solid var(--line);background:var(--surface);padding:12px 14px;display:grid;gap:4px;align-content:start}
+.theory b{font-family:var(--f-display);font-size:16px}
+.theory p{font-size:15px;color:var(--ink-2)}
+
+/* cuadro de relaciones F-E-Ep-V */
+.magic{display:grid;grid-template-columns:minmax(0,1fr) minmax(70px,.8fr) minmax(0,1fr);grid-template-rows:auto auto auto;gap:6px;align-items:stretch}
+.magic .mb{border-radius:var(--r);padding:12px;text-align:center;display:grid;gap:2px;align-content:center;border:2px solid transparent}
+.magic .mb b{font-family:var(--f-display);font-size:19px}
+.magic .mb span{font-size:13px;color:var(--ink-2)}
+.magic .vec{background:var(--accent-soft);border-color:var(--accent)}
+.magic .esc{background:var(--teal-soft);border-color:var(--teal)}
+.magic .ar{display:grid;place-items:center;text-align:center;font-size:14px;color:var(--ink-2);padding:4px;min-width:0}
+.magic .ar b{color:var(--ink);font-family:var(--f-mono);font-size:13px}
+.magic .mid{font-size:13px;color:var(--muted);display:grid;place-items:center;text-align:center}
+@media (max-width:520px){.magic .mb b{font-size:16px}.magic .ar{font-size:12.5px}}
+
+/* tabla de símbolos en móvil: tarjetas */
+@media (max-width:600px){
+  .symtab thead{display:none}
+  .symtab tr{display:grid;grid-template-columns:110px minmax(0,1fr);align-items:center;border-bottom:1px solid var(--line)}
+  .symtab td{border-bottom:0;padding:8px 10px}
+  .symtab td:nth-child(3){grid-column:1/-1;padding-top:0;font-size:14.5px}
+  .symtab svg{width:100px;height:42px}
+}
+
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']],
+    macros: { ii: '\\hat{\\imath}', jj: '\\hat{\\jmath}', kk: '\\hat{k}', sen: '\\operatorname{sen}' }
+  },
+  svg: { fontCache: 'global' },
+  options: { enableMenu: false }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<div data-topic="4">
+<header class="hero">
+  <div class="wrap">
+    <nav class="series" aria-label="Serie de apuntes">
+      <a href="https://claude.ai/artifact/HSC9RVR4F1vLX3NZBy3KcX" target="_blank" rel="noopener">0 · Mates ↗</a><a href="https://claude.ai/artifact/5UzQ4YaArXtxVZQKoz7Yef" target="_blank" rel="noopener">1 · Magnitudes y vectores ↗</a><a href="https://claude.ai/artifact/EmosFbEofZfZhApDfot99i" target="_blank" rel="noopener">2 · Campo eléctrico ↗</a><a href="https://claude.ai/artifact/6rCvw1sDeePkWPNUY6Wumw" target="_blank" rel="noopener">3 · Conductores y condensadores ↗</a><span class="on">4 · Corriente eléctrica</span><a href="https://claude.ai/artifact/Ljjm57gVSz8f4iPBnsdq1W" target="_blank" rel="noopener">5 · Teoría de bandas ↗</a>
+    </nav>
+    <div class="hero-main">
+      <div class="bignum" aria-hidden="true">4</div>
+      <div>
+        <div class="eyebrow">Física · Tema 4 · Electricidad</div>
+        <h1>Corriente eléctrica y circuitos</h1>
+        <p class="lead">Cómo se leen los circuitos (símbolos y convenios), la ley de Ohm, la potencia, la fuerza electromotriz, las asociaciones de resistencias, las leyes de Kirchhoff, los aparatos de medida y el circuito RC. Están los 32 ejercicios de tu relación de Circuitos.</p>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <span><b>11</b> apartados + formulario y test</span>
+      <span><b>≈ 6 h</b> de estudio</span>
+      <span>Relación: <b>Circuitos 1–32</b></span>
+    </div>
+  </div>
+</header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <marker id="ah-ink" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-ink" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-acc" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-acc" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-teal" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-teal" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-rose" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-rose" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-warn" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path class="f-warn" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ah-muted" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path class="f-muted" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+</svg>
+
+<div class="wrap layout">
+  <nav class="toc" aria-label="Índice del tema">
+    <div class="toc-title">En este tema</div>
+    <ol data-toc></ol>
+    <div class="progress"><span data-prog-txt></span><div class="bar"><i data-prog-bar></i></div></div>
+  </nav>
+
+  <main>
+    <details class="toc-mobile">
+      <summary>Índice del tema</summary>
+      <ol data-toc></ol>
+      <div class="progress" style="margin:0 12px 12px"><span data-prog-txt></span><div class="bar"><i data-prog-bar></i></div></div>
+    </details>
+
+    <div class="content">
+
+<!-- ======================= 00 ======================= -->
+<section class="sec" id="mapa" data-n="00" data-title="Qué entra en este tema">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 00</div>
+    <h2>Qué entra en este tema</h2>
+    <p class="sec-sub">El tema más práctico. Casi todo son cuentas con circuitos.</p>
+  </div>
+  <div class="theory">
+    <div><b>Leer circuitos</b><p>Símbolos, nudos, ramas, mallas y convenios de signos. Apartado 01. Imprescindible antes de nada.</p></div>
+    <div><b>Corriente y Ohm</b><p>Intensidad, velocidad de arrastre, ley de Ohm y resistividad. Ejercicios 1, 2, 4, 5 y 6. Apartados 02–03.</p></div>
+    <div><b>Potencia y fem</b><p>Efecto Joule, factura de la luz, pilas reales y motores. Ejercicios 3, 7–12, 18, 31 y 32. Apartados 04–05.</p></div>
+    <div><b>Resistencias equivalentes</b><p>Serie, paralelo y circuitos mixtos. Ejercicios 13–16, 19 y 30. Apartado 06.</p></div>
+    <div><b>Kirchhoff</b><p>Circuitos con varias pilas. Ejercicios 17, 20–23 y 28. Apartado 07.</p></div>
+    <div><b>Medidas y RC</b><p>Amperímetro, voltímetro y la carga y descarga de un condensador. Ejercicios 24–27 y 29. Apartados 08–09.</p></div>
+  </div>
+  <div class="box cuidado">
+    <div class="tag">Ojo con tu relación</div>
+    <p>En las figuras de tu hoja de ejercicios, el símbolo de ohmio <b>Ω</b> aparece como <b>«Λ»</b> o <b>«/\»</b> por un problema de fuente al hacer el PDF. Donde veas «4 kΛ», lee «4 kΩ».</p>
+  </div>
+</section>
+
+<!-- ======================= 01 ======================= -->
+<section class="sec" id="simbologia" data-n="01" data-title="Simbología y convenios">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 01</div>
+    <h2>Simbología y convenios: cómo leer un circuito</h2>
+    <p class="sec-sub">Qué significa cada dibujo, qué es un nudo, una rama y una malla, y con qué signos se escribe cada cosa.</p>
+  </div>
+
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>Un esquema eléctrico es un <b>mapa</b>, no un dibujo realista. Las líneas son cables ideales (sin resistencia), da igual si son largos o cortos, rectos o con curvas. Lo único que importa es <b>qué está conectado con qué</b>. Dos puntos unidos solo por cable son, eléctricamente, <b>el mismo punto</b>: tienen el mismo potencial.</p>
+  </div>
+
+  <h3>Los símbolos</h3>
+  <div class="tbl-wrap">
+    <table class="symtab">
+      <thead><tr><th>Símbolo</th><th>Nombre</th><th>Qué hace / cómo se lee</th></tr></thead>
+      <tbody>
+        <tr><td><svg data-sym="W" viewBox="0 0 120 50" width="120" height="50" aria-hidden="true"></svg></td><td><b>Cable</b></td><td>Conductor ideal, sin resistencia. Todo lo unido por cable está al mismo potencial.</td></tr>
+        <tr><td><svg data-sym="N" viewBox="0 0 120 50" width="120" height="50" aria-hidden="true"></svg></td><td><b>Nudo</b> (punto gordo)</td><td>Unión de tres o más cables. Ahí la corriente se reparte.</td></tr>
+        <tr><td><svg data-sym="X" viewBox="0 0 120 50" width="120" height="50" aria-hidden="true"></svg></td><td><b>Cruce sin conexión</b></td><td>Dos cables que se cruzan sin punto gordo (o con un «saltito») <b>no</b> están conectados.</td></tr>
+        <tr><td><svg data-sym="R" viewBox="0 0 120 50" width="120" height="50" aria-hidden="true"></svg></td><td><b>Resistencia</b></td><td>Se opone al paso de corriente y disipa energía como calor. En normas europeas también se dibuja como un rectángulo. Ley de Ohm: \(V = IR\).</td></tr>
+        <tr><td><svg data-sym="B" viewBox="0 0 120 50" width="120" height="50" aria-hidden="true"></svg></td><td><b>Pila / generador de fem</b> ε</td><td>La placa <b>larga</b> es el polo <b>+</b> y la <b>corta</b> el polo <b>−</b>. Por fuera de la pila, la corriente sale por el + y entra por el −.</td></tr>
+        <tr><td><svg data-sym="BR" viewBox="0 0 120 50" width="120" height="50" aria-hidden="true"></svg></td><td><b>Pila real</b> (ε, r)</td><td>Una pila ideal con una resistencia interna \(r\) en serie. A veces solo se indica escribiendo «r = 1 Ω» junto a la pila.</td></tr>
+        <tr><td><svg data-sym="C" viewBox="0 0 120 50" width="120" height="50" aria-hidden="true"></svg></td><td><b>Condensador</b></td><td>Dos placas <b>iguales</b> (no confundir con la pila). En corriente continua, cuando ya está cargado no deja pasar corriente.</td></tr>
+        <tr><td><svg data-sym="S" viewBox="0 0 120 50" width="120" height="50" aria-hidden="true"></svg></td><td><b>Interruptor</b> S</td><td>Abierto: no pasa corriente (rama cortada). Cerrado: es un cable.</td></tr>
+        <tr><td><svg data-sym="A" viewBox="0 0 120 50" width="120" height="50" aria-hidden="true"></svg></td><td><b>Amperímetro</b></td><td>Mide la intensidad. Se conecta <b>en serie</b> (la corriente tiene que pasar por él). Ideal: resistencia 0.</td></tr>
+        <tr><td><svg data-sym="V" viewBox="0 0 120 50" width="120" height="50" aria-hidden="true"></svg></td><td><b>Voltímetro</b></td><td>Mide la diferencia de potencial entre dos puntos. Se conecta <b>en paralelo</b>. Ideal: resistencia infinita.</td></tr>
+        <tr><td><svg data-sym="G" viewBox="0 0 120 50" width="120" height="50" aria-hidden="true"></svg></td><td><b>Galvanómetro</b></td><td>Aparato muy sensible a la corriente. Con resistencias añadidas se convierte en amperímetro o voltímetro (apartado 08).</td></tr>
+        <tr><td><svg data-sym="T" viewBox="0 0 120 50" width="120" height="50" aria-hidden="true"></svg></td><td><b>Tierra</b></td><td>Punto que se toma como referencia: \(V = 0\) (ejercicio 27).</td></tr>
+        <tr><td><svg data-sym="M" viewBox="0 0 120 50" width="120" height="50" aria-hidden="true"></svg></td><td><b>Motor</b> (ε′)</td><td>Consume energía y la convierte en trabajo. Se comporta como una pila «al revés»: tiene una fuerza contraelectromotriz ε′ (ejercicio 12).</td></tr>
+        <tr><td><svg data-sym="I" viewBox="0 0 120 50" width="120" height="50" aria-hidden="true"></svg></td><td><b>Flecha de corriente</b> I</td><td>El sentido que <b>supones</b> para la corriente. Si al resolver sale negativa, va al revés.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Nudos, ramas y mallas</h3>
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-nrm" viewBox="0 0 520 260" style="max-width:520px;margin-inline:auto" role="img" aria-label="Circuito de la diapositiva de Kirchhoff con sus nudos, ramas y mallas señalados"></svg></div>
+    <figcaption>Circuito de la diapositiva 13. <b>Nudos</b>: b y e, donde se unen tres cables. <b>Ramas</b>: los tres caminos entre b y e (izquierda, centro y derecha); en cada rama la corriente es la misma de principio a fin. <b>Mallas</b>: los caminos cerrados I y II, sin cruzar otras ramas por dentro.</figcaption>
+  </figure>
+
+  <h3>Los convenios de signos</h3>
+  <div class="theory">
+    <div><b>Sentido de la corriente</b><p>Por convenio, la corriente va en el sentido en que se moverían las cargas <b>positivas</b>: por fuera de la pila, de + a −. Los electrones (lo que de verdad se mueve en un metal) van al revés, pero no hace falta pensarlo.</p></div>
+    <div><b>Al cruzar una resistencia</b><p>A favor de la corriente, el potencial <b>baja</b> \(IR\). En contra, <b>sube</b> \(IR\). La corriente siempre va de más potencial a menos dentro de una resistencia.</p></div>
+    <div><b>Al cruzar una pila</b><p>De − a + (de placa corta a placa larga), el potencial <b>sube</b> ε. De + a −, <b>baja</b> ε. No depende del sentido de la corriente.</p></div>
+    <div><b>V<sub>ab</sub></b><p>Significa \(V_a - V_b\): potencial de a menos potencial de b. Si sale positivo, a está más alto.</p></div>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-signos" viewBox="0 0 560 170" style="max-width:560px;margin-inline:auto" role="img" aria-label="Reglas de signos al recorrer una resistencia y una pila"></svg></div>
+    <figcaption>Recorriendo de izquierda a derecha: en la resistencia, a favor de I, el potencial baja IR. En la pila, de − a +, sube ε.</figcaption>
+  </figure>
+
+  <div class="box truco">
+    <div class="tag">Truco para calcular V<sub>ab</sub></div>
+    <p>Sal de b y ve hasta a por <b>cualquier</b> camino, sumando lo que sube y restando lo que baja con las reglas de arriba. Lo que acumules es \(V_a - V_b\). Da igual el camino: todos dan lo mismo.</p>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 02 ======================= -->
+<section class="sec" id="corriente" data-n="02" data-title="Corriente e intensidad">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 02</div>
+    <h2>Corriente e intensidad</h2>
+    <p class="sec-sub">Qué es la intensidad, la densidad de corriente y la velocidad de los electrones. Ejercicio 1.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Circuitos 1</span></div>
+
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>La <b>corriente eléctrica</b> es un flujo de cargas. La <b>intensidad</b> mide cuánta carga atraviesa una sección del cable cada segundo. Es como el caudal de un río: litros por segundo, pero con culombios.</p>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Fórmulas · Intensidad y densidad de corriente</div>
+    <div class="f-body big">
+      \[I = \frac{dq}{dt}\qquad 1\ \text{A} = 1\ \text{C/s}\qquad J = \frac{I}{S}\qquad I = n\,e\,v_d\,S\]
+      <dl class="legend">
+        <dt>\(J\)</dt><dd>densidad de corriente: intensidad por unidad de sección (A/m²)</dd>
+        <dt>\(n\)</dt><dd>número de portadores de carga (electrones libres) por m³</dd>
+        <dt>\(v_d\)</dt><dd>velocidad de desplazamiento (o de arrastre): la velocidad media de los electrones a lo largo del cable</dd>
+        <dt>\(S\)</dt><dd>sección del cable (\(\pi r^2\))</dd>
+      </dl>
+      <p>De dónde sale \(I = nev_dS\): en un tiempo \(dt\), los electrones avanzan \(v_d\,dt\). Los que cruzan la sección son los de un trozo de cable de volumen \(S\,v_d\,dt\), que tienen una carga \(dq = n\,e\,S\,v_d\,dt\). Dividiendo entre \(dt\) sale \(I\).</p>
+    </div>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 1 · Lo despacio que van los electrones</span><span class="src">Circuitos 1</span></div>
+    <div class="ej-q"><p>Por un conductor de 2.01 mm de diámetro circulan 2 A. Si cada átomo aporta un electrón libre y hay \(10^{24}\) átomos/cm³, ¿a qué velocidad se desplazan los electrones?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Datos al SI</div><div class="st-b"><p>Radio \(r = 1.005\) mm \(= 1.005\cdot10^{-3}\) m. Para pasar de cm³ a m³, 1 cm³ = 10⁻⁶ m³, así que hay que <b>multiplicar</b> por 10⁶:</p>\[n = 10^{24}\ \text{cm}^{-3} = 10^{30}\ \text{m}^{-3}\]</div></li>
+      <li class="step"><div class="st-t">Sección</div><div class="st-b">\[S = \pi r^2 = \pi\,(1.005\cdot10^{-3})^2 = 3.17\cdot10^{-6}\ \text{m}^2\]</div></li>
+      <li class="step"><div class="st-t">Despeja v de I = n e v S</div><div class="st-b">\[v_d = \frac{I}{n\,e\,S} = \frac{2}{10^{30}\cdot1.6\cdot10^{-19}\cdot3.17\cdot10^{-6}} = 3.9\cdot10^{-6}\ \text{m/s}\]<div class="result">\(v_d \approx 3.9\cdot10^{-6}\) m/s: unos 4 micras por segundo. La luz se enciende al instante porque el campo eléctrico se propaga casi a la velocidad de la luz y empuja a la vez a todos los electrones del cable.</div></div></li>
+    </ol>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 03 ======================= -->
+<section class="sec" id="ohm" data-n="03" data-title="Ley de Ohm y resistividad">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 03</div>
+    <h2>Ley de Ohm y resistividad</h2>
+    <p class="sec-sub">La relación entre tensión e intensidad, y de qué depende la resistencia de un cable. Ejercicios 2, 4, 5 y 6.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Circuitos 2</span><span class="chip rel">4</span><span class="chip rel">5</span><span class="chip rel">6</span></div>
+
+  <div class="formula">
+    <div class="f-head">Fórmulas · Ley de Ohm y resistividad</div>
+    <div class="f-body big">
+      \[V = I\,R\qquad R = \rho\,\frac{L}{S}\qquad J = \sigma\,E\quad (\sigma = 1/\rho)\]
+      <dl class="legend">
+        <dt>\(R\)</dt><dd>resistencia, en ohmios: 1 Ω = 1 V/A</dd>
+        <dt>\(\rho\)</dt><dd>resistividad: depende del material (Ω·m). Cobre: 1.7·10⁻⁸ Ω·m</dd>
+        <dt>\(\sigma\)</dt><dd>conductividad, la inversa de ρ. Unidad: Ω⁻¹·m⁻¹ = S/m (siemens por metro)</dd>
+        <dt>\(L, S\)</dt><dd>longitud y sección del hilo</dd>
+      </dl>
+      <p>Un cable <b>más largo</b> tiene más resistencia (más camino) y uno <b>más grueso</b>, menos (más sitio por donde pasar).</p>
+    </div>
+  </div>
+
+  <div class="theory">
+    <div><b>Materiales óhmicos</b><p>Los que cumplen V = IR con R constante: la gráfica I–V es una recta (como los metales).</p></div>
+    <div><b>No óhmicos</b><p>Su gráfica I–V es una curva (como un diodo): R cambia con la tensión.</p></div>
+    <div><b>Temperatura</b><p>En los metales, ρ crece con T: \(\rho = \rho_0[1 + \alpha(T - T_0)]\).</p></div>
+    <div><b>Superconductividad</b><p>Algunos materiales, por debajo de una temperatura crítica (el mercurio a 4.2 K), tienen resistencia cero.</p></div>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 2 · Ohm directo</span><span class="src">Circuitos 2</span></div>
+    <div class="ej-q"><p>120 V producen 2 A en una resistencia. a) ¿Cuánto vale? b) ¿Qué corriente pasa con 25 V?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">a) R = V/I</div><div class="st-b">\[R = \frac{120}{2} = 60\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">b) I = V/R, con la misma R</div><div class="st-b">\[I = \frac{25}{60} = 0.417\ \text{A}\]<div class="result">a) 60 Ω. b) 0.417 A.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 4 · Tercer carril del metro</span><span class="src">Circuitos 4</span></div>
+    <div class="ej-q"><p>Carril de acero de 45 cm² de sección y 10 km de largo, con \(\rho = 2\cdot10^{-8}\) Ω·m. ¿Qué resistencia tiene?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Al SI</div><div class="st-b"><p>\(S = 45\ \text{cm}^2 = 45\cdot10^{-4}\ \text{m}^2\) (recuerda: cm² → m² es ×10⁻⁴). \(L = 10^4\) m.</p></div></li>
+      <li class="step"><div class="st-t">R = ρL/S</div><div class="st-b">\[R = \frac{2\cdot10^{-8}\cdot10^{4}}{45\cdot10^{-4}} = 0.044\ \Omega\]<div class="result">R = 0.044 Ω</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 6 · Mismo hilo, distinta forma</span><span class="src">Circuitos 6</span></div>
+    <div class="ej-q"><p>a) Un hilo de 100 m y 2 mm de diámetro tiene \(\rho = 4.8\cdot10^{-8}\) Ω·m. ¿Qué resistencia tiene? b) Otro hilo del mismo material y de la <b>misma masa</b> tiene el doble de diámetro. ¿Cuánto vale su resistencia?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">a) Sección y resistencia</div><div class="st-b">\[S = \pi(10^{-3})^2 = 3.14\cdot10^{-6}\ \text{m}^2\qquad R = \frac{4.8\cdot10^{-8}\cdot100}{3.14\cdot10^{-6}} = 1.528\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">b) Misma masa y material: mismo volumen</div><div class="st-b"><p>Volumen = \(L\cdot S\). Con el doble de diámetro, la sección es <b>4 veces</b> mayor (\(\pi r^2\) con \(r\) doble). Para tener el mismo volumen, la longitud tiene que ser <b>4 veces</b> menor: \(L' = 25\) m.</p></div></li>
+      <li class="step"><div class="st-t">Los dos efectos se multiplican</div><div class="st-b">\[R' = \rho\,\frac{L/4}{4S} = \frac{R}{16} = \frac{1.528}{16} = 0.0955\ \Omega\]<p class="check">La hoja da 0.382 Ω, que es R/4: solo tiene en cuenta uno de los dos cambios (la sección), pero no que el hilo también es más corto. Con la misma masa, sale R/16. Si en clase os dan 0.382 Ω, conviene preguntarlo.</p><div class="result">a) 1.528 Ω. b) 0.0955 Ω (la dieciseisava parte).</div></div></li>
+    </ol>
+  </div>
+
+  <div class="practica">
+    <div class="tag">Inténtalo tú · Ejercicio 5</div>
+    <p>¿Qué longitud tiene un hilo de cobre de 0.5 mm de diámetro y 2 Ω? (\(\rho = 1.7\cdot10^{-8}\) Ω·m)</p>
+    <details class="sol"><summary>Ver solución</summary><div><p>Está resuelto paso a paso en el Tema 0 (apartado 04): \(S = 1.963\cdot10^{-7}\) m², y despejando \(L = RS/\rho = 23.1\) m.</p></div></details>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 04 ======================= -->
+<section class="sec" id="potencia" data-n="04" data-title="Potencia y efecto Joule">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 04</div>
+    <h2>Potencia y efecto Joule</h2>
+    <p class="sec-sub">La energía que consume un aparato y el calor que se desprende. Ejercicios 7, 9, 10, 11, 31 y 32.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Circuitos 7</span><span class="chip rel">9</span><span class="chip rel">10</span><span class="chip rel">11</span><span class="chip rel">31</span><span class="chip rel">32</span></div>
+
+  <div class="box idea">
+    <div class="tag">La idea · efecto Joule</div>
+    <p>Los electrones se aceleran con el campo y chocan una y otra vez con los átomos del material. En cada choque pierden energía, que se convierte en <b>calor</b>. Así funcionan los calentadores, tostadoras y bombillas incandescentes. Otros efectos de la corriente son el magnético, el químico (electrólisis) y el luminoso.</p>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Fórmulas · Potencia y energía</div>
+    <div class="f-body big">
+      \[P = V\,I = I^2R = \frac{V^2}{R}\qquad E = P\cdot t\qquad Q_{Joule} = I^2R\,t\]
+      <p>Potencia en vatios (W = J/s). Las tres formas de \(P\) son la misma cambiando \(V = IR\). Usa la que tenga tus datos: si conoces la tensión del enchufe, \(V^2/R\); si conoces la corriente, \(I^2R\).</p>
+      <p><b>El kilovatio hora</b> (kWh), lo que cobra la compañía eléctrica: 1 kWh = 1000 W · 3600 s = 3.6·10⁶ J. Para calcular el coste: potencia en kW × horas × precio del kWh.</p>
+    </div>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicios 7 y 10 · Las tres fórmulas de la potencia</span><span class="src">Circuitos 7 y 10</span></div>
+    <div class="ej-q"><p>7) Potencia en una resistencia de 6 Ω con 50 V. 10) Una resistencia de calefacción de 0.11 kW a 220 V: ¿cuánto vale y qué corriente pasa?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">7) Conoces V y R: usa V²/R</div><div class="st-b">\[P = \frac{50^2}{6} = 417\ \text{W}\]</div></li>
+      <li class="step"><div class="st-t">10) Corriente con P = VI</div><div class="st-b">\[I = \frac{P}{V} = \frac{110}{220} = 0.5\ \text{A}\]</div></li>
+      <li class="step"><div class="st-t">10) Resistencia con Ohm</div><div class="st-b">\[R = \frac{V}{I} = \frac{220}{0.5} = 440\ \Omega\]<div class="result">7) 417 W. 10) I = 0.5 A y R = 440 Ω.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 9 · Calentar y hervir agua</span><span class="src">Circuitos 9</span></div>
+    <div class="ej-q"><p>Un calentador de 200 W aprovecha el 80 % de su energía. a) ¿Cuánto tarda en calentar 0.5 kg de agua de 10 °C a 100 °C? b) ¿Y en hervirla toda después? (c = 4.18 kJ/kg·°C; calor de vaporización 2257.2 kJ/kg)</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Potencia útil</div><div class="st-b">\[P_{util} = 0.8\cdot200 = 160\ \text{W}\]</div></li>
+      <li class="step"><div class="st-t">a) Calor para subir la temperatura: Q = m·c·ΔT</div><div class="st-b">\[Q = 0.5\cdot4180\cdot90 = 188\,100\ \text{J}\qquad t = \frac{Q}{P} = \frac{188\,100}{160} = 1176\ \text{s}\]</div></li>
+      <li class="step"><div class="st-t">b) Calor para evaporarla: Q = m·L</div><div class="st-b">\[Q = 0.5\cdot2\,257\,200 = 1\,128\,600\ \text{J}\qquad t = \frac{1\,128\,600}{160} = 7054\ \text{s}\]<div class="result">a) 1176 s (unos 20 min). b) 7054 s (casi 2 h).</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 11 · La factura</span><span class="src">Circuitos 11</span></div>
+    <div class="ej-q"><p>A 15 céntimos el kWh, ¿cuánto cuesta a) un tostador de 12 Ω a 220 V durante 5 min, b) una calefacción de 50 Ω a 220 V durante 8 h?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">a) Potencia en kW</div><div class="st-b">\[P = \frac{220^2}{12} = 4033\ \text{W} = 4.033\ \text{kW}\]</div></li>
+      <li class="step"><div class="st-t">a) Energía en kWh y coste</div><div class="st-b"><p>5 min = 5/60 h:</p>\[E = 4.033\cdot\frac{5}{60} = 0.336\ \text{kWh}\qquad 0.336\cdot15 = 5.04\ \text{céntimos}\]</div></li>
+      <li class="step"><div class="st-t">b) Igual</div><div class="st-b">\[P = \frac{220^2}{50} = 968\ \text{W}\qquad E = 0.968\cdot8 = 7.744\ \text{kWh}\qquad 7.744\cdot15 = 116.2\ \text{céntimos}\]<div class="result">a) 5.04 céntimos. b) 116.16 céntimos (1.16 €).</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicios 31 y 32 · Bombillas</span><span class="src">Circuitos 31 y 32</span></div>
+    <div class="ej-q"><p>31) Un foco de 75 W y 120 V en paralelo con otro de 40 W y 225 V: ¿resistencia total? 32) ¿Por dónde pasa más corriente, por una lámpara de 100 W o por una de 75 W?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">31) La resistencia de cada foco sale de sus datos nominales</div><div class="st-b"><p>«75 W y 120 V» significa que da 75 W cuando se conecta a 120 V. De \(P = V^2/R\):</p>\[R_1 = \frac{120^2}{75} = 192\ \Omega\qquad R_2 = \frac{225^2}{40} = 1265.6\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">31) En paralelo</div><div class="st-b">\[R = \frac{192\cdot1265.6}{192 + 1265.6} = 166.7\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">32) A la misma tensión, I = P/V</div><div class="st-b"><p>Las dos lámparas se conectan al mismo enchufe (misma V), así que la de más potencia lleva más corriente: \(I = P/V\). Pasa más por la de 100 W. (Y además tiene <b>menos</b> resistencia: \(R = V^2/P\).)</p><div class="result">31) 166.7 Ω. 32) Por la de 100 W.</div></div></li>
+    </ol>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 05 ======================= -->
+<section class="sec" id="fem" data-n="05" data-title="Fuerza electromotriz">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 05</div>
+    <h2>Fuerza electromotriz: pilas reales y motores</h2>
+    <p class="sec-sub">La pila como «bomba» de cargas, su resistencia interna y los motores. Ejercicios 3, 8, 12 y 18.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Circuitos 3</span><span class="chip rel">8</span><span class="chip rel">12</span><span class="chip rel">18</span></div>
+
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>Para que la corriente no se pare, hace falta algo que suba las cargas de potencial una y otra vez, como una bomba que sube agua para que vuelva a bajar por el río. Eso es un <b>generador</b>. Su <b>fuerza electromotriz</b> ε (fem) es el trabajo que hace por cada culombio que pasa por él. Se mide en voltios, aunque se llame «fuerza».</p>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Fórmulas · Pila real y motores</div>
+    <div class="f-body big">
+      \[V_{ab} = \varepsilon - I\,r\qquad I = \frac{\varepsilon}{R + r}\qquad I = \frac{\sum\varepsilon - \sum\varepsilon'}{\sum R}\]
+      <ul>
+        <li>Una pila real tiene una <b>resistencia interna</b> \(r\). La tensión que da en sus bornes (\(V_{ab}\)) es menor que ε, porque se «pierde» \(Ir\) dentro de la pila.</li>
+        <li><b>Circuito abierto</b> (I = 0): \(V_{ab} = \varepsilon\). Por eso un voltímetro ideal conectado a la pila sola mide ε.</li>
+        <li><b>Pila ideal</b> (r = 0): \(V_{ab} = \varepsilon\) siempre.</li>
+        <li><b>Motor</b>: tiene una fuerza contraelectromotriz ε′ que <b>resta</b>. Consume una potencia útil \(\varepsilon' I\).</li>
+        <li><b>Cargar una batería</b>: la corriente entra por su polo +, así que la batería se comporta como un motor (su ε resta).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fig widget paper" id="w-pila">
+    <div class="w-head"><b>Pila real con una resistencia de carga</b><span class="pill">Interactivo</span></div>
+    <div class="art"><svg id="pila-svg" viewBox="0 0 460 236" style="max-width:500px" role="img" aria-label="Pila con resistencia interna conectada a una resistencia externa"></svg></div>
+    <div class="controls">
+      <div class="ctrl"><label for="pi-e">fem ε</label><input type="range" id="pi-e" min="1" max="24" step="0.5" value="12"><output id="pi-e-o"></output></div>
+      <div class="ctrl"><label for="pi-r">Resistencia interna r</label><input type="range" id="pi-r" min="0" max="5" step="0.1" value="1"><output id="pi-r-o"></output></div>
+      <div class="ctrl"><label for="pi-R">Resistencia externa R</label><input type="range" id="pi-R" min="0.5" max="30" step="0.5" value="5"><output id="pi-R-o"></output></div>
+    </div>
+    <div class="readout" id="pila-read"></div>
+    <div class="explain" id="pila-exp"></div>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 3 · Pila con resistencia interna</span><span class="src">Circuitos 3</span></div>
+    <div class="ej-q"><p>Una pila de 10 V y 100 Ω de resistencia interna se conecta a una carga de 4 kΩ. Halla a) la intensidad, b) la caída de tensión en la resistencia interna y en la de carga, c) la tensión en bornes. (La figura de tu hoja tiene otros valores; uso los del enunciado.)</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">a) Intensidad: todas las resistencias en serie</div><div class="st-b">\[I = \frac{\varepsilon}{R + r} = \frac{10}{4000 + 100} = 2.44\cdot10^{-3}\ \text{A} = 2.44\ \text{mA}\]</div></li>
+      <li class="step"><div class="st-t">b) Caídas de tensión</div><div class="st-b">\[V_r = I\,r = 2.44\cdot10^{-3}\cdot100 = 0.244\ \text{V}\qquad V_R = I\,R = 2.44\cdot10^{-3}\cdot4000 = 9.76\ \text{V}\]</div></li>
+      <li class="step"><div class="st-t">c) Tensión en bornes</div><div class="st-b">\[V_{ab} = \varepsilon - Ir = 10 - 0.244 = 9.76\ \text{V}\]<p>Es la misma que cae en la carga, como tiene que ser: la carga está conectada a los bornes.</p><div class="result">a) 2.4 mA. b) 0.24 V y 9.76 V. c) 9.76 V.</div></div></li>
+    </ol>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig8" viewBox="0 0 320 200" style="max-width:320px;margin-inline:auto" role="img" aria-label="Batería de 20 V en serie con una resistencia R entre los puntos a y b, conectados a 110 V"></svg></div>
+    <figcaption>Ejercicio 8: la línea de 110 V se conecta entre a y b, y la batería se carga a través de R.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 8 · Cargar una batería</span><span class="src">Circuitos 8</span></div>
+    <div class="ej-q"><p>Una batería de 20 V y 10 Ω de resistencia interna se carga conectándola a 110 V. ¿Qué resistencia R hay que poner en serie para que la corriente no pase de 1.5 A?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Al cargarla, la batería resta</div><div class="st-b"><p>La línea de 110 V empuja la corriente <b>entrando por el + de la batería</b>, al revés de como la batería empujaría. La batería actúa como un motor: su fem se opone.</p>\[I = \frac{110 - 20}{R + 10}\]</div></li>
+      <li class="step"><div class="st-t">Impón I = 1.5 A y despeja</div><div class="st-b">\[R + 10 = \frac{90}{1.5} = 60\ \Rightarrow\ R = 50\ \Omega\]<div class="result">R = 50 Ω</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 12 · Lavadora con motor</span><span class="src">Circuitos 12</span></div>
+    <div class="ej-q"><p>Una lavadora consume 5 A a 220 V, y su motor tiene una fem (contraelectromotriz) de 120 V. ¿Cuánto calor produce en 5 min? ¿Qué potencia desarrolla? Si el kWh cuesta 25 céntimos, ¿cuánto cuesta un lavado de media hora?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Resistencia interna del motor</div><div class="st-b"><p>La tensión de la red se reparte entre la fem del motor y la caída en su resistencia: \(V = \varepsilon' + IR\).</p>\[R = \frac{220 - 120}{5} = 20\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">Calor en 5 min (efecto Joule)</div><div class="st-b">\[Q = I^2R\,t = 25\cdot20\cdot300 = 150\,000\ \text{J}\]</div></li>
+      <li class="step"><div class="st-t">Potencia que desarrolla (la útil, mecánica)</div><div class="st-b">\[P_{util} = \varepsilon'\,I = 120\cdot5 = 600\ \text{W}\]<p>El balance cuadra: lo que entra, \(VI = 1100\) W, es igual a la potencia útil (600 W) más el calor (\(I^2R = 500\) W).</p></div></li>
+      <li class="step"><div class="st-t">Coste de media hora</div><div class="st-b"><p>La compañía cobra <b>toda</b> la energía que se toma de la red, \(VI = 1.1\) kW:</p>\[E = 1.1\cdot0.5 = 0.55\ \text{kWh}\qquad 0.55\cdot25 = 13.75\ \text{céntimos}\]<p class="check">La hoja da 7.5 céntimos, que sale de contar solo la potencia útil (0.6 kW · 0.5 h · 25 = 7.5). Pero en la factura también se paga el calor que se pierde, así que el coste real es 13.75 céntimos. Si en clase usáis 7.5, es este el criterio que se ha seguido.</p><div class="result">150 000 J · 600 W · 13.75 céntimos (7.5 si solo cuentas la potencia útil, como la hoja).</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 18 · Pilas en serie y en paralelo</span><span class="src">Circuitos 18</span></div>
+    <div class="ej-q"><p>Una pila (ε, r) conectada a una resistencia R da I₁. Con una segunda pila igual en serie da I₂, y en paralelo, I₃. ¿Qué relación hay entre las corrientes?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Una pila</div><div class="st-b">\[I_1 = \frac{\varepsilon}{R + r}\]</div></li>
+      <li class="step"><div class="st-t">Dos en serie: se suman fems y resistencias internas</div><div class="st-b">\[I_2 = \frac{2\varepsilon}{R + 2r}\]</div></li>
+      <li class="step"><div class="st-t">Dos en paralelo: misma fem, resistencias internas en paralelo</div><div class="st-b"><p>Dos pilas iguales en paralelo equivalen a una pila de fem ε y resistencia interna \(r/2\):</p>\[I_3 = \frac{\varepsilon}{R + r/2} = \frac{2\varepsilon}{2R + r}\]<div class="result">I₁ = ε/(R + r) · I₂ = 2ε/(R + 2r) · I₃ = 2ε/(2R + r). Si r es pequeña comparada con R, en serie casi se duplica la corriente y en paralelo casi no cambia (pero cada pila trabaja la mitad).</div></div></li>
+    </ol>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 06 ======================= -->
+<section class="sec" id="resistencias" data-n="06" data-title="Asociación de resistencias">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 06</div>
+    <h2>Asociación de resistencias</h2>
+    <p class="sec-sub">Serie, paralelo y cómo reducir cualquier circuito a una sola resistencia. Ejercicios 13, 14, 15, 16, 19 y 30.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Circuitos 13</span><span class="chip rel">14</span><span class="chip rel">15</span><span class="chip rel">16</span><span class="chip rel">19</span><span class="chip rel">30</span></div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th></th><th>En serie</th><th>En paralelo</th></tr></thead>
+      <tbody>
+        <tr><td><b>Cómo se reconocen</b></td><td>una detrás de otra, sin nudos entre ellas</td><td>conectadas a los <b>mismos dos nudos</b></td></tr>
+        <tr><td><b>Qué comparten</b></td><td>la misma <b>intensidad</b></td><td>la misma <b>tensión</b></td></tr>
+        <tr><td><b>Qué se reparte</b></td><td>la tensión: \(V = V_1 + V_2\)</td><td>la intensidad: \(I = I_1 + I_2\)</td></tr>
+        <tr><td><b>Equivalente</b></td><td>\(R = R_1 + R_2 + \dots\)</td><td>\(\dfrac1R = \dfrac1{R_1} + \dfrac1{R_2} + \dots\)</td></tr>
+        <tr><td><b>Resultado</b></td><td>mayor que la mayor</td><td>menor que la menor</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Es justo al revés que los condensadores (Tema 3). Para dos en paralelo vale el atajo «producto partido por suma»: \(R = \dfrac{R_1R_2}{R_1+R_2}\). Y \(n\) resistencias iguales \(R\) en paralelo dan \(R/n\).</p>
+
+  <div class="fig widget paper" id="w-res">
+    <div class="w-head"><b>Serie contra paralelo con 12 V</b><span class="pill">Interactivo</span></div>
+    <div class="art"><svg id="res-svg" viewBox="0 0 440 220" style="max-width:460px" role="img" aria-label="Dos resistencias conectadas en serie o en paralelo a una pila"></svg></div>
+    <div class="controls">
+      <div class="ctrl"><label for="rs-mode">Conexión</label><select id="rs-mode"><option value="s">En serie</option><option value="p">En paralelo</option></select><span></span></div>
+      <div class="ctrl"><label for="rs-r1">R₁</label><input type="range" id="rs-r1" min="1" max="20" step="1" value="4"><output id="rs-r1-o"></output></div>
+      <div class="ctrl"><label for="rs-r2">R₂</label><input type="range" id="rs-r2" min="1" max="20" step="1" value="12"><output id="rs-r2-o"></output></div>
+    </div>
+    <div class="readout" id="res-read"></div>
+    <div class="explain" id="res-exp"></div>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Método · Reducir un circuito</div>
+    <div class="f-body">
+      <ol>
+        <li>Pon nombre a los <b>nudos</b>. Si dos puntos están unidos por un cable sin nada, son el mismo nudo (¡esto resuelve el ejercicio 15!).</li>
+        <li>Busca resistencias en serie (en el mismo camino, sin nudos en medio) y súmalas.</li>
+        <li>Busca resistencias entre los mismos dos nudos (paralelo) y combínalas.</li>
+        <li>Repite, empezando por lo más alejado de los terminales, hasta que quede una sola.</li>
+        <li>Si te piden corrientes o tensiones, haz el camino de vuelta con \(V = IR\).</li>
+      </ol>
+    </div>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig13" viewBox="0 0 770 262" style="min-width:680px" role="img" aria-label="Los tres circuitos de la figura 13"></svg></div>
+    <figcaption>Figura 13 (todas en Ω).</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 13 · Tres equivalentes</span><span class="src">Circuitos 13</span></div>
+    <div class="ej-q"><p>Halla la resistencia equivalente de los circuitos a), b) y c) de la figura 13.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">a) Rama de arriba en serie, luego paralelo</div><div class="st-b">\[3 + 4 + 5 = 12\ \Omega\qquad R = \frac{12\cdot3}{12+3} = 2.4\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">b) Igual</div><div class="st-b">\[5 + 5 = 10\ \Omega\qquad R = \frac{10\cdot5}{10+5} = 3.33\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">c) Bloque de tres ramas de arriba</div><div class="st-b"><p>Rama 2 + 6 = 8 Ω, en paralelo con 12 Ω y con 1 Ω:</p>\[\frac{1}{R} = \frac18 + \frac1{12} + \frac11 = 1.208\ \Rightarrow\ R = 0.828\ \Omega\]<div class="calc-note"><b>Casio (opcional)</b> 1 ÷ (1 ÷ 8 + 1 ÷ 12 + 1 ÷ 1) = 0.8276</div></div></li>
+      <li class="step"><div class="st-t">c) Rama de arriba completa</div><div class="st-b">\[R_{arriba} = 3 + 5 + 0.828 + 3 = 11.83\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">c) Rama de abajo</div><div class="st-b"><p>8 ∥ 6:</p>\[\frac{8\cdot6}{14} = 3.43\ \Omega\qquad R_{abajo} = 10 + 3.43 + 6 + 2 = 21.43\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">c) Las dos ramas en paralelo, más los 3 Ω de salida</div><div class="st-b">\[\frac{11.83\cdot21.43}{11.83 + 21.43} = 7.62\ \Omega\qquad R = 7.62 + 3 = 10.62\ \Omega\]<div class="result">a) 2.4 Ω. b) 3.33 Ω. c) 10.62 Ω.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 14 · Tres en paralelo</span><span class="src">Circuitos 14</span></div>
+    <div class="ej-q"><p>2, 3 y 5 kΩ en paralelo. a) Resistencia equivalente. b) Con 12 V, la corriente por cada una.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">a) Suma de inversas</div><div class="st-b">\[\frac1R = \frac12 + \frac13 + \frac15 = 1.033\ \Rightarrow\ R = 0.968\ \text{k}\Omega\]</div></li>
+      <li class="step"><div class="st-t">b) Todas tienen 12 V</div><div class="st-b">\[I_1 = \frac{12}{2\ \text{k}\Omega} = 6\ \text{mA}\qquad I_2 = \frac{12}{3} = 4\ \text{mA}\qquad I_3 = \frac{12}{5} = 2.4\ \text{mA}\]<div class="result">a) 0.968 kΩ (la hoja pone Ω, pero son kΩ). b) 6, 4 y 2.4 mA.</div></div></li>
+    </ol>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig15" viewBox="0 0 420 180" style="max-width:420px;margin-inline:auto" role="img" aria-label="Figura 15: resistencias entre A, B, C y D con un cable de A a C"></svg></div>
+    <figcaption>Figura 15. El cable de abajo une A con C sin resistencia: <b>A y C son el mismo nudo</b>.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 15 · El cable que lo cambia todo</span><span class="src">Circuitos 15</span></div>
+    <div class="ej-q"><p>Halla la resistencia equivalente entre A y D. El conductor que une A y C no tiene resistencia.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">A y C son el mismo nudo</div><div class="st-b"><p>Están unidos por un cable. Llámalos los dos «A». Ahora hay solo tres nudos: A, B y D.</p></div></li>
+      <li class="step"><div class="st-t">¿Entre qué nudos está cada resistencia?</div><div class="st-b"><ul><li>1 Ω: entre A y B</li><li>2 Ω: entre B y C, es decir, entre B y A</li><li>3 Ω: entre B y D</li><li>4 Ω: entre C y D, es decir, entre A y D</li></ul></div></li>
+      <li class="step"><div class="st-t">1 Ω y 2 Ω están en paralelo (los dos entre A y B)</div><div class="st-b">\[R_{AB} = \frac{1\cdot2}{1+2} = 0.667\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">Camino A → B → D, en paralelo con el de 4 Ω</div><div class="st-b">\[R_{ABD} = 0.667 + 3 = 3.667\ \Omega\qquad R = \frac{3.667\cdot4}{3.667+4} = 1.91\ \Omega\]<div class="result">R ≈ 1.9 Ω</div></div></li>
+    </ol>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig16" viewBox="0 0 470 250" style="max-width:470px;margin-inline:auto" role="img" aria-label="Figura 16"></svg></div>
+    <figcaption>Figura 16 (Ω).</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 16 · Equivalente y una tensión</span><span class="src">Circuitos 16</span></div>
+    <div class="ej-q"><p>Halla la resistencia equivalente entre x e y, y la diferencia de potencial entre x y a si por la resistencia de 8 Ω pasan 0.5 A.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Rama de arriba</div><div class="st-b"><p>8 ∥ 16 ∥ 16:</p>\[\frac1R = \frac18 + \frac1{16} + \frac1{16} = \frac14\ \Rightarrow\ 4\ \Omega\qquad R_{arriba} = 4 + 20 = 24\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">Rama de abajo</div><div class="st-b">\[9\parallel18 = \frac{9\cdot18}{27} = 6\ \Omega\qquad R_{abajo} = 6 + 6 = 12\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">Equivalente</div><div class="st-b">\[R = \frac{24\cdot12}{36} = 8\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">De la corriente en 8 Ω a la tensión total</div><div class="st-b"><p>El bloque 8 ∥ 16 ∥ 16 tiene \(V = 8\cdot0.5 = 4\) V. Por el bloque (4 Ω) pasa entonces \(4/4 = 1\) A, que es la corriente de toda la rama de arriba:</p>\[V_{xy} = 1\cdot24 = 24\ \text{V}\]</div></li>
+      <li class="step"><div class="st-t">Corriente de abajo y V<sub>xa</sub></div><div class="st-b">\[I_{abajo} = \frac{24}{12} = 2\ \text{A}\qquad V_{xa} = 2\cdot6 = 12\ \text{V}\]<p>Entre x y a solo está el bloque 9 ∥ 18 (6 Ω).</p><div class="result">R = 8 Ω y V<sub>xa</sub> = 12 V.</div></div></li>
+    </ol>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig19" viewBox="0 0 430 260" style="max-width:430px;margin-inline:auto" role="img" aria-label="Figura 19: resistencia larga de 300 Ω dividida en tres con dos tomas"></svg></div>
+    <figcaption>Figura 19. La resistencia de 300 Ω son tres trozos de 100 Ω, con tomas en c y d.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 19 · Empezar por el fondo</span><span class="src">Circuitos 19</span></div>
+    <div class="ej-q"><p>La resistencia entre a y b es de 300 Ω, dividida en tres partes iguales por dos tomas. ¿Cuál es la resistencia equivalente entre x e y?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Los tres trozos valen 100 Ω</div><div class="st-b"><p>Empieza por la parte más alejada de x e y: la de abajo, entre d y b.</p></div></li>
+      <li class="step"><div class="st-t">Entre d y b: 100 ∥ 25</div><div class="st-b">\[\frac{100\cdot25}{125} = 20\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">Entre c y b: (100 + 20) ∥ 120</div><div class="st-b">\[\frac{120\cdot120}{240} = 60\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">Entre a y b: (100 + 60) ∥ 40</div><div class="st-b">\[\frac{160\cdot40}{200} = 32\ \Omega\]<div class="result">R = 32 Ω</div></div></li>
+    </ol>
+  </div>
+
+  <div class="practica">
+    <div class="tag">Inténtalo tú · Ejercicio 30</div>
+    <p>Tienes 500 Ω y 800 Ω en paralelo. ¿Qué resistencia hay que poner en serie para que el total sea 300 Ω? ¿Qué significa el resultado?</p>
+    <details class="sol"><summary>Ver solución</summary><div>
+      <p>El paralelo da \(\dfrac{500\cdot800}{1300} = 307.7\ \Omega\). Para llegar a 300 Ω haría falta \(R = 300 - 307.7 = -7.69\ \Omega\).</p>
+      <p>No existen resistencias negativas, así que <b>es imposible</b>: añadir algo en serie siempre aumenta la resistencia, y ya estamos por encima de 300 Ω.</p>
+    </div></details>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 07 ======================= -->
+<section class="sec" id="kirchhoff" data-n="07" data-title="Leyes de Kirchhoff">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 07</div>
+    <h2>Leyes de Kirchhoff</h2>
+    <p class="sec-sub">Para circuitos con varias pilas o que no se pueden reducir. Ejercicios 17, 20, 21, 22, 23 y 28.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Circuitos 17</span><span class="chip rel">20</span><span class="chip rel">21</span><span class="chip rel">22</span><span class="chip rel">23</span><span class="chip rel">28</span></div>
+
+  <div class="formula">
+    <div class="f-head">Las dos leyes</div>
+    <div class="f-body big">
+      \[\textbf{1ª, de los nudos:}\quad \sum I_{entran} = \sum I_{salen}\qquad\qquad \textbf{2ª, de las mallas:}\quad \sum\varepsilon_i = \sum I_iR_i\]
+      <p><b>Nudos:</b> la carga no se acumula, así que lo que entra en un nudo sale (como el agua en un cruce de tuberías). <b>Mallas:</b> si das una vuelta completa a una malla, vuelves al mismo potencial: lo que suben las pilas lo bajan las resistencias.</p>
+    </div>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Método · Kirchhoff paso a paso</div>
+    <div class="f-body">
+      <ol>
+        <li><b>Una corriente por rama.</b> Dale nombre (I₁, I₂…) y un sentido cualquiera. Si te equivocas de sentido, al final saldrá negativa y ya está.</li>
+        <li><b>Ley de nudos</b> en todos los nudos menos uno (el último da una ecuación repetida).</li>
+        <li><b>Ley de mallas</b> en cada malla: elige un sentido de recorrido y aplica los signos del apartado 01. Pila de − a +: \(+\varepsilon\). Resistencia recorrida a favor de su corriente: \(-IR\). En contra: \(+IR\). Todo sumado da 0.</li>
+        <li><b>Resuelve el sistema</b> (Tema 0, apartado 06, o la Casio: HOME → Ecuación).</li>
+        <li><b>Tensiones:</b> \(V_{ab}\) yendo de b a a por cualquier camino.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="box truco">
+    <div class="tag">Atajo para circuitos con solo dos nudos (20, 21, 23 y 28)</div>
+    <p>Si el circuito tiene solo <b>dos nudos</b> unidos por varias ramas, pon uno a \(V = 0\) y llama \(V\) al otro. La corriente de cada rama se escribe fácil en función de \(V\): \(I = \dfrac{V \pm \varepsilon}{R_{rama}}\). La ley de nudos te da <b>una sola ecuación</b> con una incógnita. Es el «método de los nudos», y es mucho más rápido.</p>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig20" viewBox="0 0 420 220" style="max-width:420px;margin-inline:auto" role="img" aria-label="Figura 20: dos pilas de 12 V y tres resistencias"></svg></div>
+    <figcaption>Figura 20. Corrientes supuestas: I₁ por la rama izquierda, I₂ por la derecha (las dos subiendo por su pila y hacia a) e I₃ bajando por la central.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 20 · Kirchhoff con mallas</span><span class="src">Circuitos 20</span></div>
+    <div class="ej-q"><p>Pilas ideales de 12 V. Halla a) la corriente en cada resistencia, b) \(V_{ab}\). (Resistencias en kΩ, así que las corrientes salen en mA.)</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Ley de nudos en a</div><div class="st-b">\[I_1 + I_2 = I_3\]</div></li>
+      <li class="step"><div class="st-t">Malla izquierda (sentido horario, saliendo de b)</div><div class="st-b"><p>Subes por la pila de − a + (+12), cruzas los 4 kΩ de arriba a favor de I₁ (−4I₁) y bajas por los 4 kΩ centrales a favor de I₃ (−4I₃):</p>\[12 - 4I_1 - 4I_3 = 0\]</div></li>
+      <li class="step"><div class="st-t">Malla derecha (saliendo de b hacia la pila de la derecha)</div><div class="st-b">\[12 - 3I_2 - 4I_3 = 0\]</div></li>
+      <li class="step"><div class="st-t">Sustituye I₃ = I₁ + I₂</div><div class="st-b">\[12 = 8I_1 + 4I_2\qquad 12 = 4I_1 + 7I_2\]</div></li>
+      <li class="step"><div class="st-t">Resuelve (Tema 0, apartado 06)</div><div class="st-b"><p>De la primera, \(I_2 = 3 - 2I_1\). En la segunda: \(12 = 4I_1 + 21 - 14I_1\), así que \(I_1 = 0.9\) mA.</p>\[I_1 = 0.9\ \text{mA}\qquad I_2 = 1.2\ \text{mA}\qquad I_3 = 2.1\ \text{mA}\]<div class="calc-note"><b>Casio (opcional)</b> HOME → Ecuación → sistema de 2 incógnitas: [8, 4 | 12] y [4, 7 | 12].</div></div></li>
+      <li class="step"><div class="st-t">b) V<sub>ab</sub> por la rama central</div><div class="st-b">\[V_{ab} = I_3\cdot4\ \text{k}\Omega = 2.1\cdot4 = 8.4\ \text{V}\]<p class="check">Con el atajo de los nudos: \(\dfrac{12-V}{4} + \dfrac{12-V}{3} = \dfrac{V}{4}\), que da \(V = 8.4\) V directamente.</p><div class="result">4 kΩ izquierda: 0.9 mA · 3 kΩ: 1.2 mA · 4 kΩ central: 2.1 mA · V<sub>ab</sub> = 8.4 V. (La hoja llama I₂ a la central.)</div></div></li>
+    </ol>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig21" viewBox="0 0 430 250" style="max-width:430px;margin-inline:auto" role="img" aria-label="Figura 21"></svg></div>
+    <figcaption>Figura 21. Dos nudos: T (arriba, en el centro) y B (abajo, en el centro), unidos por tres ramas.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 21 · Con el método de los nudos</span><span class="src">Circuitos 21</span></div>
+    <div class="ej-q"><p>Pilas ideales. Halla a) la corriente en cada resistencia, b) \(V_{ab}\).</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Referencia: V<sub>B</sub> = 0, incógnita V<sub>T</sub> = V</div><div class="st-b"><p>Escribe la corriente de cada rama, <b>de T hacia B</b>, en función de V (en mA, con kΩ):</p></div></li>
+      <li class="step"><div class="st-t">Rama derecha (1 kΩ)</div><div class="st-b">\[I_{der} = \frac{V - 0}{1} = V\]</div></li>
+      <li class="step"><div class="st-t">Rama central (pila de 5 V con el + arriba, luego 3 kΩ)</div><div class="st-b"><p>Bajando de T, cruzas la pila de + a − (baja 5 V) y luego la resistencia:</p>\[I_{cen} = \frac{V - 5}{3}\]</div></li>
+      <li class="step"><div class="st-t">Rama izquierda (pila de 6 V con el + a la izquierda, 2 kΩ)</div><div class="st-b"><p>De T hacia la izquierda, cruzas la pila de − a + (sube 6 V), bajas y atraviesas los 2 kΩ hasta B:</p>\[I_{izq} = \frac{V + 6}{2}\]</div></li>
+      <li class="step"><div class="st-t">Lo que sale de T suma 0</div><div class="st-b">\[V + \frac{V-5}{3} + \frac{V+6}{2} = 0\]<p>Multiplicando por 6:</p>\[6V + 2V - 10 + 3V + 18 = 0\ \Rightarrow\ 11V = -8\ \Rightarrow\ V = -0.727\ \text{V}\]</div></li>
+      <li class="step"><div class="st-t">Corrientes</div><div class="st-b">\[I_{der} = -0.727\ \text{mA}\qquad I_{cen} = \frac{-5.727}{3} = -1.909\ \text{mA}\qquad I_{izq} = \frac{5.273}{2} = 2.636\ \text{mA}\]<p>Por la izquierda bajan 2.636 mA de T a B, y suben de B a T 1.909 mA por el centro y 0.727 mA por la derecha (de b hacia a). Comprobación: 1.909 + 0.727 = 2.636 ✓</p></div></li>
+      <li class="step"><div class="st-t">b) V<sub>ab</sub></div><div class="st-b"><p>a está unido a T y b a B, así que \(V_{ab} = V_T - V_B = -0.727\) V.</p><div class="result">3 kΩ: 1.909 mA · 2 kΩ: 2.636 mA · 1 kΩ: 0.727 mA (de b a a) · b está 0.727 V por encima de a. (La hoja da V<sub>ab</sub> = 0.727 V sin signo.)</div></div></li>
+    </ol>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig22" viewBox="0 -14 450 264" style="max-width:450px;margin-inline:auto" role="img" aria-label="Figura 22"></svg></div>
+    <figcaption>Figura 22. Tres nudos: L (todo el cable de la izquierda), R (todo el de la derecha) y C (el del centro, unido arriba). Corrientes con los sentidos de la hoja.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 22 · Tres nudos</span><span class="src">Circuitos 22</span></div>
+    <div class="ej-q"><p>Calcula I₁, I₂ e I₃ (kΩ, así que en mA).</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Referencia V<sub>L</sub> = 0. Incógnitas V<sub>C</sub> y V<sub>R</sub></div><div class="st-b"><p>Corrientes de cada rama:</p><ul><li>5 kΩ, de L a C: \((0 - V_C)/5\)</li><li>8 kΩ, de C a R: \((V_C - V_R)/8\)</li><li>I₂, de C a L (1 kΩ y pila de 12 V con el + en L): \(I_2 = V_C + 12\)</li><li>I₁, de C a R (1 kΩ y pila de 9 V con el + en R): \(I_1 = V_C - V_R + 9\)</li><li>I₃, de L a R (10 kΩ): \(I_3 = -V_R/10\)</li></ul></div></li>
+      <li class="step"><div class="st-t">Nudo C: lo que entra = lo que sale</div><div class="st-b">\[\frac{-V_C}{5} = (V_C - V_R + 9) + (V_C + 12) + \frac{V_C - V_R}{8}\]<p>Multiplicando por 40 y ordenando:</p>\[-93\,V_C + 45\,V_R = 840\]</div></li>
+      <li class="step"><div class="st-t">Nudo R: todo lo que llega suma 0</div><div class="st-b">\[\frac{V_C - V_R}{8} + (V_C - V_R + 9) - \frac{V_R}{10} = 0\ \Rightarrow\ 45\,V_C - 49\,V_R = -360\]</div></li>
+      <li class="step"><div class="st-t">Sistema 2×2 por Cramer</div><div class="st-b">\[D = (-93)(-49) - 45\cdot45 = 2532\]\[V_C = \frac{840\cdot(-49) - 45\cdot(-360)}{2532} = -9.858\qquad V_R = \frac{(-93)(-360) - 840\cdot45}{2532} = -1.706\]<div class="calc-note"><b>Casio (opcional)</b> HOME → Ecuación → 2 incógnitas: [−93, 45 | 840] y [45, −49 | −360].</div></div></li>
+      <li class="step"><div class="st-t">Corrientes</div><div class="st-b">\[I_1 = -9.858 + 1.706 + 9 = 0.848\ \text{mA}\qquad I_2 = -9.858 + 12 = 2.142\ \text{mA}\qquad I_3 = \frac{1.706}{10} = 0.171\ \text{mA}\]<div class="result">I₁ = 0.848 mA · I₂ = 2.142 mA · I₃ = 0.171 mA, todas en el sentido de las flechas.</div></div></li>
+    </ol>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig23" viewBox="0 0 420 260" style="max-width:420px;margin-inline:auto" role="img" aria-label="Figura 23"></svg></div>
+    <figcaption>Figura 23. Se conocen dos corrientes (1 A y 2 A) y se buscan las fem.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 23 · Buscar las fem</span><span class="src">Circuitos 23</span></div>
+    <div class="ej-q"><p>Halla ε₁, ε₂ y \(V_{ab}\).</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Rama de arriba: da V<sub>ab</sub> directamente</div><div class="st-b"><p>Por arriba pasa 1 A de b hacia a. Yendo de b a a: cruzas 6 Ω y r = 1 Ω a favor de la corriente (baja 7 V) y la pila de − a + (sube 20 V):</p>\[V_{ab} = 20 - 1\cdot(6 + 1) = 13\ \text{V}\]</div></li>
+      <li class="step"><div class="st-t">Nudo a: corriente de la rama central</div><div class="st-b"><p>A a llega 1 A por arriba y salen 2 A por abajo. Por la rama central tiene que llegar 1 A, de b hacia a.</p></div></li>
+      <li class="step"><div class="st-t">Rama central: ε₁</div><div class="st-b"><p>De b a a con 1 A a favor: bajas \(1\cdot(1 + 4) = 5\) V en las resistencias y subes ε₁ en la pila:</p>\[13 = \varepsilon_1 - 5\ \Rightarrow\ \varepsilon_1 = 18\ \text{V}\]</div></li>
+      <li class="step"><div class="st-t">Rama de abajo: ε₂</div><div class="st-b"><p>Por abajo pasan 2 A de a hacia b. Yendo de b a a vas <b>en contra</b> de la corriente, así que en las resistencias subes \(2\cdot(2 + 1) = 6\) V:</p>\[13 = 6 + \varepsilon_2\ \Rightarrow\ \varepsilon_2 = 7\ \text{V}\]<div class="result">ε₁ = 18 V · ε₂ = 7 V · V<sub>ab</sub> = 13 V</div></div></li>
+    </ol>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig28" viewBox="0 0 420 240" style="max-width:420px;margin-inline:auto" role="img" aria-label="Figura 28"></svg></div>
+    <figcaption>Figura 28. Dos nudos, a y b, con tres ramas.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 28 · Método de los nudos otra vez</span><span class="src">Circuitos 28</span></div>
+    <div class="ej-q"><p>Halla la diferencia de potencial entre a y b.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">V<sub>b</sub> = 0, V<sub>a</sub> = V. Corrientes de a hacia b</div><div class="st-b"><p>Rama izquierda (2 + 2 = 4 Ω, pila de 2 V con el + arriba, hacia a): de a hacia b cruzas la pila de + a −, así que baja 2 V.</p>\[I_{izq} = \frac{V - 2}{4}\]</div></li>
+      <li class="step"><div class="st-t">Rama derecha (1 + 1 = 2 Ω, pila de 2 V)</div><div class="st-b">\[I_{der} = \frac{V - 2}{2}\]</div></li>
+      <li class="step"><div class="st-t">Rama central (4 Ω y pila de 4 V con el + hacia a)</div><div class="st-b">\[I_{cen} = \frac{V - 4}{4}\]</div></li>
+      <li class="step"><div class="st-t">Suma = 0 y despeja</div><div class="st-b">\[\frac{V-2}{4} + \frac{V-2}{2} + \frac{V-4}{4} = 0\]<p>Multiplicando por 4:</p>\[V - 2 + 2V - 4 + V - 4 = 0\ \Rightarrow\ 4V = 10\ \Rightarrow\ V_{ab} = 2.5\ \text{V}\]<div class="result">V<sub>ab</sub> = 2.5 V</div></div></li>
+    </ol>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig17" viewBox="0 0 300 300" style="max-width:300px;margin-inline:auto" role="img" aria-label="Figura 17"></svg></div>
+    <figcaption>Figura 17. Todas las resistencias valen R = 10 kΩ y la pila 12 V.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 17 · Una sola pila: reducir</span><span class="src">Circuitos 17</span></div>
+    <div class="ej-q"><p>Con R = 10 kΩ y 12 V, halla a) la corriente de la pila, b) \(V_{bc}\), c) la corriente en la rama ab (la diagonal).</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">Con una sola pila no hace falta Kirchhoff</div><div class="st-b"><p>Reduce. Entre a y b hay dos caminos: la diagonal (R) y el de arriba a la izquierda (R + R = 2R). En paralelo:</p>\[R_{ab} = \frac{R\cdot2R}{3R} = \frac{2R}{3} = 6.67\ \text{k}\Omega\]</div></li>
+      <li class="step"><div class="st-t">Camino a → b → c, en paralelo con la R directa de a a c</div><div class="st-b">\[R_{abc} = \frac{2R}{3} + R = \frac{5R}{3} = 16.67\ \text{k}\Omega\qquad R_{ac} = \frac{R\cdot\frac{5R}{3}}{R + \frac{5R}{3}} = \frac{5R}{8} = 6.25\ \text{k}\Omega\]</div></li>
+      <li class="step"><div class="st-t">a) En serie con la R de abajo y la pila</div><div class="st-b">\[I = \frac{12}{R + \frac{5R}{8}} = \frac{12}{16.25\ \text{k}\Omega} = 0.738\ \text{mA}\]</div></li>
+      <li class="step"><div class="st-t">Tensión entre a y c, y corriente por el camino a-b-c</div><div class="st-b">\[V_{ac} = 0.738\cdot6.25 = 4.615\ \text{V}\qquad I_{abc} = \frac{4.615}{16.67} = 0.277\ \text{mA}\]</div></li>
+      <li class="step"><div class="st-t">b) V<sub>bc</sub> y c) corriente en la diagonal</div><div class="st-b">\[V_{bc} = 0.277\cdot10 = 2.77\ \text{V}\qquad V_{ab} = 0.277\cdot6.67 = 1.846\ \text{V}\qquad I_{diag} = \frac{1.846}{10} = 0.185\ \text{mA}\]<p class="check">La parte c) coincide con la hoja (0.184 mA). En b) la hoja pone «2076 V», que parece una errata: con estos datos sale 2.77 V.</p><div class="result">a) 0.738 mA. b) 2.77 V. c) 0.185 mA, de a hacia b.</div></div></li>
+    </ol>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 08 ======================= -->
+<section class="sec" id="medida" data-n="08" data-title="Amperímetros y voltímetros">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 08</div>
+    <h2>Galvanómetros: amperímetro y voltímetro</h2>
+    <p class="sec-sub">Cómo se mide y cómo se fabrica cada aparato a partir de un galvanómetro. Ejercicio 29.</p>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig-galv" viewBox="0 0 600 200" style="min-width:520px" role="img" aria-label="Amperímetro: galvanómetro con resistencia shunt en paralelo. Voltímetro: galvanómetro con resistencia en serie"></svg></div>
+    <figcaption>Izquierda: amperímetro = galvanómetro con una resistencia <b>pequeña en paralelo</b> (shunt). Derecha: voltímetro = galvanómetro con una resistencia <b>grande en serie</b>.</figcaption>
+  </figure>
+
+  <div class="theory">
+    <div><b>Galvanómetro</b><p>Aparato muy sensible al paso de corriente: con muy poca (por ejemplo 1 mA) ya llega al final de la escala. Tiene su propia resistencia \(R_g\).</p></div>
+    <div><b>Amperímetro (en serie)</b><p>Tiene que dejar pasar casi toda la corriente sin estorbar, así que debe tener resistencia casi nula. Se pone una <b>resistencia shunt</b> \(R_p\) pequeña <b>en paralelo</b> con el galvanómetro, para que casi toda la corriente se desvíe por ella.</p></div>
+    <div><b>Voltímetro (en paralelo)</b><p>No debe robar corriente al circuito, así que debe tener resistencia enorme. Se pone una resistencia \(R_s\) grande <b>en serie</b> con el galvanómetro.</p></div>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Fórmulas · Diseño de los aparatos</div>
+    <div class="f-body big">
+      \[\text{Amperímetro de fondo } I:\quad I_gR_g = (I - I_g)\,R_p\ \Rightarrow\ R_p = \frac{I_gR_g}{I - I_g}\]
+      \[\text{Voltímetro de fondo } V:\quad V = I_g\,(R_g + R_s)\ \Rightarrow\ R_s = \frac{V}{I_g} - R_g\]
+    </div>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejemplo resuelto · Fabricar los dos aparatos</span><span class="src">Diapositivas 14–15</span></div>
+    <div class="ej-q"><p>Un galvanómetro tiene \(R_g = 50\ \Omega\) y llega al fondo de escala con \(I_g = 1\) mA. Conviértelo en a) un amperímetro de 1 A, b) un voltímetro de 10 V.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">a) Amperímetro: shunt en paralelo</div><div class="st-b"><p>Con 1 A entrando, 1 mA va por el galvanómetro y 999 mA por el shunt. Los dos tienen la misma tensión:</p>\[R_p = \frac{10^{-3}\cdot50}{1 - 10^{-3}} = 0.050\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">b) Voltímetro: resistencia en serie</div><div class="st-b"><p>Con 10 V tiene que pasar justo 1 mA:</p>\[R_s = \frac{10}{10^{-3}} - 50 = 9950\ \Omega\]<div class="result">a) 0.05 Ω en paralelo (el amperímetro queda con unos 0.05 Ω en total). b) 9950 Ω en serie (el voltímetro queda con 10 kΩ en total).</div></div></li>
+    </ol>
+  </div>
+
+  <div class="box cuidado">
+    <div class="tag">Ejercicio 29: la figura está cortada</div>
+    <p>En tu PDF falta la parte de arriba de la figura del ejercicio 29 (no se ven el amperímetro ni algunos valores), así que no puedo resolverlo con seguridad. El método es este:</p>
+    <ol>
+      <li>Con los <b>dos interruptores abiertos</b>, queda un solo camino: \(I = \varepsilon/\sum R\) de ese camino.</li>
+      <li>Con los <b>dos cerrados</b>, aparecen ramas nuevas: calcula la resistencia equivalente (con R dentro), la corriente total y la parte que pasa por el amperímetro.</li>
+      <li>Iguala las dos lecturas y despeja R. La hoja da R = 600 Ω.</li>
+    </ol>
+    <p>Si consigues la figura completa (de clase o del libro), te lo resuelvo paso a paso.</p>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 09 ======================= -->
+<section class="sec" id="rc" data-n="09" data-title="Circuito RC">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 09</div>
+    <h2>Circuito RC: carga y descarga de un condensador</h2>
+    <p class="sec-sub">Un condensador no se carga al instante: lo hace de forma exponencial. Ejercicios 24, 25, 26 y 27.</p>
+  </div>
+  <div class="uses"><span class="lbl">Ejercicios:</span><span class="chip rel">Circuitos 24</span><span class="chip rel">25</span><span class="chip rel">26</span><span class="chip rel">27</span><span class="chip">Repasa: Tema 0, apartado 07</span></div>
+
+  <div class="box idea">
+    <div class="tag">La idea</div>
+    <p>Al conectar un condensador descargado a una pila a través de una resistencia, al principio la corriente es máxima (\(\varepsilon/R\)), como si el condensador fuera un cable. Según se carga, su tensión \(q/C\) se opone cada vez más a la pila y la corriente va bajando hasta 0. Al final, el condensador cargado se comporta como un <b>circuito abierto</b>. La rapidez la marca la <b>constante de tiempo</b> \(\tau = RC\).</p>
+  </div>
+
+  <div class="formula">
+    <div class="f-head">Fórmulas · Carga y descarga</div>
+    <div class="f-body big">
+      \[\textbf{Carga:}\quad q = \varepsilon C\left(1 - e^{-t/RC}\right)\qquad I = \frac{\varepsilon}{R}\,e^{-t/RC}\]
+      \[\textbf{Descarga:}\quad q = q_0\,e^{-t/RC}\qquad I = -\frac{q_0}{RC}\,e^{-t/RC}\qquad \tau = RC\]
+      <p><b>De dónde sale (carga):</b> la ley de mallas da \(\varepsilon - IR - q/C = 0\) con \(I = dq/dt\). Separando variables e integrando (Tema 0, apartados 07 y 09) sale la exponencial. La corriente es la derivada de la carga (Tema 0, apartado 08, ejemplo 3). En la descarga no hay pila: \(q/C + IR = 0\).</p>
+      <p>En \(t = \tau\), la carga ha llegado al 63 % (o ha bajado al 37 %). A partir de \(5\tau\) se considera terminado.</p>
+    </div>
+  </div>
+
+  <div class="fig widget paper" id="w-rc">
+    <div class="w-head"><b>Circuito RC con ε = 12 V</b><span class="pill">Interactivo</span></div>
+    <div class="art"><svg id="rc-svg" viewBox="0 0 470 345" style="max-width:520px" role="img" aria-label="Gráficas de carga e intensidad en función del tiempo"></svg></div>
+    <div class="controls">
+      <div class="ctrl"><label for="rc-mode">Proceso</label><select id="rc-mode"><option value="c">Carga (con la pila)</option><option value="d">Descarga (sin pila)</option></select><span></span></div>
+      <div class="ctrl"><label for="rc-R">R</label><input type="range" id="rc-R" min="1" max="20" step="1" value="5"><output id="rc-R-o"></output></div>
+      <div class="ctrl"><label for="rc-C">C</label><input type="range" id="rc-C" min="50" max="1000" step="50" value="400"><output id="rc-C-o"></output></div>
+      <div class="ctrl"><label for="rc-t">Tiempo t</label><input type="range" id="rc-t" min="0" max="10" step="0.1" value="2"><output id="rc-t-o"></output></div>
+    </div>
+    <div class="readout" id="rc-read"></div>
+    <div class="explain" id="rc-exp"></div>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 24 · Descarga de un condensador</span><span class="src">Circuitos 24</span></div>
+    <div class="ej-q"><p>Un condensador de 4 μF cargado a 120 V se descarga a través de 500 Ω. a) Carga inicial. b) Corriente inicial. c) Constante de tiempo. d) Carga tras 6 ms.</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">a) Carga inicial</div><div class="st-b">\[Q_0 = CV = 4\cdot10^{-6}\cdot120 = 4.8\cdot10^{-4}\ \text{C}\]</div></li>
+      <li class="step"><div class="st-t">b) Corriente inicial: toda la tensión cae en R</div><div class="st-b">\[I_0 = \frac{V}{R} = \frac{120}{500} = 0.24\ \text{A}\]</div></li>
+      <li class="step"><div class="st-t">c) Constante de tiempo</div><div class="st-b">\[\tau = RC = 500\cdot4\cdot10^{-6} = 2\cdot10^{-3}\ \text{s} = 2\ \text{ms}\]</div></li>
+      <li class="step"><div class="st-t">d) Tras 6 ms = 3τ</div><div class="st-b">\[Q = Q_0\,e^{-6/2} = 4.8\cdot10^{-4}\cdot e^{-3} = 4.8\cdot10^{-4}\cdot0.0498 = 2.39\cdot10^{-5}\ \text{C}\]<p class="check">La hoja da 0.239·10⁻⁶ C, pero \(4.8\cdot10^{-4}\cdot0.0498\) es 2.39·10⁻⁵ C (23.9 μC). Parece una errata en el exponente.</p><div class="result">a) 4.8·10⁻⁴ C. b) 0.24 A. c) 2 ms. d) 2.39·10⁻⁵ C (queda el 5 %).</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicios 25 y 26 · Usar el ln para despejar el tiempo</span><span class="src">Circuitos 25 y 26</span></div>
+    <div class="ej-q"><p>25) Un condensador de 0.2 μF con carga Q₀ queda con Q₀/2 a los 4 s. ¿Qué resistencia tiene el circuito? 26) Un condensador de 0.05 μF a 150 V se descarga por 10 MΩ. ¿Cuánto tarda en bajar a 0.368 y a 0.135 veces su carga inicial?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">25) Plantea la descarga</div><div class="st-b">\[\frac{Q_0}{2} = Q_0\,e^{-4/RC}\ \Rightarrow\ e^{-4/RC} = 0.5\ \Rightarrow\ \frac{4}{RC} = \ln2\]</div></li>
+      <li class="step"><div class="st-t">25) Despeja R</div><div class="st-b">\[R = \frac{4}{C\ln2} = \frac{4}{0.2\cdot10^{-6}\cdot0.693} = 2.89\cdot10^{7}\ \Omega\]</div></li>
+      <li class="step"><div class="st-t">26) Constante de tiempo</div><div class="st-b">\[\tau = RC = 10^{7}\cdot0.05\cdot10^{-6} = 0.5\ \text{s}\]</div></li>
+      <li class="step"><div class="st-t">26) Los números «mágicos»</div><div class="st-b"><p>\(0.368 = e^{-1}\), así que \(t = \tau = 0.5\) s. Y \(0.135 = e^{-2}\), así que \(t = 2\tau = 1\) s. (La tensión de 150 V no hace falta.)</p><div class="result">25) R = 2.89·10⁷ Ω. 26) a) 0.5 s. b) 1 s.</div></div></li>
+    </ol>
+  </div>
+
+  <figure class="fig paper" style="margin:0">
+    <div class="art"><svg id="fig27" viewBox="0 0 380 290" style="max-width:380px;margin-inline:auto" role="img" aria-label="Figura 27: dos ramas con resistencia y condensador, unidas por un interruptor"></svg></div>
+    <figcaption>Figura 27. Arriba hay 18 V y abajo tierra (0 V). El interruptor S une a con b.</figcaption>
+  </figure>
+
+  <div class="ej" data-ej>
+    <div class="ej-head"><span class="t">Ejercicio 27 · Condensadores en régimen estacionario</span><span class="src">Circuitos 27</span></div>
+    <div class="ej-q"><p>a) \(V_{ab}\) con S abierto. b) ¿Qué punto está a más potencial? c) Potencial final de b al cerrar S. d) ¿Cuánto cambia la carga de cada condensador?</p></div>
+    <ol class="steps">
+      <li class="step"><div class="st-t">La clave: condensador cargado = circuito abierto</div><div class="st-b"><p>Después de mucho tiempo, por los condensadores ya no pasa corriente. Una resistencia por la que no pasa corriente no tiene caída de tensión: sus dos extremos están al mismo potencial.</p></div></li>
+      <li class="step"><div class="st-t">a) y b) S abierto</div><div class="st-b"><p>Rama izquierda: por los 6 kΩ no pasa corriente (el condensador de 3 μF la corta), así que \(V_a = 18\) V. Rama derecha: por los 3 kΩ tampoco pasa, así que \(V_b = 0\).</p>\[V_{ab} = 18 - 0 = 18\ \text{V}\]<p>a está a más potencial.</p></div></li>
+      <li class="step"><div class="st-t">c) S cerrado: ahora sí hay corriente</div><div class="st-b"><p>Aparece un camino de corriente continua: 18 V → 6 kΩ → a = b → 3 kΩ → 0 V.</p>\[I = \frac{18}{6 + 3} = 2\ \text{mA}\qquad V_b = 2\cdot3 = 6\ \text{V}\]</div></li>
+      <li class="step"><div class="st-t">d) Cargas antes y después</div><div class="st-b"><p>3 μF (entre a y tierra): pasa de \(3\cdot18 = 54\) μC a \(3\cdot6 = 18\) μC.</p><p>6 μF (entre 18 V y b): su tensión pasa de 18 − 0 = 18 V a 18 − 6 = 12 V, así que su carga pasa de 108 μC a 72 μC.</p><div class="result">a) 18 V. b) a. c) 6 V. d) Los dos pierden 36 μC (la hoja pone «mC», pero son μC).</div></div></li>
+    </ol>
+  </div>
+  <button class="done-btn" type="button">Marcar como entendido</button>
+</section>
+
+<!-- ======================= 10 ======================= -->
+<section class="sec" id="formulario" data-n="10" data-title="Formulario del Tema 4">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 10</div>
+    <h2>Formulario del Tema 4</h2>
+    <p class="sec-sub">Todo el tema en una vista.</p>
+  </div>
+  <div class="fgrid">
+    <div class="fcard"><h4>Símbolos clave</h4><p>Pila: placa larga +, corta − · Condensador: placas iguales · Amperímetro en serie (R ≈ 0) · Voltímetro en paralelo (R ≈ ∞) · Tierra: V = 0 · Cable: mismo potencial · En tu hoja, «Λ» = Ω</p></div>
+    <div class="fcard"><h4>Signos al recorrer</h4><p>Resistencia a favor de I: −IR · en contra: +IR · Pila de − a +: +ε · de + a −: −ε · V<sub>ab</sub> = V<sub>a</sub> − V<sub>b</sub></p></div>
+    <div class="fcard"><h4>Corriente</h4><div class="row">\[I = \frac{dq}{dt}\quad J = \frac IS\quad I = n\,e\,v_d\,S\]</div></div>
+    <div class="fcard"><h4>Ohm y resistividad</h4><div class="row">\[V = IR\qquad R = \rho\frac LS\qquad \sigma = \frac1\rho\]</div><p>ρ = ρ₀[1 + α(T − T₀)]</p></div>
+    <div class="fcard"><h4>Potencia</h4><div class="row">\[P = VI = I^2R = \frac{V^2}{R}\qquad E = Pt\]</div><p>1 kWh = 3.6·10⁶ J · coste = kW × h × precio</p></div>
+    <div class="fcard"><h4>Pila real y motor</h4><div class="row">\[V_{ab} = \varepsilon - Ir\qquad I = \frac{\sum\varepsilon - \sum\varepsilon'}{\sum R}\]</div><p>Motor: P útil = ε′I · cargar batería: su ε resta</p></div>
+    <div class="fcard"><h4>Asociaciones</h4><div class="row">\[R_s = \sum R_i\qquad \frac1{R_p} = \sum\frac1{R_i}\qquad \frac{R_1R_2}{R_1+R_2}\]</div><p>Serie: misma I · paralelo: misma V</p></div>
+    <div class="fcard"><h4>Kirchhoff</h4><div class="row">\[\sum I_{entran} = \sum I_{salen}\qquad \sum\varepsilon = \sum IR\]</div><p>Dos nudos: V = 0 en uno y ΣI = 0 en el otro</p></div>
+    <div class="fcard"><h4>Medidas</h4><div class="row">\[R_p = \frac{I_gR_g}{I - I_g}\qquad R_s = \frac{V}{I_g} - R_g\]</div></div>
+    <div class="fcard"><h4>Circuito RC</h4><div class="row">\[q = \varepsilon C(1 - e^{-t/RC})\quad q = q_0e^{-t/RC}\quad I_0 = \frac\varepsilon R\quad \tau = RC\]</div><p>t = τ: 63 % (carga) / 37 % (descarga) · cargado = circuito abierto</p></div>
+  </div>
+</section>
+
+<!-- ======================= 11 ======================= -->
+<section class="sec" id="test" data-n="11" data-title="Test rápido">
+  <div class="sec-head">
+    <div class="sec-num">APARTADO 11</div>
+    <h2>Test rápido</h2>
+    <p class="sec-sub">10 preguntas de simbología, teoría y cálculo.</p>
+  </div>
+  <div class="quiz" data-quiz>
+    <div class="q" data-ans="2"><p class="qt">1. En el símbolo de una pila, el polo positivo es…</p><div class="opts"><button>la placa corta</button><button>da igual, depende del dibujo</button><button>la placa larga</button><button>el cable de la derecha</button></div><p class="why" hidden>Placa larga: +. Placa corta: −. Si las dos placas son iguales, es un condensador.</p></div>
+    <div class="q" data-ans="0"><p class="qt">2. Un amperímetro se conecta…</p><div class="opts"><button>en serie, y debe tener resistencia casi nula</button><button>en paralelo, y debe tener resistencia casi nula</button><button>en serie, y debe tener resistencia enorme</button><button>en paralelo, y debe tener resistencia enorme</button></div><p class="why" hidden>La corriente tiene que pasar por él sin que la estorbe. El voltímetro es al revés: en paralelo y con resistencia enorme.</p></div>
+    <div class="q" data-ans="3"><p class="qt">3. Al recorrer una resistencia en el mismo sentido que su corriente, el potencial…</p><div class="opts"><button>sube IR</button><button>no cambia</button><button>sube ε</button><button>baja IR</button></div><p class="why" hidden>Dentro de una resistencia, la corriente va de más potencial a menos.</p></div>
+    <div class="q" data-ans="1"><p class="qt">4. Si se duplica la longitud de un cable y también su sección, su resistencia…</p><div class="opts"><button>se duplica</button><button>no cambia</button><button>se cuadruplica</button><button>se reduce a la mitad</button></div><p class="why" hidden>R = ρL/S: el 2 de arriba y el 2 de abajo se anulan.</p></div>
+    <div class="q" data-ans="2"><p class="qt">5. Una bombilla de 60 W a 230 V tiene una resistencia de…</p><div class="opts"><button>3.8 Ω</button><button>0.26 Ω</button><button>882 Ω</button><button>13 800 Ω</button></div><p class="why" hidden>R = V²/P = 52 900/60 ≈ 882 Ω.</p></div>
+    <div class="q" data-ans="0"><p class="qt">6. Una pila de 9 V y r = 1 Ω conectada a 8 Ω. ¿Qué tensión hay en sus bornes?</p><div class="opts"><button>8 V</button><button>9 V</button><button>1 V</button><button>7.2 V</button></div><p class="why" hidden>I = 9/9 = 1 A, así que V = ε − Ir = 9 − 1 = 8 V.</p></div>
+    <div class="q" data-ans="3"><p class="qt">7. Tres resistencias de 6 Ω en paralelo equivalen a…</p><div class="opts"><button>18 Ω</button><button>6 Ω</button><button>3 Ω</button><button>2 Ω</button></div><p class="why" hidden>n iguales en paralelo: R/n = 6/3 = 2 Ω.</p></div>
+    <div class="q" data-ans="1"><p class="qt">8. En un nudo entran 3 A y 2 A, y sale una corriente por una tercera rama. ¿Cuánto vale?</p><div class="opts"><button>1 A</button><button>5 A</button><button>6 A</button><button>no se puede saber</button></div><p class="why" hidden>Primera ley de Kirchhoff: lo que entra sale, 3 + 2 = 5 A.</p></div>
+    <div class="q" data-ans="2"><p class="qt">9. Al resolver Kirchhoff, una corriente te sale −0.5 A. Eso significa que…</p><div class="opts"><button>te has equivocado en las cuentas</button><button>no pasa corriente</button><button>va en sentido contrario al que supusiste, con 0.5 A</button><button>hay que cambiar todas las demás de signo</button></div><p class="why" hidden>El sentido se supone al principio. El signo menos solo indica que va al revés.</p></div>
+    <div class="q" data-ans="0"><p class="qt">10. Con R = 2 kΩ y C = 5 μF, la constante de tiempo es…</p><div class="opts"><button>10 ms</button><button>10 s</button><button>2.5 ms</button><button>0.4 s</button></div><p class="why" hidden>τ = RC = 2000 · 5·10⁻⁶ = 0.01 s = 10 ms.</p></div>
+    <div class="score" data-score></div>
+  </div>
+</section>
+
+    </div><!-- /content -->
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap">
+    <p><b>Siguiente: <a href="https://claude.ai/artifact/Ljjm57gVSz8f4iPBnsdq1W" target="_blank" rel="noopener">Tema 5 · Teoría de bandas ↗</a></b> (conductores, aislantes y semiconductores; dopado n y p).</p>
+  </div>
+</footer>
+
+</div>
+<script>
+/* ===== utilidades comunes a todos los temas ===== */
+(function(){
+  const holder = document.querySelector("[data-topic]");
+  const TOPIC = (holder && holder.dataset.topic) || "x";
+  const KEY = "fisica-apuntes-" + TOPIC + "-hecho";
+  const store = {
+    get(){ try{ return JSON.parse(localStorage.getItem(KEY) || "[]"); }catch(e){ return []; } },
+    set(v){ try{ localStorage.setItem(KEY, JSON.stringify(v)); }catch(e){} }
+  };
+
+  /* ---- índice ---- */
+  const secs = [...document.querySelectorAll("section.sec[id]")];
+  const tocLists = [...document.querySelectorAll("[data-toc]")];
+  tocLists.forEach(ol=>{
+    secs.forEach(s=>{
+      const li=document.createElement("li");
+      const a=document.createElement("a");
+      a.href="#"+s.id; a.dataset.id=s.id;
+      a.innerHTML='<span class="n">'+(s.dataset.n||"")+'</span><span>'+(s.dataset.title||s.id)+'</span><span class="ck">✓</span>';
+      li.appendChild(a); ol.appendChild(li);
+    });
+  });
+  const links = id => document.querySelectorAll('[data-toc] a[data-id="'+id+'"]');
+  if("IntersectionObserver" in window){
+    const io=new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting){
+        document.querySelectorAll("[data-toc] a.active").forEach(a=>a.classList.remove("active"));
+        links(e.target.id).forEach(a=>a.classList.add("active"));
+      }});
+    },{rootMargin:"-30% 0px -60% 0px"});
+    secs.forEach(s=>io.observe(s));
+  }
+
+  /* ---- "lo tengo" por sección ---- */
+  const countable = secs.filter(s=>s.querySelector(".done-btn"));
+  function paint(){
+    const done=store.get();
+    countable.forEach(s=>{
+      const on=done.includes(s.id);
+      const b=s.querySelector(".done-btn");
+      b.setAttribute("aria-pressed", on?"true":"false");
+      b.textContent = on ? "✓ Entendido" : "Marcar como entendido";
+      links(s.id).forEach(a=>a.classList.toggle("done",on));
+    });
+    const n=countable.filter(s=>done.includes(s.id)).length;
+    document.querySelectorAll("[data-prog-txt]").forEach(el=>el.textContent=n+" de "+countable.length+" apartados entendidos");
+    document.querySelectorAll("[data-prog-bar]").forEach(el=>el.style.width=(countable.length? (100*n/countable.length):0)+"%");
+  }
+  countable.forEach(s=>{
+    s.querySelector(".done-btn").addEventListener("click",()=>{
+      let d=store.get();
+      d = d.includes(s.id) ? d.filter(x=>x!==s.id) : d.concat(s.id);
+      store.set(d); paint();
+    });
+  });
+  paint();
+
+  /* ---- ejemplos paso a paso ---- */
+  document.querySelectorAll("[data-ej]").forEach(ej=>{
+    const steps=[...ej.querySelectorAll(".step")];
+    let shown=0;
+    let ctrl=ej.querySelector(".ej-ctrl");
+    if(!ctrl){ ctrl=document.createElement("div"); ctrl.className="ej-ctrl"; ej.appendChild(ctrl); }
+    const next=document.createElement("button"); next.className="btn primary"; next.type="button";
+    const all=document.createElement("button"); all.className="btn"; all.type="button"; all.textContent="Ver todos los pasos";
+    const reset=document.createElement("button"); reset.className="btn"; reset.type="button"; reset.textContent="Ocultar y empezar de nuevo";
+    ctrl.append(next,all,reset);
+    function render(flash){
+      steps.forEach((s,i)=>{
+        s.classList.toggle("locked", i>=shown);
+        if(flash && i===shown-1){ s.classList.remove("just"); void s.offsetWidth; s.classList.add("just"); }
+      });
+      next.disabled = shown>=steps.length;
+      next.textContent = shown>=steps.length ? "Resuelto ✓" : "Ver paso "+(shown+1)+" de "+steps.length;
+      reset.hidden = shown===0;
+    }
+    next.addEventListener("click",()=>{ if(shown<steps.length){ shown++; render(true);} });
+    all.addEventListener("click",()=>{ shown=steps.length; render(false); });
+    reset.addEventListener("click",()=>{ shown=0; render(false); });
+    render(false);
+  });
+
+  /* ---- test ---- */
+  document.querySelectorAll("[data-quiz]").forEach(qz=>{
+    const qs=[...qz.querySelectorAll(".q")];
+    const out=qz.querySelector("[data-score]");
+    let ok=0, answered=0;
+    function upd(){ if(out) out.innerHTML="<span>Aciertos: "+ok+" / "+qs.length+"</span><span>"+(answered<qs.length?"Te quedan "+(qs.length-answered):(ok>=qs.length-1?"¡Listo para seguir!":"Repasa los apartados que has fallado"))+"</span>"; }
+    qs.forEach(q=>{
+      const right=+q.dataset.ans;
+      const bs=[...q.querySelectorAll(".opts button")];
+      bs.forEach((b,i)=>{
+        b.type="button";
+        b.addEventListener("click",()=>{
+          if(q.dataset.done) return;
+          q.dataset.done="1"; answered++;
+          if(i===right) ok++;
+          bs.forEach((x,j)=>{ if(j===right) x.classList.add("ok"); else if(j===i) x.classList.add("ko"); x.disabled=true; });
+          const w=q.querySelector(".why"); if(w) w.hidden=false;
+          upd();
+        });
+      });
+    });
+    upd();
+  });
+})();
+
+/* ---- helpers para dibujos ---- */
+window.SV = function(tag, attrs, parent){
+  const e=document.createElementNS("http://www.w3.org/2000/svg",tag);
+  for(const k in (attrs||{})) e.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(e);
+  return e;
+};
+window.fmt = function(x, d){
+  if(!isFinite(x)) return "—";
+  const v = Math.abs(x)<1e-12 ? 0 : x;
+  let s = (+v.toPrecision(d||4)).toString();
+  if(/e/.test(s)) return sci(v, d);
+  return s.replace("-", "−");
+};
+window.sci = function(x, d){
+  if(x===0) return "0";
+  const k=Math.floor(Math.log10(Math.abs(x)));
+  let m=x/Math.pow(10,k);
+  let ms=(+m.toPrecision(d||3)).toString();
+  if(ms==="10"||ms==="-10"){ ms = ms[0]==="-"?"-1":"1"; return ms.replace("-","−")+" × 10<sup>"+String(k+1).replace("-","−")+"</sup>"; }
+  return ms.replace("-","−")+" × 10<sup>"+String(k).replace("-","−")+"</sup>";
+};
+
+</script>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const T = (parent, x, y, txt, cls, extra) => { const t=SV("text", Object.assign({x, y}, cls?{class:cls}:{}, extra||{}), parent); t.textContent=txt; return t; };
+  const L = (p, x1,y1,x2,y2, cls, w, extra) => SV("line", Object.assign({x1,y1,x2,y2,class:cls,"stroke-width":w||2}, extra||{}), p);
+  const f3 = x => fmt(x,3);
+  const wire=(p,pts)=>SV("polyline",{points:pts.map(q=>q.join(",")).join(" "),class:"s-ink","stroke-width":2,fill:"none"},p);
+  const dot=(p,x,y)=>SV("circle",{cx:x,cy:y,r:4,class:"f-ink"},p);
+  const term=(p,x,y,lab,dx,dy)=>{ SV("circle",{cx:x,cy:y,r:4.5,class:"f-surface s-ink","stroke-width":2},p); if(lab) T(p,x+(dx??8),y+(dy??-8),lab,"b"); };
+  /* componente entre (x1,y1) y (x2,y2) */
+  function comp(p,type,x1,y1,x2,y2,o){
+    o=o||{}; const dx=x2-x1, dy=y2-y1, len=Math.hypot(dx,dy), u=[dx/len,dy/len], n=[-u[1],u[0]], m=[(x1+x2)/2,(y1+y2)/2];
+    const P=(a,b)=>[m[0]+a*u[0]+b*n[0], m[1]+a*u[1]+b*n[1]];
+    const seg=(a,b)=>{const A=P(a,0),B=P(b,0); return [A,B];};
+    const toEnds=(h)=>{ const A=P(-h,0),B=P(h,0); L(p,x1,y1,A[0],A[1],"s-ink",2); L(p,B[0],B[1],x2,y2,"s-ink",2); };
+    if(type==="W"){ L(p,x1,y1,x2,y2,"s-ink",2); }
+    else if(type==="R"){ const h=20; toEnds(h); let d=""; const k=6; for(let i=0;i<=k;i++){ const a=-h+2*h*i/k, b=(i===0||i===k)?0:(i%2?7:-7); const q=P(a,b); d+=(i?"L":"M")+q[0].toFixed(1)+","+q[1].toFixed(1);} SV("path",{d,class:o.cls||"s-warn","stroke-width":2.5,fill:"none","stroke-linejoin":"round"},p); }
+    else if(type==="B"){ const g=5; toEnds(g); const plus1=(o.plus||1)===1; const aL=plus1?-g:g, aS=plus1?g:-g;
+      let A=P(aL,16),B=P(aL,-16); L(p,A[0],A[1],B[0],B[1],"s-rose",3); A=P(aS,8); B=P(aS,-8); L(p,A[0],A[1],B[0],B[1],"s-rose",5);
+      if(o.sign!==false){ const q=P(aL+(plus1?-9:9),-20); T(p,q[0],q[1]+4,"+","b",{"text-anchor":"middle",style:"fill:var(--rose);font-size:13px"}); } }
+    else if(type==="C"){ const g=5; toEnds(g); for(const a of [-g,g]){ const A=P(a,14),B=P(a,-14); L(p,A[0],A[1],B[0],B[1],"s-acc",4);} }
+    else if(type==="S"){ const h=15; toEnds(h); const A=P(-h,0), B=P(h,0), C=P(h-2,-14); SV("circle",{cx:A[0],cy:A[1],r:3.2,class:"f-surface s-ink","stroke-width":1.8},p); SV("circle",{cx:B[0],cy:B[1],r:3.2,class:"f-surface s-ink","stroke-width":1.8},p); L(p,A[0],A[1],C[0],C[1],"s-ink",2.2); }
+    else if("AVGM".includes(type)){ const r=13; toEnds(r); SV("circle",{cx:m[0],cy:m[1],r,class:"f-surface s-ink","stroke-width":2},p); T(p,m[0],m[1]+5,type,"b",{"text-anchor":"middle"}); }
+    if(o.label){ const s=o.side||1, dist=o.dist||(type==="R"?20:(type==="B"?26:24)); const q=P(o.along||0,-s*dist); const anchor=Math.abs(n[0])>0.6?((-s*n[0])>0?"start":"end"):"middle"; T(p,q[0],q[1]+(Math.abs(n[1])>0.6?((-s*n[1])>0?12:-2):5),o.label,"m b",{"text-anchor":anchor}); }
+  }
+  const arrowI=(p,x,y,ang,lab,lx,ly)=>{ const a=ang*Math.PI/180, c=Math.cos(a), s=Math.sin(a);
+    SV("path",{d:`M${x+8*c},${y+8*s} L${x-6*c+5*s},${y-6*s-5*c} L${x-6*c-5*s},${y-6*s+5*c} Z`,class:"f-teal"},p);
+    if(lab) T(p,x+(lx||0),y+(ly||-10),lab,"m b",{"text-anchor":"middle",style:"fill:var(--teal)"}); };
+  const ground=(p,x,y)=>{ L(p,x,y,x,y+10,"s-ink",2); L(p,x-14,y+10,x+14,y+10,"s-ink",2.5); L(p,x-9,y+15,x+9,y+15,"s-ink",2.2); L(p,x-4,y+20,x+4,y+20,"s-ink",2); };
+
+  /* ---------- tabla de símbolos ---------- */
+  document.querySelectorAll("svg[data-sym]").forEach(s=>{
+    const t=s.dataset.sym;
+    if(t==="W") L(s,10,25,110,25,"s-ink",2);
+    else if(t==="N"){ L(s,10,22,110,22,"s-ink",2); L(s,60,22,60,48,"s-ink",2); dot(s,60,22); }
+    else if(t==="X"){ L(s,10,25,110,25,"s-ink",2); L(s,60,2,60,48,"s-ink",2); }
+    else if(t==="BR"){ comp(s,"B",8,25,58,25,{plus:1}); comp(s,"R",58,25,112,25); T(s,85,46,"r","m b",{"text-anchor":"middle"}); }
+    else if(t==="T"){ L(s,60,4,60,18,"s-ink",2); ground(s,60,18); }
+    else if(t==="I"){ L(s,10,30,110,30,"s-ink",2); arrowI(s,60,30,0,"I",0,-12); }
+    else comp(s,t,10,25,110,25,{plus:1});
+  });
+
+  /* ---------- nudos, ramas y mallas ---------- */
+  (function(){
+    const s=$("fig-nrm"); if(!s) return;
+    wire(s,[[60,40],[460,40]]); wire(s,[[260,220],[460,220]]);
+    comp(s,"B",60,220,60,40,{plus:2,label:"12 V",side:1});
+    comp(s,"R",60,220,260,220,{label:"3 Ω",side:-1});
+    comp(s,"R",260,40,260,220,{label:"4 Ω",side:-1});
+    comp(s,"R",460,40,460,130,{label:"2 Ω",side:-1}); comp(s,"B",460,130,460,220,{plus:1,label:"5 V",side:-1});
+    dot(s,260,40); dot(s,260,220);
+    T(s,272,30,"nudo b","b",{style:"fill:var(--accent-ink)"}); T(s,272,244,"nudo e","b",{style:"fill:var(--accent-ink)"});
+    const loop=(cx,cy,lab)=>{ SV("path",{d:`M${cx+34},${cy-14} A36 36 0 1 1 ${cx+30},${cy+20}`,class:"s-teal","stroke-width":2,fill:"none","marker-end":"url(#ah-teal)"},s); T(s,cx,cy+6,lab,"b lg",{"text-anchor":"middle",style:"fill:var(--teal)"}); };
+    loop(160,130,"I"); loop(360,130,"II");
+  })();
+
+  /* ---------- signos ---------- */
+  (function(){
+    const s=$("fig-signos"); if(!s) return;
+    comp(s,"R",30,70,240,70);
+    arrowI(s,80,70,0,"I",0,-14);
+    L(s,40,120,230,120,"s-muted",1.6,{"marker-end":"url(#ah-muted)"}); T(s,135,140,"sentido del recorrido","m",{"text-anchor":"middle"});
+    T(s,30,52,"V","b"); T(s,240,52,"V − IR","b",{"text-anchor":"end",style:"fill:var(--warn)"});
+    comp(s,"B",310,70,530,70,{plus:2});
+    T(s,370,100,"−","b lg",{"text-anchor":"middle"});
+    L(s,320,120,520,120,"s-muted",1.6,{"marker-end":"url(#ah-muted)"}); T(s,420,140,"sentido del recorrido","m",{"text-anchor":"middle"});
+    T(s,310,52,"V","b"); T(s,530,52,"V + ε","b",{"text-anchor":"end",style:"fill:var(--rose)"});
+  })();
+
+  /* ---------- figura 8 ---------- */
+  (function(){
+    const s=$("fig8"); if(!s) return;
+    wire(s,[[60,150],[60,30],[260,30],[260,60]]);
+    comp(s,"B",60,160,60,60,{plus:2,label:"ε = 20 V, r = 10 Ω",side:-1,dist:30});
+    comp(s,"R",260,60,260,160,{label:"R",side:-1});
+    term(s,60,165,"a",-20,6); term(s,260,165,"b",10,6);
+    T(s,160,170,"110 V","b",{"text-anchor":"middle"});
+  })();
+
+  /* ---------- figura 13 ---------- */
+  (function(){
+    const s=$("fig13"); if(!s) return;
+    T(s,8,24,"a)","b lg");
+    term(s,24,50); wire(s,[[28,50],[40,50]]); comp(s,"R",40,50,100,50,{label:"3"}); comp(s,"R",100,50,170,50,{label:"4"}); comp(s,"R",170,50,240,50,{label:"5"}); wire(s,[[240,50],[252,50]]); term(s,256,50);
+    wire(s,[[40,50],[40,105]]); wire(s,[[240,50],[240,105]]); comp(s,"R",40,105,240,105,{label:"3",side:-1});
+    T(s,8,150,"b)","b lg");
+    term(s,24,175); wire(s,[[28,175],[40,175]]); comp(s,"R",40,175,140,175,{label:"5"}); comp(s,"R",140,175,240,175,{label:"5"}); wire(s,[[240,175],[252,175]]); term(s,256,175);
+    wire(s,[[40,175],[40,228]]); wire(s,[[240,175],[240,228]]); comp(s,"R",40,228,240,228,{label:"5",side:-1});
+    T(s,290,24,"c)","b lg");
+    term(s,296,135); wire(s,[[300,135],[315,135]]); wire(s,[[315,70],[315,205]]);
+    comp(s,"R",315,70,375,70,{label:"3"}); comp(s,"R",375,70,440,70,{label:"5"});
+    wire(s,[[440,30],[440,110]]); wire(s,[[590,30],[590,110]]);
+    comp(s,"R",440,30,515,30,{label:"2"}); comp(s,"R",515,30,590,30,{label:"6"}); comp(s,"R",440,70,590,70,{label:"12"}); comp(s,"R",440,110,590,110,{label:"1",side:-1});
+    comp(s,"R",590,70,670,70,{label:"3"}); wire(s,[[670,70],[690,70],[690,205]]);
+    comp(s,"R",315,205,380,205,{label:"10"}); wire(s,[[380,185],[380,225]]); wire(s,[[450,185],[450,225]]);
+    comp(s,"R",380,185,450,185,{label:"8"}); comp(s,"R",380,225,450,225,{label:"6",side:-1});
+    comp(s,"R",450,205,570,205,{label:"6"}); comp(s,"R",570,205,690,205,{label:"2"});
+    comp(s,"R",690,135,755,135,{label:"3"}); term(s,760,135);
+  })();
+
+  /* ---------- figura 15 ---------- */
+  (function(){
+    const s=$("fig15"); if(!s) return;
+    comp(s,"R",40,95,140,95,{label:"1 Ω",side:-1}); comp(s,"R",140,95,240,95,{label:"2 Ω",side:-1}); comp(s,"R",240,95,340,95,{label:"4 Ω",side:-1});
+    wire(s,[[140,95],[140,40]]); comp(s,"R",140,40,340,40,{label:"3 Ω"}); wire(s,[[340,40],[340,95]]);
+    wire(s,[[40,95],[40,150],[240,150],[240,95]]);
+    term(s,30,95,"A",-22,5); dot(s,140,95); dot(s,240,95); term(s,350,95,"D",10,5);
+    T(s,136,120,"B","b",{"text-anchor":"end"}); T(s,246,120,"C","b");
+    T(s,140,168,"cable sin resistencia: A = C","m",{style:"fill:var(--accent-ink)"});
+  })();
+
+  /* ---------- figura 16 ---------- */
+  (function(){
+    const s=$("fig16"); if(!s) return;
+    term(s,22,130,"x",-16,5); wire(s,[[26,130],[60,130]]); wire(s,[[60,70],[60,195]]);
+    wire(s,[[60,70],[150,70]]); arrowI(s,105,70,0);
+    wire(s,[[150,32],[150,108]]); wire(s,[[250,32],[250,108]]);
+    comp(s,"R",150,32,250,32,{label:"8"}); comp(s,"R",150,70,250,70,{label:"16"}); comp(s,"R",150,108,250,108,{label:"16",side:-1});
+    comp(s,"R",250,70,370,70,{label:"20"}); wire(s,[[370,70],[420,70],[420,195]]);
+    wire(s,[[60,195],[80,195]]); wire(s,[[80,175],[80,218]]); wire(s,[[150,175],[150,218]]);
+    comp(s,"R",80,175,150,175,{label:"9"}); comp(s,"R",80,218,150,218,{label:"18",side:-1});
+    dot(s,150,195); T(s,158,189,"a","b"); comp(s,"R",150,195,420,195,{label:"6"});
+    wire(s,[[420,130],[440,130]]); term(s,444,130,"y",10,5);
+  })();
+
+  /* ---------- figura 19 ---------- */
+  (function(){
+    const s=$("fig19"); if(!s) return;
+    term(s,20,30,"x",-16,5); term(s,20,230,"y",-16,5);
+    wire(s,[[24,30],[380,30]]); wire(s,[[24,230],[380,230]]);
+    T(s,52,22,"a","b"); T(s,52,250,"b","b");
+    comp(s,"R",70,30,70,97,{label:"100",side:1}); comp(s,"R",70,97,70,163,{label:"100",side:1}); comp(s,"R",70,163,70,230,{label:"100",side:1});
+    wire(s,[[70,97],[290,97]]); dot(s,290,97); T(s,298,92,"c","b"); comp(s,"R",290,97,290,230,{label:"120",side:-1});
+    wire(s,[[70,163],[180,163]]); dot(s,180,163); T(s,188,158,"d","b"); comp(s,"R",180,163,180,230,{label:"25",side:-1});
+    comp(s,"R",380,30,380,230,{label:"40",side:-1});
+    dot(s,70,97); dot(s,70,163);
+  })();
+
+  /* ---------- figura 17 ---------- */
+  (function(){
+    const s=$("fig17"); if(!s) return;
+    comp(s,"R",60,40,230,40,{label:"R"}); comp(s,"R",60,40,60,170,{label:"R",side:1}); comp(s,"R",60,170,230,40,{label:"R",side:1});
+    comp(s,"R",230,40,230,170,{label:"R",side:-1}); comp(s,"R",60,170,230,170,{label:"R",side:-1}); comp(s,"R",230,170,230,265,{label:"R",side:-1});
+    wire(s,[[60,170],[60,265]]); comp(s,"B",230,265,60,265,{label:"12 V",side:-1,sign:false});
+    dot(s,60,170); dot(s,230,40); dot(s,230,170);
+    T(s,46,175,"a","b lg",{"text-anchor":"end"}); T(s,240,34,"b","b lg"); T(s,240,190,"c","b lg");
+  })();
+
+  /* ---------- figura 20 ---------- */
+  (function(){
+    const s=$("fig20"); if(!s) return;
+    comp(s,"B",40,180,40,40,{plus:2,label:"12 V",side:-1}); comp(s,"R",40,40,210,40,{label:"4 kΩ"}); comp(s,"R",210,40,380,40,{label:"3 kΩ"});
+    comp(s,"B",380,180,380,40,{plus:2,label:"12 V",side:1}); comp(s,"R",210,40,210,180,{label:"4 kΩ",side:-1});
+    wire(s,[[40,180],[380,180]]); dot(s,210,40); dot(s,210,180);
+    T(s,216,30,"a","b lg"); T(s,216,204,"b","b lg");
+    arrowI(s,80,40,0,"I₁",0,24); arrowI(s,345,40,180,"I₂",0,24); arrowI(s,210,150,90,"I₃",-22,4);
+  })();
+
+  /* ---------- figura 21 ---------- */
+  (function(){
+    const s=$("fig21"); if(!s) return;
+    comp(s,"B",40,40,220,40,{plus:1,label:"6 V"}); wire(s,[[220,40],[380,40],[380,80]]);
+    comp(s,"R",380,80,380,170,{label:"1 kΩ",side:-1}); wire(s,[[380,170],[380,215],[220,215]]);
+    comp(s,"B",220,40,220,115,{plus:1,label:"5 V",side:-1}); comp(s,"R",220,115,220,215,{label:"3 kΩ",side:-1});
+    comp(s,"R",40,215,220,215,{label:"2 kΩ",side:-1}); wire(s,[[40,40],[40,215]]);
+    dot(s,220,40); dot(s,220,215); dot(s,380,80); dot(s,380,170);
+    T(s,226,32,"T","b",{style:"fill:var(--accent-ink)"}); T(s,226,236,"B","b",{style:"fill:var(--accent-ink)"});
+    T(s,388,78,"a","b lg"); T(s,388,182,"b","b lg");
+  })();
+
+  /* ---------- figura 22 ---------- */
+  (function(){
+    const s=$("fig22"); if(!s) return;
+    wire(s,[[40,30],[40,215]]); wire(s,[[410,30],[410,215]]);
+    comp(s,"R",40,30,225,30,{label:"5 kΩ"}); comp(s,"R",225,30,410,30,{label:"8 kΩ"}); wire(s,[[225,30],[225,120]]);
+    comp(s,"B",40,120,100,120,{plus:1,label:"12 V"}); comp(s,"R",100,120,225,120,{label:"1 kΩ"});
+    comp(s,"R",225,120,350,120,{label:"1 kΩ"}); comp(s,"B",350,120,410,120,{plus:2,label:"9 V"});
+    comp(s,"R",40,215,410,215,{label:"10 kΩ",side:-1});
+    dot(s,225,30); dot(s,225,120); dot(s,40,120); dot(s,410,120);
+    arrowI(s,130,120,180,"I₂",0,24); arrowI(s,320,120,0,"I₁",0,24); arrowI(s,110,215,0,"I₃",0,-12);
+    T(s,30,24,"L","b",{"text-anchor":"end",style:"fill:var(--accent-ink)"}); T(s,420,24,"R","b",{style:"fill:var(--accent-ink)"}); T(s,232,140,"C","b",{style:"fill:var(--accent-ink)"});
+  })();
+
+  /* ---------- figura 23 ---------- */
+  (function(){
+    const s=$("fig23"); if(!s) return;
+    wire(s,[[60,130],[60,40]]); comp(s,"B",60,40,170,40,{plus:1,label:"20 V (r = 1 Ω)"}); comp(s,"R",170,40,360,40,{label:"6 Ω"}); wire(s,[[360,40],[360,220]]);
+    comp(s,"R",60,130,200,130,{label:"4 Ω"}); comp(s,"B",200,130,320,130,{plus:1,label:"ε₁ (r = 1 Ω)"}); wire(s,[[320,130],[360,130]]);
+    wire(s,[[60,130],[60,220]]); comp(s,"B",60,220,170,220,{plus:1,label:"ε₂ (r = 1 Ω)",side:-1}); comp(s,"R",170,220,360,220,{label:"2 Ω",side:-1});
+    dot(s,60,130); dot(s,360,130); T(s,46,136,"a","b lg",{"text-anchor":"end"}); T(s,368,136,"b","b lg");
+    arrowI(s,60,85,90,"1 A",-26,4); arrowI(s,60,175,90,"2 A",-26,4);
+  })();
+
+  /* ---------- figura 28 ---------- */
+  (function(){
+    const s=$("fig28"); if(!s) return;
+    comp(s,"R",40,40,210,40,{label:"2 Ω"}); comp(s,"R",210,40,380,40,{label:"1 Ω"});
+    comp(s,"B",40,200,40,40,{plus:2,label:"2 V",side:-1}); comp(s,"B",380,200,380,40,{plus:2,label:"2 V",side:1});
+    comp(s,"R",210,40,210,120,{label:"4 Ω",side:-1}); comp(s,"B",210,200,210,120,{plus:2,label:"4 V",side:-1});
+    comp(s,"R",40,200,210,200,{label:"2 Ω",side:-1}); comp(s,"R",210,200,380,200,{label:"1 Ω",side:-1});
+    dot(s,210,40); dot(s,210,200); T(s,216,30,"a","b lg"); T(s,216,226,"b","b lg");
+  })();
+
+  /* ---------- figura 27 ---------- */
+  (function(){
+    const s=$("fig27"); if(!s) return;
+    term(s,190,22,"V = 18 V",10,4); wire(s,[[190,26],[190,50]]); wire(s,[[90,50],[290,50]]); dot(s,190,50);
+    comp(s,"R",90,50,90,135,{label:"6 kΩ",side:1}); comp(s,"C",90,135,90,230,{label:"3 μF",side:1});
+    comp(s,"C",290,50,290,135,{label:"6 μF",side:-1}); comp(s,"R",290,135,290,230,{label:"3 kΩ",side:-1});
+    comp(s,"S",90,135,290,135,{label:"S"});
+    dot(s,90,135); dot(s,290,135); T(s,78,140,"a","b lg",{"text-anchor":"end"}); T(s,300,154,"b","b lg");
+    wire(s,[[90,230],[290,230]]); dot(s,190,230); wire(s,[[190,230],[190,245]]); ground(s,190,245); T(s,212,262,"V = 0","b");
+  })();
+
+  /* ---------- galvanómetros ---------- */
+  (function(){
+    const s=$("fig-galv"); if(!s) return;
+    T(s,150,22,"Amperímetro (en serie)","b",{"text-anchor":"middle"});
+    term(s,20,110); wire(s,[[24,110],[60,110]]); wire(s,[[60,65],[60,155]]); wire(s,[[240,65],[240,155]]); wire(s,[[240,110],[276,110]]); term(s,280,110);
+    comp(s,"R",60,65,150,65,{label:"R_g"}); comp(s,"G",150,65,240,65);
+    comp(s,"R",60,155,240,155,{label:"R_p (shunt, pequeña)",side:-1});
+    T(s,450,22,"Voltímetro (en paralelo)","b",{"text-anchor":"middle"});
+    term(s,320,110); comp(s,"R",324,110,450,110,{label:"R_s (grande)"}); comp(s,"G",450,110,576,110); term(s,580,110);
+    T(s,450,150,"G: galvanómetro con resistencia R_g","m",{"text-anchor":"middle"});
+  })();
+
+  /* ---------- pila real ---------- */
+  (function(){
+    const s=$("pila-svg"); if(!s) return;
+    const E=$("pi-e"), Rr=$("pi-r"), RR=$("pi-R");
+    SV("rect",{x:28,y:22,width:84,height:132,rx:8,class:"s-muted","stroke-width":1.5,fill:"none","stroke-dasharray":"5 4"},s);
+    T(s,70,170,"pila real","m",{"text-anchor":"middle"}); 
+    comp(s,"B",70,150,70,95,{plus:2,label:"ε",side:1}); comp(s,"R",70,95,70,30,{label:"r",side:1});
+    wire(s,[[70,30],[330,30]]); comp(s,"R",330,30,330,150,{label:"R",side:-1}); wire(s,[[330,150],[70,150]]);
+    dot(s,150,30); dot(s,150,150); T(s,150,22,"a","b",{"text-anchor":"middle"}); T(s,150,170,"b","b",{"text-anchor":"middle"});
+    arrowI(s,240,30,0,"I",0,-10);
+    const g=SV("g",{},s);
+    function upd(){
+      const e=+E.value, r=+Rr.value, R=+RR.value, I=e/(R+r), Vab=e-I*r, PR=I*I*R, Pr=I*I*r;
+      g.innerHTML="";
+      const W=400, x0=30, y=210, sc=W/24;
+      SV("rect",{x:x0,y:y-10,width:I*r*sc,height:20,class:"f-rose",opacity:.85},g);
+      SV("rect",{x:x0+I*r*sc,y:y-10,width:I*R*sc,height:20,class:"f-acc",opacity:.85},g);
+      T(g,x0,y-16,`ε = ${f3(e)} V = Ir (${f3(I*r)}) + IR (${f3(I*R)})`,"m b");
+      $("pi-e-o").textContent=f3(e)+" V"; $("pi-r-o").textContent=f3(r)+" Ω"; $("pi-R-o").textContent=f3(R)+" Ω";
+      $("pila-read").innerHTML=`<div>intensidad I<span>${f3(I)} A</span></div><div>tensión en bornes<span>${f3(Vab)} V</span></div><div>potencia en R<span>${f3(PR)} W</span></div><div>perdida en r<span>${f3(Pr)} W</span></div><div>rendimiento<span>${f3(100*R/(R+r))} %</span></div>`;
+      $("pila-exp").innerHTML=`<p>I = ε/(R + r) = ${f3(e)}/${f3(R+r)} = <b>${f3(I)} A</b>. Dentro de la pila se pierden Ir = ${f3(I*r)} V, y en bornes quedan V<sub>ab</sub> = ε − Ir = <b>${f3(Vab)} V</b>. En la barra, en rosa lo que se pierde dentro de la pila y en verde lo que llega a R.</p><p>${r===0?"Con r = 0 (pila ideal), V<sub>ab</sub> = ε siempre.":(Math.abs(R-r)<0.26?"Ahora R ≈ r: es justo cuando la potencia que llega a R es <b>máxima</b> (pero el rendimiento es solo del 50 %).":"Prueba a poner R igual a r: es cuando R recibe la máxima potencia posible.")}</p>`;
+    }
+    [E,Rr,RR].forEach(el=>el.addEventListener("input",upd)); upd();
+  })();
+
+  /* ---------- serie y paralelo de resistencias ---------- */
+  (function(){
+    const s=$("res-svg"); if(!s) return;
+    const M=$("rs-mode"), R1=$("rs-r1"), R2=$("rs-r2"), V=12;
+    const g=SV("g",{},s);
+    function upd(){
+      const r1=+R1.value, r2=+R2.value, ser=M.value==="s"; g.innerHTML="";
+      comp(g,"B",40,185,40,40,{plus:2,label:"12 V",side:1});
+      let Req,i1,i2,v1,v2;
+      if(ser){ Req=r1+r2; const I=V/Req; i1=i2=I; v1=I*r1; v2=I*r2;
+        wire(g,[[40,40],[90,40]]); comp(g,"R",90,40,210,40,{label:"R₁"}); comp(g,"R",210,40,330,40,{label:"R₂"}); wire(g,[[330,40],[400,40],[400,185],[40,185]]);
+        T(g,150,82,`I = ${f3(i1)} A`,"m b",{"text-anchor":"middle",style:"fill:var(--accent-ink)"}); T(g,150,100,`V = ${f3(v1)} V`,"m",{"text-anchor":"middle"});
+        T(g,270,82,`I = ${f3(i2)} A`,"m b",{"text-anchor":"middle",style:"fill:var(--accent-ink)"}); T(g,270,100,`V = ${f3(v2)} V`,"m",{"text-anchor":"middle"});
+      } else { Req=r1*r2/(r1+r2); v1=v2=V; i1=V/r1; i2=V/r2;
+        wire(g,[[40,40],[340,40]]); wire(g,[[40,185],[340,185]]); dot(g,200,40); dot(g,200,185);
+        comp(g,"R",200,40,200,185,{label:"R₁",side:1}); comp(g,"R",340,40,340,185,{label:"R₂",side:-1});
+        T(g,150,140,`I = ${f3(i1)} A`,"m b",{"text-anchor":"end",style:"fill:var(--accent-ink)"});
+        T(g,372,140,`I = ${f3(i2)} A`,"m b",{style:"fill:var(--accent-ink)"});
+      }
+      $("rs-r1-o").textContent=r1+" Ω"; $("rs-r2-o").textContent=r2+" Ω";
+      $("res-read").innerHTML=`<div>R equivalente<span>${f3(Req)} Ω</span></div><div>I₁ / I₂<span>${f3(i1)} / ${f3(i2)} A</span></div><div>V₁ / V₂<span>${f3(v1)} / ${f3(v2)} V</span></div><div>potencia total<span>${f3(V*V/Req)} W</span></div>`;
+      $("res-exp").innerHTML= ser
+        ? `<p><b>Serie:</b> R = R₁ + R₂ = ${f3(Req)} Ω. Las dos tienen la <b>misma corriente</b> I = 12/${f3(Req)} = ${f3(i1)} A, y la tensión se reparte en proporción a cada R: la resistencia más grande se lleva más tensión.</p>`
+        : `<p><b>Paralelo:</b> R = R₁R₂/(R₁+R₂) = ${f3(Req)} Ω, menor que las dos. Las dos tienen la <b>misma tensión</b> (12 V) y la corriente se reparte: por la resistencia más pequeña pasa más.</p>`;
+    }
+    [M,R1,R2].forEach(el=>el.addEventListener("input",upd)); upd();
+  })();
+
+  /* ---------- RC ---------- */
+  (function(){
+    const s=$("rc-svg"); if(!s) return;
+    const M=$("rc-mode"), RR=$("rc-R"), CC=$("rc-C"), TT=$("rc-t"), eps=12;
+    const X0=60,X1=450, X=t=>X0+(X1-X0)*t/10;
+    const panels=[{y0:24,y1:140,key:"q"},{y0:190,y1:306,key:"I"}];
+    const g=SV("g",{},s);
+    function upd(){
+      const R=+RR.value*1e3, C=+CC.value*1e-6, tau=R*C, t=+TT.value, ch=M.value==="c";
+      const Q=eps*C, I0=eps/R;
+      const q=tt=>ch?Q*(1-Math.exp(-tt/tau)):Q*Math.exp(-tt/tau);
+      const I=tt=>I0*Math.exp(-tt/tau);
+      g.innerHTML="";
+      panels.forEach(pn=>{
+        const Y=v=>pn.y1-(pn.y1-pn.y0)*v;
+        SV("rect",{x:X0,y:pn.y0,width:X1-X0,height:pn.y1-pn.y0,class:"f-surface s-muted","stroke-width":1,opacity:.9},g);
+        for(let k=0;k<=10;k+=2) T(g,X(k),pn.y1+16,String(k),"m",{"text-anchor":"middle"});
+        T(g,X1,pn.y1+30,"t (s)","m",{"text-anchor":"end"});
+        T(g,X0+4,pn.y0-6,pn.key==="q"?`q (máx. ${fmt(Q*1e3,3)} mC)`:`|I| (máx. ${fmt(I0*1e3,3)} mA)`,"m b");
+        T(g,X0-6,pn.y0+10,"1","m",{"text-anchor":"end"}); T(g,X0-6,pn.y1,"0","m",{"text-anchor":"end"});
+        if(tau<=10){ L(g,X(tau),pn.y0,X(tau),pn.y1,"s-warn",1.4,{"stroke-dasharray":"5 4"}); T(g,X(tau)+4,pn.y0+14,"τ","b",{style:"fill:var(--warn)"}); }
+        let d=""; for(let i=0;i<=200;i++){ const tt=10*i/200; const v=pn.key==="q"?q(tt)/Q:I(tt)/I0; d+=(i?"L":"M")+X(tt).toFixed(1)+","+Y(v).toFixed(1); }
+        SV("path",{d,class:pn.key==="q"?"s-acc":"s-teal","stroke-width":3.2,fill:"none"},g);
+        const v=pn.key==="q"?q(t)/Q:I(t)/I0;
+        L(g,X(t),pn.y0,X(t),pn.y1,"s-rose",1.4,{opacity:.7}); SV("circle",{cx:X(t),cy:Y(v),r:6,class:"f-rose"},g);
+      });
+      $("rc-R-o").textContent=RR.value+" kΩ"; $("rc-C-o").textContent=CC.value+" μF"; $("rc-t-o").textContent=fmt(t,3)+" s";
+      $("rc-read").innerHTML=`<div>τ = RC<span>${fmt(tau,3)} s</span></div><div>t / τ<span>${fmt(t/tau,3)}</span></div><div>carga q<span>${fmt(q(t)*1e3,3)} mC (${fmt(100*q(t)/Q,3)} %)</span></div><div>intensidad<span>${fmt((ch?1:-1)*I(t)*1e3,3)} mA</span></div>`;
+      $("rc-exp").innerHTML = ch
+        ? `<p><b>Carga:</b> τ = RC = ${fmt(+RR.value,3)} kΩ · ${fmt(+CC.value,3)} μF = ${fmt(tau,3)} s. La corriente empieza en ε/R = ${fmt(I0*1e3,3)} mA y se apaga, mientras la carga sube hasta εC = ${fmt(Q*1e3,3)} mC. Con más R o más C, todo va más despacio.</p>`
+        : `<p><b>Descarga:</b> la carga cae desde ${fmt(Q*1e3,3)} mC con la misma τ = ${fmt(tau,3)} s. La corriente es negativa porque va en sentido contrario a la de carga (el condensador empuja ahora él la corriente). En t = τ queda el 36.8 %.</p>`;
+    }
+    [M,RR,CC,TT].forEach(el=>el.addEventListener("input",upd)); upd();
+  })();
+})();
+
+</script>
+
+</body></html>
